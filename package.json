@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/NiklasBurggraaff/svelte-runia/issues"
   },
-  "homepage": "https://github.com/NiklasBurggraaff/svelte-runia#readme"
+  "homepage": "https://github.com/NiklasBurggraaff/svelte-runia#readme",
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13"
+  }
 }
