@@ -9,31 +9,36 @@
         | { "aria-labelledby": string; "aria-label"?: null };
 
     type Props = ARIALabelOrLabelledByProps & {
-        onclick: (event: UIEvent) => void;
-        children: Snippet<[any]>;
+        state: "true" | "false" | "mixed";
+        children: Snippet;
     } & OtherAttributes;
     let {
+        state = $bindable("false"),
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledby,
-        onclick,
         children,
         ...props
     }: Props = $props();
 
-    function onkeydown(event: KeyboardEvent) {
-        if (event.key === " " || event.key === "Enter") {
-            onclick(event);
-            event.preventDefault();
+    function onclick(event: MouseEvent) {
+        if (state === "mixed") {
+            state = "true";
+        } else if (state === "true") {
+            state = "false";
+        } else {
+            state = "mixed";
         }
+
+        event.preventDefault();
     }
 </script>
 
-{@render children({
-    role: "button",
-    tabindex: 0,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledby,
-    onclick,
-    onkeydown,
-    ...props
-})}
+<button
+    aria-pressed={state}
+    aria-label={ariaLabel}
+    aria-labelledby={ariaLabelledby}
+    {onclick}
+    {...props}
+>
+    {@render children()}
+</button>

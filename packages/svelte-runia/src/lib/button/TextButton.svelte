@@ -1,4 +1,3 @@
-<!-- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role -->
 <script lang="ts">
     import type { HTMLButtonAttributes } from "svelte/elements";
 
