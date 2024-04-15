@@ -28,8 +28,6 @@
         } else {
             pressed = "mixed";
         }
-
-        event.preventDefault();
     }
 </script>
 

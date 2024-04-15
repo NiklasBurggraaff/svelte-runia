@@ -22,8 +22,6 @@
 
     function onclick(event: MouseEvent) {
         pressed = !pressed;
-
-        event.preventDefault();
     }
 </script>
 

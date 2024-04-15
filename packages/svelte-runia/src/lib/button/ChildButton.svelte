@@ -21,7 +21,7 @@
     }: Props = $props();
 
     function onkeydown(event: KeyboardEvent) {
-        if (event.key === " " || event.key === "Enter") {
+        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
             onclick(event);
             event.preventDefault();
         }

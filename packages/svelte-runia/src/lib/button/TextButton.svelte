@@ -5,12 +5,12 @@
 
     type Props = {
         name: string;
-        onclick?: (event: UIEvent) => void;
+        onclick: (event: UIEvent) => void;
     } & OtherAttributes;
     let { name, onclick, ...props }: Props = $props();
 
     function onkeydown(event: KeyboardEvent) {
-        if (onclick !== undefined && (event.key === " " || event.key === "Enter")) {
+        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
             onclick(event);
             event.preventDefault();
         }

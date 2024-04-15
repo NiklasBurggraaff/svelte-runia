@@ -1,4 +1,3 @@
-<!-- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role -->
 <script lang="ts">
     import type { Snippet } from "svelte";
     import type { HTMLButtonAttributes } from "svelte/elements";
@@ -20,13 +19,6 @@
         children,
         ...props
     }: Props = $props();
-
-    function onkeydown(event: KeyboardEvent) {
-        if (event.key === " " || event.key === "Enter") {
-            onclick(event);
-            event.preventDefault();
-        }
-    }
 </script>
 
 <button aria-label={ariaLabel} aria-labelledby={ariaLabelledby} {onclick} {...props}>
