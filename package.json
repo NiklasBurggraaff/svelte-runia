@@ -1,30 +1,29 @@
 {
-  "name": "@niklasburggraaff/svelte-runia",
-  "version": "0.0.1",
-  "description": "Svelte ARIA components using RUNES",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NiklasBurggraaff/svelte-runia.git"
-  },
-  "keywords": [
-    "svelte",
-    "runes",
-    "aria",
-    "component",
-    "components",
-    "ui"
-  ],
-  "author": "Niklas Burggraaff",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/NiklasBurggraaff/svelte-runia/issues"
-  },
-  "homepage": "https://github.com/NiklasBurggraaff/svelte-runia#readme",
-  "devDependencies": {
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.13"
-  }
+    "name": "svelte-runia",
+    "version": "0.0.1",
+    "description": "Svelte ARIA components using RUNES",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NiklasBurggraaff/svelte-runia.git"
+    },
+    "keywords": [
+        "svelte",
+        "runes",
+        "aria",
+        "component",
+        "components",
+        "ui"
+    ],
+    "author": "Niklas Burggraaff",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/NiklasBurggraaff/svelte-runia/issues"
+    },
+    "homepage": "https://github.com/NiklasBurggraaff/svelte-runia#readme",
+    "devDependencies": {
+        "prettier": "^3.2.5"
+    }
 }
