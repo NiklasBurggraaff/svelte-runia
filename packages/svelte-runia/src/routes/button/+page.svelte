@@ -9,7 +9,9 @@
         window.alert("clicked");
     }
 
-    let buttonState = $state(false);
+    let buttonPressed = $state(false);
+    let buttonPressed2 = $state(true);
+    let buttonPressed3 = $state(false);
     let mixedState: "true" | "false" | "mixed" = $state("false");
 </script>
 
@@ -62,21 +64,28 @@
 
 <div style="padding: 1rem">
     <h2>Toggle Button</h2>
-    <ToggleButton bind:state={buttonState} aria-label="Toggle me">
-        State: {buttonState ? "on" : "off"}
+    <ToggleButton bind:pressed={buttonPressed} aria-label="Toggle me">
+        State: {buttonPressed ? "on" : "off"}
+    </ToggleButton>
+</div>
+
+<div style="padding: 1rem">
+    <h2>Toggle Button (default pressed)</h2>
+    <ToggleButton bind:pressed={buttonPressed2} aria-label="Toggle me">
+        State: {buttonPressed2 ? "on" : "off"}
+    </ToggleButton>
+</div>
+
+<div style="padding: 1rem">
+    <h2>Disabled Toggle Button</h2>
+    <ToggleButton disabled bind:pressed={buttonPressed3} aria-label="Toggle me">
+        State: {buttonPressed3 ? "on" : "off"}
     </ToggleButton>
 </div>
 
 <div style="padding: 1rem">
     <h2>Mixed Toggle Button</h2>
-    <MixedToggleButton bind:state={mixedState} aria-label="Toggle me">
+    <MixedToggleButton bind:pressed={mixedState} aria-label="Toggle me">
         State: {mixedState}
     </MixedToggleButton>
-</div>
-
-<div style="padding: 1rem">
-    <h2>Disabled Toggle Button</h2>
-    <ToggleButton disabled bind:state={buttonState} aria-label="Toggle me">
-        State: {buttonState ? "on" : "off"}
-    </ToggleButton>
 </div>

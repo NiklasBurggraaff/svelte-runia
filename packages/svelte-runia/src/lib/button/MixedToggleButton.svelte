@@ -9,11 +9,11 @@
         | { "aria-labelledby": string; "aria-label"?: null };
 
     type Props = ARIALabelOrLabelledByProps & {
-        state: "true" | "false" | "mixed";
+        pressed: "true" | "false" | "mixed";
         children: Snippet;
     } & OtherAttributes;
     let {
-        state = $bindable("false"),
+        pressed = $bindable("false"),
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledby,
         children,
@@ -21,12 +21,12 @@
     }: Props = $props();
 
     function onclick(event: MouseEvent) {
-        if (state === "mixed") {
-            state = "true";
-        } else if (state === "true") {
-            state = "false";
+        if (pressed === "mixed") {
+            pressed = "true";
+        } else if (pressed === "true") {
+            pressed = "false";
         } else {
-            state = "mixed";
+            pressed = "mixed";
         }
 
         event.preventDefault();
@@ -34,7 +34,7 @@
 </script>
 
 <button
-    aria-pressed={state}
+    aria-pressed={pressed}
     aria-label={ariaLabel}
     aria-labelledby={ariaLabelledby}
     {onclick}

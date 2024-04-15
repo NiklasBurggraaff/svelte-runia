@@ -9,11 +9,11 @@
         | { "aria-labelledby": string; "aria-label"?: null };
 
     type Props = ARIALabelOrLabelledByProps & {
-        state: boolean;
+        pressed: boolean;
         children: Snippet;
     } & OtherAttributes;
     let {
-        state = $bindable(false),
+        pressed = $bindable(false),
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledby,
         children,
@@ -21,14 +21,14 @@
     }: Props = $props();
 
     function onclick(event: MouseEvent) {
-        state = !state;
+        pressed = !pressed;
 
         event.preventDefault();
     }
 </script>
 
 <button
-    aria-pressed={state}
+    aria-pressed={pressed}
     aria-label={ariaLabel}
     aria-labelledby={ariaLabelledby}
     {onclick}
