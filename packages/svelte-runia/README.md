@@ -1,5 +1,13 @@
 # create-svelte
 
+## Notes
+
+<https://www.w3.org/TR/using-aria/#rule1>
+
+If you can use a native HTML element or attribute with the semantics and behavior you require already built in, instead of re-purposing an element and adding an ARIA role, state or property to make it accessible, then do so.
+
+## Introduction
+
 Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
 Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
