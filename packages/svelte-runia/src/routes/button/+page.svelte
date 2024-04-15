@@ -32,6 +32,11 @@
 </div>
 
 <div style="padding: 1rem">
+    <h2>Disabled</h2>
+    <Button disabled {onclick} aria-label="Click me">Content</Button>
+</div>
+
+<div style="padding: 1rem">
     <h2>Text Button</h2>
     <TextButton {onclick} name="Click me" />
 </div>
@@ -63,8 +68,15 @@
 </div>
 
 <div style="padding: 1rem">
-    <h2>Toggle Button</h2>
+    <h2>Mixed Toggle Button</h2>
     <MixedToggleButton bind:state={mixedState} aria-label="Toggle me">
         State: {mixedState}
     </MixedToggleButton>
+</div>
+
+<div style="padding: 1rem">
+    <h2>Disabled Toggle Button</h2>
+    <ToggleButton disabled bind:state={buttonState} aria-label="Toggle me">
+        State: {buttonState ? "on" : "off"}
+    </ToggleButton>
 </div>
