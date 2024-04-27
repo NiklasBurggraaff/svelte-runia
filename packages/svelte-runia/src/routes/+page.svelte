@@ -3,3 +3,5 @@
 <h2>Components</h2>
 
 <a href="/button">Button</a>
+
+<a href="/select/radio">Radio</a>

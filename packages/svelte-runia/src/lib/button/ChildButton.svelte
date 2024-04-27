@@ -1,8 +1,5 @@
 <script lang="ts">
     import type { Snippet } from "svelte";
-    import type { HTMLButtonAttributes } from "svelte/elements";
-
-    type OtherAttributes = Omit<HTMLButtonAttributes, "aria-label" | "aria-labelledby" | "onclick">;
 
     type ARIALabelOrLabelledByProps =
         | { "aria-label": string; "aria-labelledby"?: null }
@@ -11,7 +8,7 @@
     type Props = ARIALabelOrLabelledByProps & {
         onclick: (event: UIEvent) => void;
         children: Snippet<[any]>;
-    } & OtherAttributes;
+    };
     let {
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledby,
