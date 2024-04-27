@@ -1,44 +1,54 @@
 <script>
     import RadioGroup from "$lib/select/radio/RadioGroup.svelte";
-    import Radio from "$lib/select/radio/Radio.svelte";
+    import RadioItem from "$lib/select/radio/RadioItem.svelte";
 
     let picked = $state("red");
 
     let group = $state("blue");
+
+    $effect(() => {
+        console.log(group);
+    });
 </script>
 
 <div style="padding: 1rem">
-    <RadioGroup>
-        <Radio value="blue" bind:groupValue={group}>
-            {#snippet indicator(checked)}
-                <div class="indicator">
-                    {#if checked}
-                        <span class="indicator-inner"></span>
-                    {/if}
-                </div>
-            {/snippet}
-            Blue
-        </Radio>
-        <Radio value="red" bind:groupValue={group}>
-            {#snippet indicator(checked)}
-                <div class="indicator">
-                    {#if checked}
-                        <span class="indicator-inner"></span>
-                    {/if}
-                </div>
-            {/snippet}
-            Red
-        </Radio>
-        <Radio value="green" bind:groupValue={group}>
-            {#snippet indicator(checked)}
-                <div class="indicator">
-                    {#if checked}
-                        <span class="indicator-inner"></span>
-                    {/if}
-                </div>
-            {/snippet}
-            Green
-        </Radio>
+    <RadioGroup bind:value={group} defaultValue="blue">
+        <div style="display: flex; gap: 0.5rem align-items: center">
+            <RadioItem value="blue" id="blue">
+                {#snippet indicator(checked)}
+                    <div class="indicator">
+                        {#if checked}
+                            <span class="indicator-inner"></span>
+                        {/if}
+                    </div>
+                {/snippet}
+            </RadioItem>
+            <label for="blue">Blue</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem align-items: center">
+            <RadioItem value="red">
+                {#snippet indicator(checked)}
+                    <div class="indicator">
+                        {#if checked}
+                            <span class="indicator-inner"></span>
+                        {/if}
+                    </div>
+                {/snippet}
+            </RadioItem>
+            <label for="red">Red</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem align-items: center">
+            <RadioItem value="green">
+                {#snippet indicator(checked)}
+                    <div class="indicator">
+                        {#if checked}
+                            <span class="indicator-inner"></span>
+                        {/if}
+                    </div>
+                {/snippet}
+            </RadioItem>
+            <label for="green">Green</label>
+        </div>
     </RadioGroup>
 </div>
 
