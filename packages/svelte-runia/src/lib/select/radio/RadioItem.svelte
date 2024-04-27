@@ -1,54 +1,98 @@
 <script lang="ts">
     import { getContextKey } from "$lib/context.js";
-    import { radioItemAttrs, type RadioGroupContext } from "./utils.js";
+    import Resize from "$lib/utilComponents/Resize.svelte";
+    import { getRadioItemDataAttributes, getValueIndex, type RadioGroupContext } from "./utils.js";
     import { getContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
 
     type Props = {
         value: string;
-        indicator: Snippet<[boolean]>;
-    } & HTMLAttributes<HTMLDivElement>;
+        required?: boolean;
+        disabled?: boolean;
+        indicator: Snippet<[]>;
+    } & HTMLAttributes<HTMLButtonElement>;
 
-    let { value, children, indicator, ...props }: Props = $props();
+    let { value, required, disabled, children, indicator, ...props }: Props = $props();
 
-    let inputElement: HTMLInputElement | undefined = $state(undefined);
+    const { valueStore, groupName, getRadioItems, setValue, selectNext, selectPrevious } =
+        getContext<RadioGroupContext>(getContextKey("radio-group"))!;
 
-    const context = getContext<RadioGroupContext>(getContextKey("radio-group"))!;
-
-    let checked = $state(false);
-
-    context.valueStore.subscribe((newValue) => {
-        checked = value === newValue;
+    let groupValue = $state<string | undefined>(undefined);
+    valueStore.subscribe((newValue) => {
+        groupValue = newValue;
     });
+    let checked = $derived(groupValue === value);
+
+    function onclick() {
+        setValue(value);
+    }
 
     function onkeydown(event: KeyboardEvent) {
-        if (event.key === " " || event.key === "Spacebar") {
-            inputElement?.click();
+        if (event.key === "Enter") {
+            event.preventDefault();
+            return;
+        }
+
+        if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+            selectNext(value);
+            event.preventDefault();
+        } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+            selectPrevious(value);
             event.preventDefault();
         }
     }
+
+    let firstElement = $state(false);
+    $effect(() => {
+        if (groupValue === undefined) {
+            const radioItems = getRadioItems();
+
+            firstElement = getValueIndex(radioItems, value) === 0;
+        }
+    });
+
+    let focusable = $derived(groupValue === undefined ? firstElement : checked);
+
+    let buttonElement: HTMLButtonElement | undefined = $state(undefined);
 </script>
 
 <button
+    bind:this={buttonElement}
     class="radio"
     role="radio"
-    tabindex={checked ? 0 : -1}
-    onclick={() => {
-        console.log("here");
-        console.log(context);
-        context?.setValue(value);
-    }}
+    tabindex={focusable ? 0 : -1}
+    {onclick}
     {onkeydown}
     aria-checked={checked}
-    {...radioItemAttrs}
+    {...getRadioItemDataAttributes(value)}
+    {...props}
 >
-    {@render indicator(checked)}
+    {#if checked}
+        {@render indicator()}
+    {/if}
 </button>
-<!-- Don't use hidden -->
-<input bind:this={inputElement} type="radio" {value} {...props} tabindex="-1" hidden />
+
+<Resize element={buttonElement}>
+    {#snippet child({ width, height })}
+        <input
+            type="radio"
+            aria-hidden
+            {value}
+            {checked}
+            {required}
+            {disabled}
+            name={groupName}
+            tabindex="-1"
+            style={`width: ${width}px; height: ${height}px;`}
+        />
+    {/snippet}
+</Resize>
 
 <style>
-    button {
-        all: unset;
+    input {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0;
+        margin: 0;
     }
 </style>

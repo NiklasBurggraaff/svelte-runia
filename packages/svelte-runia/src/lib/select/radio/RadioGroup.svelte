@@ -1,10 +1,10 @@
 <script lang="ts">
     import { getContextKey } from "$lib/context.js";
-    import { getChildElements } from "$lib/data-attr.js";
     import { writable } from "svelte/store";
-    import type { RadioGroupContext } from "./utils.js";
+    import { getValue, getValueIndex, type RadioGroupContext } from "./utils.js";
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
+    import { getChildElements } from "$lib/data-attr.js";
 
     type DefaultValueProps =
         | {
@@ -17,38 +17,111 @@
           };
 
     type Props = DefaultValueProps & {
+        name?: string;
         value: string | undefined;
         children: Snippet;
+        loop?: boolean;
     } & HTMLAttributes<HTMLDivElement>;
 
-    let groupElement: HTMLDivElement | undefined = undefined;
-
-    const valueStore = writable<string | undefined>(undefined);
-
     let {
-        value = $bindable(undefined),
+        name,
+        value = $bindable(),
         defaultValue,
         required,
         children,
+        loop = true,
         ...props
     }: Props = $props();
 
+    if (defaultValue !== undefined && value === undefined) {
+        value = defaultValue;
+    }
+
+    const valueStore = writable<string | undefined>(value);
     $effect(() => {
         valueStore.set(value);
     });
 
-    setContext<RadioGroupContext>(getContextKey("radio-group"), {
-        valueStore,
-        groupElement,
-        setValue: (newValue: string) => {
-            console.log("setValue", newValue);
-            value = newValue;
-        }
-    });
+    let groupElement: HTMLDivElement | undefined = undefined;
 
-    $effect(() => {
-        if (groupElement) {
-            console.log(getChildElements(groupElement, "radio-item"));
+    const setValue = (newValue: string, index: number) => {
+        if (groupElement === undefined) {
+            return;
+        }
+
+        const radioItems = getChildElements(groupElement, "radio-item");
+
+        value = newValue;
+
+        const radioItem = radioItems[index]!;
+        radioItem.focus();
+    };
+
+    setContext<RadioGroupContext>(getContextKey("radio-group"), {
+        groupName: name,
+        valueStore,
+        getRadioItems: () => {
+            if (groupElement === undefined) {
+                return [];
+            }
+            return getChildElements(groupElement, "radio-item");
+        },
+        setValue: (newValue: string) => {
+            if (groupElement === undefined) {
+                return;
+            }
+
+            const radioItems = getChildElements(groupElement, "radio-item");
+            const index = getValueIndex(radioItems, newValue);
+            setValue(newValue, index);
+        },
+        selectNext: (currentValue: string) => {
+            if (groupElement === undefined) {
+                return;
+            }
+
+            const radioItems = getChildElements(groupElement, "radio-item");
+            const index = getValueIndex(radioItems, currentValue);
+
+            let nextIndex = index + 1;
+            if (nextIndex >= radioItems.length) {
+                if (loop) {
+                    nextIndex = 0;
+                } else {
+                    return;
+                }
+            }
+
+            const newValue = getValue(radioItems, nextIndex);
+            if (newValue === undefined) {
+                return;
+            }
+
+            setValue(newValue, nextIndex);
+        },
+        selectPrevious: (currentValue: string) => {
+            if (groupElement === undefined) {
+                return;
+            }
+
+            const radioItems = getChildElements(groupElement, "radio-item");
+            const index = getValueIndex(radioItems, currentValue);
+
+            let previousIndex = index - 1;
+            if (previousIndex < 0) {
+                if (loop) {
+                    previousIndex = radioItems.length - 1;
+                } else {
+                    return;
+                }
+            }
+
+            const newValue = getValue(radioItems, previousIndex);
+            if (newValue === undefined) {
+                return;
+            }
+
+            setValue(newValue, previousIndex);
         }
     });
 </script>

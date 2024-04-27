@@ -1,53 +1,128 @@
-<script>
+<script lang="ts">
     import RadioGroup from "$lib/select/radio/RadioGroup.svelte";
     import RadioItem from "$lib/select/radio/RadioItem.svelte";
+    import { scale } from "svelte/transition";
 
     let picked = $state("red");
 
-    let group = $state("blue");
-
-    $effect(() => {
-        console.log(group);
-    });
+    let group = $state(undefined);
+    let group2 = $state("blue");
+    let group3 = $state(undefined);
+    let group4 = $state("blue");
 </script>
 
 <div style="padding: 1rem">
-    <RadioGroup bind:value={group} defaultValue="blue">
-        <div style="display: flex; gap: 0.5rem align-items: center">
-            <RadioItem value="blue" id="blue">
-                {#snippet indicator(checked)}
-                    <div class="indicator">
-                        {#if checked}
-                            <span class="indicator-inner"></span>
-                        {/if}
-                    </div>
+    <RadioGroup bind:value={group} id="1">
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="blue" id="blue" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
                 {/snippet}
             </RadioItem>
             <label for="blue">Blue</label>
         </div>
-        <div style="display: flex; gap: 0.5rem align-items: center">
-            <RadioItem value="red">
-                {#snippet indicator(checked)}
-                    <div class="indicator">
-                        {#if checked}
-                            <span class="indicator-inner"></span>
-                        {/if}
-                    </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="red" id="red" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
                 {/snippet}
             </RadioItem>
             <label for="red">Red</label>
         </div>
-        <div style="display: flex; gap: 0.5rem align-items: center">
-            <RadioItem value="green">
-                {#snippet indicator(checked)}
-                    <div class="indicator">
-                        {#if checked}
-                            <span class="indicator-inner"></span>
-                        {/if}
-                    </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="green" id="green" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
                 {/snippet}
             </RadioItem>
             <label for="green">Green</label>
+        </div>
+    </RadioGroup>
+</div>
+
+<div style="padding: 1rem">
+    <RadioGroup bind:value={group2} id="2">
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="blue" id="blue2" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="blue2">Blue</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="red" id="red2" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="red2">Red</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="green" id="green2" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="green2">Green</label>
+        </div>
+    </RadioGroup>
+</div>
+
+<div style="padding: 1rem">
+    <RadioGroup bind:value={group3} id="3" defaultValue="red">
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="blue" id="blue3" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="blue3">Blue</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="red" id="red3" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="red3">Red</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="green" id="green3" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="green3">Green</label>
+        </div>
+    </RadioGroup>
+</div>
+
+<div style="padding: 1rem">
+    <RadioGroup bind:value={group4} id="4" defaultValue="red">
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="blue" id="blue4" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="blue4">Blue</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="red" id="red4" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="red4">Red</label>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+            <RadioItem value="green" id="green4" class="h-6 w-6 rounded-full border-2 p-1">
+                {#snippet indicator()}
+                    <div transition:scale|global class="h-full w-full rounded-full bg-slate-500" />
+                {/snippet}
+            </RadioItem>
+            <label for="green4">Green</label>
         </div>
     </RadioGroup>
 </div>
@@ -62,58 +137,6 @@
         <input id="red-pill" bind:group={picked} type="radio" value="red" />
         <label for="red-pill">Red pill</label>
     </fieldset>
-</div>
-
-<div style="padding: 1rem">
-    <div role="radiogroup" aria-labelledby="question">
-        <div id="question">Which is the best color?</div>
-        <div id="radioGroup">
-            <p>
-                <span
-                    id="colorOption_0"
-                    tabindex="0"
-                    role="radio"
-                    aria-checked="false"
-                    aria-labelledby="purple"
-                    style="display:inline-block; width: 1rem; height: 1rem;"
-                ></span>
-                <span id="purple">Purple</span>
-            </p>
-            <p>
-                <span
-                    id="colorOption_1"
-                    tabindex="-1"
-                    role="radio"
-                    aria-checked="false"
-                    aria-labelledby="aubergine"
-                    style="display:inline-block; width: 1rem; height: 1rem;"
-                ></span>
-                <span id="aubergine">Aubergine</span>
-            </p>
-            <p>
-                <span
-                    id="colorOption_2"
-                    tabindex="-1"
-                    role="radio"
-                    aria-checked="false"
-                    aria-labelledby="magenta"
-                    style="display:inline-block; width: 1rem; height: 1rem;"
-                ></span>
-                <span id="magenta">Magenta</span>
-            </p>
-            <p>
-                <span
-                    id="colorOption_3"
-                    tabindex="-1"
-                    role="radio"
-                    aria-checked="false"
-                    aria-labelledby="all"
-                    style="display:inline-block; width: 1rem; height: 1rem;"
-                ></span>
-                <span id="all">All of the above</span>
-            </p>
-        </div>
-    </div>
 </div>
 
 <div>
@@ -137,31 +160,3 @@
         </p>
     </fieldset>
 </div>
-
-<style>
-    .indicator {
-        width: 13px;
-        height: 13px;
-        border-radius: 50%;
-        background-color: white;
-        border: 1px solid #767676;
-    }
-
-    .indicator-inner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
-
-    .indicator-inner::after {
-        content: "";
-        display: block;
-        width: 5px;
-        height: 5px;
-        background-color: black;
-        border-radius: 50%;
-    }
-</style>
