@@ -5,16 +5,12 @@
     import type { HTMLAttributes } from "svelte/elements";
 
     type Props = {
-        expandedItems: string[];
         value: string;
         disabled?: boolean;
-        header: Snippet<[boolean]>;
-        content: Snippet<[boolean]>;
+        children: Snippet;
     } & HTMLAttributes<HTMLDivElement>;
 
-    let { expandedItems, value, disabled = false, header, content, ...props }: Props = $props();
-
-    let expanded = $derived(expandedItems.includes(value));
+    let { value, disabled = false, children, ...props }: Props = $props();
 
     setContext<AccordionItemContext>(getContextKey("accordion-item"), {
         value
@@ -22,6 +18,5 @@
 </script>
 
 <div {...props}>
-    {@render header(expanded)}
-    {@render content(expanded)}
+    {@render children()}
 </div>

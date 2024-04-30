@@ -2,11 +2,11 @@
     import { getContextKey } from "$lib/context.js";
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
-    import type { AccordionRootContext } from "$lib/accordion/utils.js";
+    import type { AccordionRootContext, AccordionState } from "$lib/accordion/utils.js";
 
     type Props = {
-        items: Snippet<[string[], boolean]>;
         disabled?: boolean;
+        children: Snippet;
     } & HTMLAttributes<HTMLDivElement>;
 
     interface AccordionSingleProps extends Props {
@@ -33,10 +33,20 @@
         defaultValue,
         values = $bindable([]),
         defaultValues,
-        items,
         disabled = false,
+        children,
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
+
+    let state: AccordionState = $state({
+        value:
+            type === "single"
+                ? defaultValue === undefined
+                    ? []
+                    : [defaultValue]
+                : defaultValues ?? [],
+        disabled
+    });
 
     function toggleItem(item: string) {
         if (disabled) {
@@ -60,17 +70,18 @@
         }
     }
     setContext<AccordionRootContext>(getContextKey("accordion"), {
-        disabled,
+        state,
         toggleItem
     });
 
     let expandedItems: string[] = $derived(
         type === "single" ? (value === undefined ? [] : [value]) : values
     );
-
-    $inspect(values);
+    $effect(() => {
+        state.value = expandedItems;
+    });
 </script>
 
 <div {...props}>
-    {@render items(expandedItems, disabled)}
+    {@render children()}
 </div>

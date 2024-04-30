@@ -15,8 +15,13 @@ export type AccordionItemInfo = {
     setExpanded: (newExpanded: boolean) => void;
 };
 
-export type AccordionRootContext = {
+export type AccordionState = {
+    value: string[];
     disabled: boolean;
+};
+
+export type AccordionRootContext = {
+    state: AccordionState;
     toggleItem: (value: string) => void;
 };
 export type AccordionItemContext = {

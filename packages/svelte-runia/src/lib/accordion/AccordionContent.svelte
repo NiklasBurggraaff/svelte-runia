@@ -1,13 +1,19 @@
 <script lang="ts">
-    import type { Snippet } from "svelte";
+    import type { AccordionItemContext, AccordionRootContext } from "$lib/accordion/utils.js";
+    import { getContextKey } from "$lib/context.js";
+    import { getContext, type Snippet } from "svelte";
 
     type Props = {
-        expanded: boolean;
         children: Snippet;
         forceMount?: boolean;
     };
 
-    let { expanded, children, forceMount = false }: Props = $props();
+    let { children, forceMount = false }: Props = $props();
+
+    let { value } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
+    const { state } = getContext<AccordionRootContext>(getContextKey("accordion"));
+
+    let expanded = $derived(state.value.includes(value));
 </script>
 
 <!--
