@@ -16,18 +16,11 @@ export type AccordionItemInfo = {
 };
 
 export type AccordionRootContext = {
-    registerItem: (value: string, other: AccordionItemInfo) => void;
-    unRegisterItem: (value: string) => void;
-    /**
-     * @returns true if the item is expanded after the toggle and false if not
-     */
-    toggleItem: (value: string, currentExpanded: boolean) => boolean;
+    disabled: boolean;
+    toggleItem: (value: string) => void;
 };
-
 export type AccordionItemContext = {
     value: string;
-    initialExpanded: boolean;
-    setExpanded: (newExpanded: boolean) => void;
 };
 
 export function getValueIndex(radioItems: Array<Element>, value: string) {

@@ -1,60 +1,76 @@
 <script lang="ts">
-    import { Map } from "svelte/reactivity";
     import { getContextKey } from "$lib/context.js";
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
-    import type { AccordionItemInfo, AccordionRootContext } from "$lib/accordion/utils.js";
+    import type { AccordionRootContext } from "$lib/accordion/utils.js";
 
     type Props = {
-        type: "single" | "multiple";
-        collapsible?: boolean;
-        value?: string[];
-        children: Snippet;
+        items: Snippet<[string[], boolean]>;
+        disabled?: boolean;
     } & HTMLAttributes<HTMLDivElement>;
 
-    let { type, collapsible = false, value = $bindable([]), children, ...props }: Props = $props();
+    interface AccordionSingleProps extends Props {
+        type: "single";
+        collapsible?: boolean;
+        value?: string | undefined;
+        defaultValue?: string;
+        values?: never;
+        defaultValues?: never;
+    }
+    interface AccordionMultipleProps extends Props {
+        type: "multiple";
+        values?: string[];
+        defaultValues?: string[];
+        collapsible?: never;
+        value?: never;
+        defaultValue?: never;
+    }
 
-    const items = new Map<string, AccordionItemInfo>();
+    let {
+        type,
+        collapsible = false,
+        value = $bindable(undefined),
+        defaultValue,
+        values = $bindable([]),
+        defaultValues,
+        items,
+        disabled = false,
+        ...props
+    }: AccordionSingleProps | AccordionMultipleProps = $props();
 
-    setContext<AccordionRootContext>(getContextKey("accordion"), {
-        registerItem: (item: string, other: AccordionItemInfo) => {
-            items.set(item, other);
-        },
-        unRegisterItem: (item: string) => {
-            items.delete(item);
-        },
-        toggleItem: (item: string, currentExpanded: boolean) => {
-            if (!items.has(item)) {
-                return currentExpanded;
-            }
+    function toggleItem(item: string) {
+        if (disabled) {
+            return;
+        }
 
-            if (value.includes(item)) {
-                if (type === "multiple" || collapsible) {
-                    value = value.filter((i) => i !== item);
-                    items.get(item)!.setExpanded(false);
-                    return false;
-                } else {
-                    return currentExpanded;
+        if (type === "single") {
+            if (value === item) {
+                if (collapsible) {
+                    value = undefined;
                 }
             } else {
-                if (type === "single") {
-                    for (const i of value) {
-                        items.get(i)!.setExpanded(false);
-                    }
-                    value = [item];
-                    items.get(item)!.setExpanded(true);
-                } else {
-                    value = [...value, item];
-                    items.get(item)!.setExpanded(true);
-                }
-                return true;
+                value = item;
+            }
+        } else {
+            if (values.includes(item)) {
+                values = values.filter((i) => i !== item);
+            } else {
+                values = [...values, item];
             }
         }
+    }
+    setContext<AccordionRootContext>(getContextKey("accordion"), {
+        disabled,
+        toggleItem
     });
 
-    $inspect(value);
+    let expandedItems: string[] = $derived(
+        type === "single" ? (value === undefined ? [] : [value]) : values
+    );
+
+    $inspect(values);
 </script>
 
 <div {...props}>
-    {@render children()}
+    {@render items(expandedItems, disabled)}
 </div>

@@ -4,25 +4,22 @@
     import { getContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
 
-    type Props = { controlsId: string; children: Snippet } & HTMLAttributes<HTMLButtonElement>;
+    type Props = {
+        expanded: boolean;
+        disabled: boolean;
+        controlsId: string;
+        children: Snippet;
+    } & HTMLAttributes<HTMLButtonElement>;
 
-    let { controlsId, children, ...props }: Props = $props();
-
-    let { value, initialExpanded, setExpanded } = getContext<AccordionItemContext>(
-        getContextKey("accordion-item")
-    );
-
-    let expanded = $state(initialExpanded);
-    $effect(() => {
-        setExpanded(expanded);
-    });
-
+    let { expanded, disabled = false, controlsId, children, ...props }: Props = $props();
+    let { value } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
     const { toggleItem } = getContext<AccordionRootContext>(getContextKey("accordion"));
 </script>
 
 <button
+    {disabled}
     onclick={() => {
-        expanded = toggleItem(value, expanded);
+        toggleItem(value);
     }}
     aria-controls={controlsId}
     {...props}
