@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { getContextKey } from "$lib/context.js";
-    import { writable } from "svelte/store";
-    import { getValue, getValueIndex, type RadioGroupContext } from "./utils.js";
     import { setContext, type Snippet } from "svelte";
+    import { writable } from "svelte/store";
     import type { HTMLAttributes } from "svelte/elements";
-    import { getChildElements } from "$lib/data-attr.js";
 
+    import type { RadioGroupContext } from "./utils.js";
+    import { getContextKey } from "$lib/context.js";
+    import { getChildElements, getValue, getValueIndex } from "$lib/data-attr.js";
+
+    // Default to first value?
     type DefaultValueProps =
         | {
               defaultValue: string;

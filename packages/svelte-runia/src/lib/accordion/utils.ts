@@ -11,12 +11,12 @@ export function getAccordionTriggerDataAttributes(value: string) {
     };
 }
 
-export type AccordionItemInfo = {
-    setExpanded: (newExpanded: boolean) => void;
-};
-
 export type AccordionState = {
     value: string[];
+    disabled: boolean;
+    collapsible: boolean;
+};
+export type AccordionItemState = {
     disabled: boolean;
 };
 
@@ -27,4 +27,5 @@ export type AccordionRootContext = {
 };
 export type AccordionItemContext = {
     value: string;
+    itemState: AccordionItemState;
 };

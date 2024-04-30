@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContextKey } from "$lib/context.js";
+    import { getValueIndex } from "$lib/data-attr.js";
     import Resize from "$lib/utilComponents/Resize.svelte";
-    import { getRadioItemDataAttributes, getValueIndex, type RadioGroupContext } from "./utils.js";
+    import { getRadioItemDataAttributes, type RadioGroupContext } from "./utils.js";
     import { getContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
 
@@ -9,7 +10,7 @@
         value: string;
         required?: boolean;
         disabled?: boolean;
-        indicator: Snippet<[]>;
+        indicator: Snippet<[boolean]>;
     } & HTMLAttributes<HTMLButtonElement>;
 
     let { value, required, disabled, children, indicator, ...props }: Props = $props();
@@ -56,6 +57,7 @@
     let buttonElement: HTMLButtonElement | undefined = $state(undefined);
 </script>
 
+<!-- Add data -->
 <button
     bind:this={buttonElement}
     class="radio"
@@ -68,7 +70,7 @@
     {...props}
 >
     {#if checked}
-        {@render indicator()}
+        {@render indicator(checked)}
     {/if}
 </button>
 

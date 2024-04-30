@@ -1,11 +1,19 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
 
-    import { Accordion } from "$lib/index.js";
+    import { Accordion } from "../../lib/index.js";
+
+    let disabled = $state(false);
+
+    setInterval(() => {
+        disabled = !disabled;
+    }, 1000);
 </script>
 
-<Accordion.Root type="single">
-    <Accordion.Item value="1">
+<p>Disabled: {disabled}</p>
+
+<Accordion.Root type="single" collapsible>
+    <Accordion.Item value="1" {disabled}>
         <Accordion.Header level={2}>
             <Accordion.Trigger>Accordion Item 1</Accordion.Trigger>
         </Accordion.Header>

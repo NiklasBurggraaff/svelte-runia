@@ -9,10 +9,13 @@
     import { getContextKey } from "$lib/context.js";
     import { getChildElements, getValueIndex } from "$lib/data-attr.js";
 
+    // TODO: Add orientation and direction props
+    // TODO: Render delegation
     type Props = {
         disabled?: boolean;
         loop?: boolean;
         children: Snippet;
+        element?: HTMLDivElement | undefined;
     } & HTMLAttributes<HTMLDivElement>;
 
     interface AccordionSingleProps extends Props {
@@ -42,8 +45,11 @@
         disabled = false,
         loop = true,
         children,
+        element = $bindable(undefined),
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
+
+    // TODO: Handle default values
 
     const id: string = `svelte-runia-accordion-${count++}`;
 
@@ -54,7 +60,15 @@
                     ? []
                     : [defaultValue]
                 : defaultValues ?? [],
-        disabled
+        disabled,
+        collapsible
+    });
+
+    $effect(() => {
+        accordionState.disabled = disabled;
+    });
+    $effect(() => {
+        accordionState.collapsible = collapsible;
     });
 
     function toggleItem(item: string) {
@@ -79,14 +93,15 @@
         }
     }
 
-    let rootElement: HTMLDivElement | undefined = $state(undefined);
-
     function handleKeydown(item: string, event: KeyboardEvent) {
-        if (rootElement === undefined) {
+        if (disabled) {
+            return;
+        }
+        if (element === undefined) {
             return;
         }
 
-        const accordionTriggers = getChildElements(rootElement, "accordion-trigger");
+        const accordionTriggers = getChildElements(element, "accordion-trigger");
         const index = getValueIndex(accordionTriggers, item);
 
         let focusIndex: number | undefined;
@@ -122,7 +137,7 @@
 
     setContext<AccordionRootContext>(getContextKey("accordion"), {
         id,
-        accordionState: accordionState,
+        accordionState,
         triggerEvents: {
             onclick: toggleItem,
             onkeydown: handleKeydown
@@ -137,6 +152,6 @@
     });
 </script>
 
-<div bind:this={rootElement} {...props}>
+<div bind:this={element} {...props}>
     {@render children()}
 </div>

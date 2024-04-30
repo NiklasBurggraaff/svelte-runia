@@ -11,25 +11,28 @@
 
     type Props = {
         children: Snippet;
+        element?: HTMLButtonElement | undefined;
     } & HTMLAttributes<HTMLButtonElement>;
 
-    let { children, ...props }: Props = $props();
-    let { value } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
+    let { children, element = $bindable(undefined), ...props }: Props = $props();
+    let { value, itemState } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
     const { id, accordionState, triggerEvents } = getContext<AccordionRootContext>(
         getContextKey("accordion")
     );
 
     let expanded = $derived(accordionState.value.includes(value));
-
-    let events = addValueParam(value, triggerEvents);
-    console.log(events);
+    let disabled = $derived(accordionState.disabled || itemState.disabled);
+    let ariaDisabled = $derived(disabled || (expanded && !accordionState.collapsible));
 </script>
 
 <button
-    {...events}
+    bind:this={element}
+    id={`${id}-${value}-trigger`}
     aria-controls={`${id}-${value}-content`}
     aria-expanded={expanded}
-    disabled={accordionState.disabled}
+    {disabled}
+    aria-disabled={ariaDisabled}
+    {...addValueParam(value, triggerEvents)}
     {...getAccordionTriggerDataAttributes(value)}
     {...props}
 >

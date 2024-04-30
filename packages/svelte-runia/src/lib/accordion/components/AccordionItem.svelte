@@ -8,15 +8,30 @@
         value: string;
         disabled?: boolean;
         children: Snippet;
+        element?: HTMLDivElement | undefined;
     } & HTMLAttributes<HTMLDivElement>;
 
-    let { value, disabled = false, children, ...props }: Props = $props();
+    let {
+        value,
+        disabled = false,
+        children,
+        element = $bindable(undefined),
+        ...props
+    }: Props = $props();
+
+    let itemState = $state({
+        disabled
+    });
+    $effect(() => {
+        itemState.disabled = disabled;
+    });
 
     setContext<AccordionItemContext>(getContextKey("accordion-item"), {
-        value
+        value,
+        itemState
     });
 </script>
 
-<div {...props}>
+<div bind:this={element} {...props}>
     {@render children()}
 </div>

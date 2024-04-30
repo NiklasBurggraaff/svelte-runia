@@ -19,17 +19,3 @@ export type RadioGroupContext = {
     selectNext: (currentValue: string) => void;
     selectPrevious: (currentValue: string) => void;
 };
-
-export function getValueIndex(radioItems: Array<Element>, value: string) {
-    return radioItems.findIndex((radioItem) => radioItem.getAttribute(valueDataAttr) === value);
-}
-
-export function getValue(radioItems: Array<Element>, index: number) {
-    const value = radioItems[index].getAttribute(valueDataAttr);
-
-    if (value === null) {
-        return undefined;
-    }
-
-    return value;
-}
