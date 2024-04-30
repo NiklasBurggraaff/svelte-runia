@@ -5,3 +5,5 @@
 <a href="/button">Button</a>
 
 <a href="/select/radio">Radio</a>
+
+<a href="/accordion">Accordion</a>
