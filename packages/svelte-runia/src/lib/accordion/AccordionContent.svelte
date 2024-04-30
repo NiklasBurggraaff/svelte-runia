@@ -2,16 +2,16 @@
     import type { AccordionItemContext, AccordionRootContext } from "$lib/accordion/utils.js";
     import { getContextKey } from "$lib/context.js";
     import { getContext, type Snippet } from "svelte";
+    import type { HTMLAttributes } from "svelte/elements";
 
     type Props = {
         children: Snippet;
-        forceMount?: boolean;
-    };
+    } & HTMLAttributes<HTMLDivElement>;
 
-    let { children, forceMount = false }: Props = $props();
+    let { children, ...props }: Props = $props();
 
     let { value } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
-    const { state } = getContext<AccordionRootContext>(getContextKey("accordion"));
+    const { id, state } = getContext<AccordionRootContext>(getContextKey("accordion"));
 
     let expanded = $derived(state.value.includes(value));
 </script>
@@ -29,6 +29,8 @@ It will show up on hover.
     ```
 -->
 
-{#if expanded || forceMount}
-    {@render children()}
-{/if}
+<div id={`${id}-${value}-content`} hidden={!expanded} {...props}>
+    {#if expanded}
+        {@render children()}
+    {/if}
+</div>

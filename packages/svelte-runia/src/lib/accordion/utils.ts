@@ -1,5 +1,6 @@
 import { getDataAttribute } from "$lib/data-attr.js";
 import { getValueIndex as getValueIndexMain, getValue as getValueMain } from "$lib/data-attr.js";
+import type { ValueEventHandlers } from "$lib/events.js";
 
 export const accordionItemDataAttr = getDataAttribute("accordion-item");
 export const valueDataAttr = getDataAttribute("value");
@@ -21,8 +22,9 @@ export type AccordionState = {
 };
 
 export type AccordionRootContext = {
+    id: string;
     state: AccordionState;
-    toggleItem: (value: string) => void;
+    triggerEvents: ValueEventHandlers;
 };
 export type AccordionItemContext = {
     value: string;

@@ -1,3 +1,7 @@
+<script context="module" lang="ts">
+    let count = 0;
+</script>
+
 <script lang="ts">
     import { getContextKey } from "$lib/context.js";
     import { setContext, type Snippet } from "svelte";
@@ -38,6 +42,8 @@
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
 
+    const id: string = `svelte-runia-accordion-${count++}`;
+
     let state: AccordionState = $state({
         value:
             type === "single"
@@ -70,8 +76,11 @@
         }
     }
     setContext<AccordionRootContext>(getContextKey("accordion"), {
+        id,
         state,
-        toggleItem
+        triggerEvents: {
+            onclick: toggleItem
+        }
     });
 
     let expandedItems: string[] = $derived(
