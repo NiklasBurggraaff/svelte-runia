@@ -1,13 +1,12 @@
 import { getDataAttribute } from "$lib/data-attr.js";
-import { getValueIndex as getValueIndexMain, getValue as getValueMain } from "$lib/data-attr.js";
 import type { ValueEventHandlers } from "$lib/events.js";
 
-export const accordionItemDataAttr = getDataAttribute("accordion-item");
+export const accordionTriggerDataAttr = getDataAttribute("accordion-trigger");
 export const valueDataAttr = getDataAttribute("value");
 
-export function getAccordionItemDataAttributes(value: string) {
+export function getAccordionTriggerDataAttributes(value: string) {
     return {
-        [accordionItemDataAttr]: "",
+        [accordionTriggerDataAttr]: "",
         [valueDataAttr]: value
     };
 }
@@ -23,17 +22,9 @@ export type AccordionState = {
 
 export type AccordionRootContext = {
     id: string;
-    state: AccordionState;
+    accordionState: AccordionState;
     triggerEvents: ValueEventHandlers;
 };
 export type AccordionItemContext = {
     value: string;
 };
-
-export function getValueIndex(radioItems: Array<Element>, value: string) {
-    return getValueIndexMain(radioItems, value, "value");
-}
-
-export function getValue(radioItems: Array<Element>, index: number) {
-    return getValueMain(radioItems, index, "value");
-}

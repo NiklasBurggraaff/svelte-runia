@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { AccordionItemContext } from "$lib/accordion/utils.js";
+    import type { AccordionItemContext } from "../utils.js";
     import { getContextKey } from "$lib/context.js";
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";

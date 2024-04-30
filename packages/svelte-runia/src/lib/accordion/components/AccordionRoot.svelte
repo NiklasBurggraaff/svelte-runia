@@ -3,13 +3,15 @@
 </script>
 
 <script lang="ts">
-    import { getContextKey } from "$lib/context.js";
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
-    import type { AccordionRootContext, AccordionState } from "$lib/accordion/utils.js";
+    import type { AccordionRootContext, AccordionState } from "../utils.js";
+    import { getContextKey } from "$lib/context.js";
+    import { getChildElements, getValueIndex } from "$lib/data-attr.js";
 
     type Props = {
         disabled?: boolean;
+        loop?: boolean;
         children: Snippet;
     } & HTMLAttributes<HTMLDivElement>;
 
@@ -38,13 +40,14 @@
         values = $bindable([]),
         defaultValues,
         disabled = false,
+        loop = true,
         children,
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
 
     const id: string = `svelte-runia-accordion-${count++}`;
 
-    let state: AccordionState = $state({
+    let accordionState: AccordionState = $state({
         value:
             type === "single"
                 ? defaultValue === undefined
@@ -75,11 +78,54 @@
             }
         }
     }
+
+    let rootElement: HTMLDivElement | undefined = $state(undefined);
+
+    function handleKeydown(item: string, event: KeyboardEvent) {
+        if (rootElement === undefined) {
+            return;
+        }
+
+        const accordionTriggers = getChildElements(rootElement, "accordion-trigger");
+        const index = getValueIndex(accordionTriggers, item);
+
+        let focusIndex: number | undefined;
+
+        if (event.key === "ArrowUp") {
+            focusIndex = index - 1;
+            if (focusIndex < 0) {
+                if (loop) {
+                    focusIndex = accordionTriggers.length - 1;
+                } else {
+                    focusIndex = undefined;
+                }
+            }
+        } else if (event.key === "ArrowDown") {
+            focusIndex = index + 1;
+            if (focusIndex >= accordionTriggers.length) {
+                if (loop) {
+                    focusIndex = 0;
+                } else {
+                    focusIndex = undefined;
+                }
+            }
+        } else if (event.key === "Home") {
+            focusIndex = 0;
+        } else if (event.key === "End") {
+            focusIndex = accordionTriggers.length - 1;
+        }
+
+        if (focusIndex !== undefined) {
+            accordionTriggers[focusIndex].focus();
+        }
+    }
+
     setContext<AccordionRootContext>(getContextKey("accordion"), {
         id,
-        state,
+        accordionState: accordionState,
         triggerEvents: {
-            onclick: toggleItem
+            onclick: toggleItem,
+            onkeydown: handleKeydown
         }
     });
 
@@ -87,10 +133,10 @@
         type === "single" ? (value === undefined ? [] : [value]) : values
     );
     $effect(() => {
-        state.value = expandedItems;
+        accordionState.value = expandedItems;
     });
 </script>
 
-<div {...props}>
+<div bind:this={rootElement} {...props}>
     {@render children()}
 </div>

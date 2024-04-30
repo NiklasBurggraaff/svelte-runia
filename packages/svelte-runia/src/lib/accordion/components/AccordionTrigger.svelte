@@ -1,5 +1,9 @@
 <script lang="ts">
-    import type { AccordionItemContext, AccordionRootContext } from "$lib/accordion/utils.js";
+    import {
+        getAccordionTriggerDataAttributes,
+        type AccordionItemContext,
+        type AccordionRootContext
+    } from "../utils.js";
     import { getContextKey } from "$lib/context.js";
     import { addValueParam } from "$lib/events.js";
     import { getContext, type Snippet } from "svelte";
@@ -11,12 +15,11 @@
 
     let { children, ...props }: Props = $props();
     let { value } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
-    const { id, state, triggerEvents } = getContext<AccordionRootContext>(
+    const { id, accordionState, triggerEvents } = getContext<AccordionRootContext>(
         getContextKey("accordion")
     );
 
-    let expanded = $derived(state.value.includes(value));
-    let disabled = $derived(state.disabled);
+    let expanded = $derived(accordionState.value.includes(value));
 
     let events = addValueParam(value, triggerEvents);
     console.log(events);
@@ -26,7 +29,8 @@
     {...events}
     aria-controls={`${id}-${value}-content`}
     aria-expanded={expanded}
-    {disabled}
+    disabled={accordionState.disabled}
+    {...getAccordionTriggerDataAttributes(value)}
     {...props}
 >
     {@render children()}

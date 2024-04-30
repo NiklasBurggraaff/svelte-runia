@@ -1,42 +1,38 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
 
-    import AccordionRoot from "$lib/accordion/AccordionRoot.svelte";
-    import AccordionItem from "$lib/accordion/AccordionItem.svelte";
-    import AccordionHeader from "$lib/accordion/AccordionHeader.svelte";
-    import AccordionTrigger from "$lib/accordion/AccordionTrigger.svelte";
-    import AccordionContent from "$lib/accordion/AccordionContent.svelte";
+    import { Accordion } from "$lib/index.js";
 </script>
 
-<AccordionRoot type="single">
-    <AccordionItem value="1">
-        <AccordionHeader level={2}>
-            <AccordionTrigger>Accordion Item 1</AccordionTrigger>
-        </AccordionHeader>
-        <AccordionContent>
+<Accordion.Root type="single">
+    <Accordion.Item value="1">
+        <Accordion.Header level={2}>
+            <Accordion.Trigger>Accordion Item 1</Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
             <p transition:fade>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, et.
             </p>
-        </AccordionContent>
-    </AccordionItem>
-    <AccordionItem value="2">
-        <AccordionHeader level={2}>
-            <AccordionTrigger>Accordion Item 2</AccordionTrigger>
-        </AccordionHeader>
-        <AccordionContent>
+        </Accordion.Content>
+    </Accordion.Item>
+    <Accordion.Item value="2">
+        <Accordion.Header level={2}>
+            <Accordion.Trigger>Accordion Item 2</Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
             <p transition:fade>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, et.
             </p>
-        </AccordionContent>
-    </AccordionItem>
-    <AccordionItem value="3">
-        <AccordionHeader level={2}>
-            <AccordionTrigger>Accordion Item 3</AccordionTrigger>
-        </AccordionHeader>
-        <AccordionContent>
+        </Accordion.Content>
+    </Accordion.Item>
+    <Accordion.Item value="3">
+        <Accordion.Header level={2}>
+            <Accordion.Trigger>Accordion Item 3</Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
             <p transition:fade>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, et.
             </p>
-        </AccordionContent>
-    </AccordionItem>
-</AccordionRoot>
+        </Accordion.Content>
+    </Accordion.Item>
+</Accordion.Root>
