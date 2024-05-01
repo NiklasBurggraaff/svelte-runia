@@ -12,11 +12,15 @@
     "dependencies": {
         "@astrojs/check": "^0.5.10",
         "@astrojs/starlight": "^0.21.5",
+        "@astrojs/starlight-tailwind": "^2.0.2",
         "@astrojs/svelte": "^5.4.0",
+        "@astrojs/tailwind": "^5.1.0",
+        "@fontsource/noto-sans-runic": "^5.0.20",
         "@niklasburggraaff/svelte-runia": "workspace:*",
         "astro": "^4.3.5",
         "sharp": "^0.32.5",
         "svelte": "^5.0.0-next.1",
+        "tailwindcss": "^3.4.3",
         "typescript": "^5.4.5"
     }
 }
