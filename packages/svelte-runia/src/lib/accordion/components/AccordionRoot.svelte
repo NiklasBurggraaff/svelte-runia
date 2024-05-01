@@ -5,24 +5,35 @@
 <script lang="ts">
     import { setContext, type Snippet } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
-    import type { AccordionRootContext, AccordionState } from "../utils.js";
     import { getContextKey } from "$lib/context.js";
-    import { getChildElements, getValueIndex } from "$lib/data-attr.js";
+    import {
+        moveEnd,
+        moveLeft,
+        moveNext,
+        movePrevious,
+        moveRight,
+        moveStart,
+        type Direction,
+        type Orientation
+    } from "$lib/moves.js";
+    import type { AccordionRootContext, AccordionState } from "../context.js";
+    import { getAccordionTriggers } from "../data-atts.js";
 
-    // TODO: Add orientation and direction props
-    // TODO: Render delegation
     type Props = {
         disabled?: boolean;
         loop?: boolean;
+        direction?: Direction;
+        orientation?: Orientation;
         children: Snippet;
         element?: HTMLDivElement | undefined;
     } & HTMLAttributes<HTMLDivElement>;
 
     interface AccordionSingleProps extends Props {
         type: "single";
-        collapsible?: boolean;
-        value?: string | undefined;
+        // Null indicates the accordion is closed
+        value?: string | null;
         defaultValue?: string;
+        collapsible?: boolean;
         values?: never;
         defaultValues?: never;
     }
@@ -30,28 +41,40 @@
         type: "multiple";
         values?: string[];
         defaultValues?: string[];
-        collapsible?: never;
         value?: never;
         defaultValue?: never;
+        collapsible?: never;
     }
 
     let {
         type,
-        collapsible = false,
-        value = $bindable(undefined),
+        value = $bindable(),
         defaultValue,
-        values = $bindable([]),
+        values = $bindable(),
         defaultValues,
+        collapsible = false,
         disabled = false,
         loop = true,
+        direction = "ltr",
+        orientation = "vertical",
         children,
         element = $bindable(undefined),
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
 
-    // TODO: Handle default values
-
-    const id: string = `svelte-runia-accordion-${count++}`;
+    // Handle default values
+    switch (type) {
+        case "single":
+            if (value === undefined) {
+                value = defaultValue;
+            }
+            break;
+        case "multiple":
+            if (values === undefined) {
+                values = defaultValues;
+            }
+            break;
+    }
 
     let accordionState: AccordionState = $state({
         value:
@@ -60,83 +83,31 @@
                     ? []
                     : [defaultValue]
                 : defaultValues ?? [],
+        collapsible,
         disabled,
-        collapsible
+        orientation
     });
-
     $effect(() => {
         accordionState.disabled = disabled;
     });
     $effect(() => {
         accordionState.collapsible = collapsible;
     });
+    $effect(() => {
+        accordionState.orientation = orientation;
+    });
 
-    function toggleItem(item: string) {
-        if (disabled) {
-            return;
-        }
+    let expandedItems: string[] = $derived(
+        type === "single" ? (value === undefined || value === null ? [] : [value]) : values ?? []
+    );
+    $effect(() => {
+        accordionState.value = expandedItems;
+    });
 
-        if (type === "single") {
-            if (value === item) {
-                if (collapsible) {
-                    value = undefined;
-                }
-            } else {
-                value = item;
-            }
-        } else {
-            if (values.includes(item)) {
-                values = values.filter((i) => i !== item);
-            } else {
-                values = [...values, item];
-            }
-        }
-    }
-
-    function handleKeydown(item: string, event: KeyboardEvent) {
-        if (disabled) {
-            return;
-        }
-        if (element === undefined) {
-            return;
-        }
-
-        const accordionTriggers = getChildElements(element, "accordion-trigger");
-        const index = getValueIndex(accordionTriggers, item);
-
-        let focusIndex: number | undefined;
-
-        if (event.key === "ArrowUp") {
-            focusIndex = index - 1;
-            if (focusIndex < 0) {
-                if (loop) {
-                    focusIndex = accordionTriggers.length - 1;
-                } else {
-                    focusIndex = undefined;
-                }
-            }
-        } else if (event.key === "ArrowDown") {
-            focusIndex = index + 1;
-            if (focusIndex >= accordionTriggers.length) {
-                if (loop) {
-                    focusIndex = 0;
-                } else {
-                    focusIndex = undefined;
-                }
-            }
-        } else if (event.key === "Home") {
-            focusIndex = 0;
-        } else if (event.key === "End") {
-            focusIndex = accordionTriggers.length - 1;
-        }
-
-        if (focusIndex !== undefined) {
-            accordionTriggers[focusIndex].focus();
-        }
-    }
+    const id: string = `svelte-runia-accordion-${count++}`;
 
     setContext<AccordionRootContext>(getContextKey("accordion"), {
-        id,
+        accordionId: id,
         accordionState,
         triggerEvents: {
             onclick: toggleItem,
@@ -144,12 +115,72 @@
         }
     });
 
-    let expandedItems: string[] = $derived(
-        type === "single" ? (value === undefined ? [] : [value]) : values
-    );
-    $effect(() => {
-        accordionState.value = expandedItems;
-    });
+    function toggleItem(item: string) {
+        if (disabled) {
+            return;
+        }
+
+        switch (type) {
+            case "single":
+                if (value === item) {
+                    if (collapsible) {
+                        value = null;
+                    }
+                } else {
+                    value = item;
+                }
+                break;
+            case "multiple":
+                if (values === undefined) {
+                    values = [item];
+                } else {
+                    if (values.includes(item)) {
+                        values = values.filter((i) => i !== item);
+                    } else {
+                        values = [...values, item];
+                    }
+                }
+                break;
+        }
+    }
+
+    function getMoved(item: string, event: KeyboardEvent) {
+        if (element === undefined) {
+            return;
+        }
+
+        const accordionTriggers = getAccordionTriggers(element);
+
+        switch (event.key) {
+            case "ArrowUp":
+                if (orientation === "vertical") return movePrevious(accordionTriggers, item, loop);
+            case "ArrowDown":
+                if (orientation === "vertical") return moveNext(accordionTriggers, item, loop);
+            case "ArrowLeft":
+                if (orientation === "horizontal")
+                    return moveLeft(accordionTriggers, item, loop, direction);
+            case "ArrowRight":
+                if (orientation === "horizontal")
+                    return moveRight(accordionTriggers, item, loop, direction);
+            case "Home":
+                return moveStart(accordionTriggers, item);
+            case "End":
+                return moveEnd(accordionTriggers, item);
+        }
+
+        return;
+    }
+
+    function handleKeydown(item: string, event: KeyboardEvent) {
+        if (disabled) {
+            return;
+        }
+
+        const moved = getMoved(item, event);
+        if (moved !== undefined) {
+            moved.element.focus();
+        }
+    }
 </script>
 
 <div bind:this={element} {...props}>

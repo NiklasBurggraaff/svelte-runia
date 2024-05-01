@@ -4,10 +4,18 @@
 
     type Props = {
         level: 2 | 3 | 4 | 5 | 6;
-        useHeading?: boolean;
         children: Snippet;
-        element?: HTMLDivElement | undefined;
+    };
+
+    type HeadingProps = Props & {
+        useHeading?: true;
+        element?: HTMLHeadingElement | undefined;
     } & HTMLAttributes<HTMLHeadingElement>;
+
+    type NonHeadingProps = Props & {
+        useHeading?: false;
+        element?: HTMLDivElement | undefined;
+    } & HTMLAttributes<HTMLDivElement>;
 
     let {
         level = 3,
@@ -15,35 +23,31 @@
         children,
         element = $bindable(undefined),
         ...props
-    }: Props = $props();
+    }: HeadingProps | NonHeadingProps = $props();
 </script>
 
-{#snippet content()}
-    {@render children()}
-{/snippet}
-
 {#if useHeading}
-    <div bind:this={element} aria-level={level} {...props}>
-        {@render content()}
+    <div bind:this={element} {...props} aria-level={level}>
+        {@render children()}
     </div>
 {:else if level === 2}
     <h2 bind:this={element} {...props}>
-        {@render content()}
+        {@render children()}
     </h2>
 {:else if level === 3}
     <h3 bind:this={element} {...props}>
-        {@render content()}
+        {@render children()}
     </h3>
 {:else if level === 4}
     <h4 bind:this={element} {...props}>
-        {@render content()}
+        {@render children()}
     </h4>
 {:else if level === 5}
     <h5 bind:this={element} {...props}>
-        {@render content()}
+        {@render children()}
     </h5>
 {:else if level === 6}
     <h6 bind:this={element} {...props}>
-        {@render content()}
+        {@render children()}
     </h6>
 {/if}
