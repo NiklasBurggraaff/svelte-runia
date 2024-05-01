@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContextKey } from "$lib/context.js";
-    import { getValueIndex } from "$lib/data-attr.js";
+    import { findValueIndex } from "$lib/data-attr.js";
     import Resize from "$lib/utilComponents/Resize.svelte";
     import { getRadioItemDataAttributes, type RadioGroupContext } from "./utils.js";
     import { getContext, type Snippet } from "svelte";
@@ -48,7 +48,7 @@
         if (groupValue === undefined) {
             const radioItems = getRadioItems();
 
-            firstElement = getValueIndex(radioItems, value) === 0;
+            firstElement = findValueIndex(radioItems, value) === 0;
         }
     });
 
@@ -78,7 +78,7 @@
     {#snippet child({ width, height })}
         <input
             type="radio"
-            aria-hidden
+            aria-hidden={true}
             {value}
             {checked}
             {required}

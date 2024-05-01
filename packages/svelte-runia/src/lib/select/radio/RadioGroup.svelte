@@ -5,7 +5,7 @@
 
     import type { RadioGroupContext } from "./utils.js";
     import { getContextKey } from "$lib/context.js";
-    import { getChildElements, getValue, getValueIndex } from "$lib/data-attr.js";
+    import { getChildElements, getValue, findValueIndex } from "$lib/data-attr.js";
 
     // Default to first value?
     type DefaultValueProps =
@@ -74,7 +74,7 @@
             }
 
             const radioItems = getChildElements(groupElement, "radio-item");
-            const index = getValueIndex(radioItems, newValue);
+            const index = findValueIndex(radioItems, newValue);
             setValue(newValue, index);
         },
         selectNext: (currentValue: string) => {
@@ -83,7 +83,7 @@
             }
 
             const radioItems = getChildElements(groupElement, "radio-item");
-            const index = getValueIndex(radioItems, currentValue);
+            const index = findValueIndex(radioItems, currentValue);
 
             let nextIndex = index + 1;
             if (nextIndex >= radioItems.length) {
@@ -107,7 +107,7 @@
             }
 
             const radioItems = getChildElements(groupElement, "radio-item");
-            const index = getValueIndex(radioItems, currentValue);
+            const index = findValueIndex(radioItems, currentValue);
 
             let previousIndex = index - 1;
             if (previousIndex < 0) {
