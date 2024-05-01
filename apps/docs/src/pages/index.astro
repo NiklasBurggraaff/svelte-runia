@@ -1,8 +1,9 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 
-import { Code } from "@astrojs/starlight/components";
+import { Card, Code, TabItem, Tabs } from "@astrojs/starlight/components";
 import NpmCommand from "../components/NpmCommand.astro";
+import CallToAction from "../components/override/CallToAction.astro";
 
 const componentCode = `
 <script lang="ts">
@@ -11,6 +12,19 @@ const componentCode = `
 
 <Button>Click me</Button>
 `;
+const componentMarks = [
+    `import { Button } from "@niklasburggraaff/svelte-runia";`,
+    `<Button>Click me</Button>`
+];
+
+const componentStyledCode = `
+<script lang="ts">
+    import { Button } from "@niklasburggraaff/svelte-runia";
+</script>
+
+<Button class="bg-blue-500">Click me</Button>
+`;
+const componentStyledMarks = [`class="bg-blue-500"`];
 ---
 
 <StarlightPage
@@ -26,25 +40,119 @@ const componentCode = `
                     text: "Introduction",
                     link: "/guides/introduction/",
                     icon: "right-arrow",
-                    variant: "primary",
+                    variant: "primary"
                 },
                 {
                     text: "Component docs",
                     link: "/components/overview",
                     icon: "seti:html",
-                    variant: "secondary",
-                },
-            ],
-        },
+                    variant: "secondary"
+                }
+            ]
+        }
     }}
 >
     <div class="not-content">
-        <h2 class="text-2xl font-bold text-center">Getting started is easy as</h2>
-        <div class="pt-8"></div>
+        <div class="flex gap-4 overflow-x-auto">
+            <Card title="Dialog">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Dropdown Menu">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Popover">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Slider">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Tabs">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Accordion">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Radio Group">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Toggle Group">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="Switch">
+                <div class="h-52 w-80">
+                    <Tabs class="tabs">
+                        <TabItem label="World" icon="laptop"> Hello </TabItem>
+                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                    </Tabs>
+                </div>
+            </Card>
+            <Card title="and many more...">
+                <div class="flex h-52 w-80 flex-col items-center justify-center">
+                    <div>
+                        <div class="m-auto">See the component docs for more examples</div>
+                        <div class="pt-4"></div>
+                        <div class="mx-auto w-fit">
+                            <CallToAction
+                                link="/components/overview"
+                                icon={{ type: "icon", name: "seti:html" }}
+                                variant="primary"
+                            >
+                                View docs
+                            </CallToAction>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+        </div>
+    </div>
+
+    <h2 class="text-center">Getting started is easy as</h2>
+    <div class="pt-8"></div>
+    <div class="not-content">
         <div class="grid grid-cols-[auto,auto] gap-8">
-            <div class="flex flex-col gap-2 justify-start items-end">
+            <div class="flex flex-col items-end justify-start gap-2">
                 <div
-                    class="border-2 p-1 rounded-full w-10 h-10 text-center bg-accent text-xl font-mono"
+                    class="bg-accent h-10 w-10 rounded-full border-2 p-1 text-center font-mono text-xl"
                 >
                     1
                 </div>
@@ -55,16 +163,37 @@ const componentCode = `
                     command={{ type: "install", package: "@niklasburggraaff/svelte-runia" }}
                 />
             </div>
-            <div class="flex flex-col gap-2 justify-start items-end">
+            <div class="flex flex-col items-end justify-start gap-2">
                 <div
-                    class="border-2 p-1 rounded-full w-10 h-10 text-center bg-accent text-xl font-mono"
+                    class="bg-accent h-10 w-10 rounded-full border-2 p-1 text-center font-mono text-xl"
                 >
                     2
                 </div>
-                <div class="text-lg">Use a component</div>
+                <div class="text-lg">Import and use a component</div>
             </div>
             <div class="max-w-xl">
-                <Code code={componentCode} title="index.svelte" lang="svelte" />
+                <Code
+                    code={componentCode}
+                    title="Component.svelte"
+                    lang="svelte"
+                    mark={componentMarks}
+                />
+            </div>
+            <div class="flex flex-col items-end justify-start gap-2">
+                <div
+                    class="bg-accent h-10 w-10 rounded-full border-2 p-1 text-center font-mono text-xl"
+                >
+                    3
+                </div>
+                <div class="text-lg">Make it yours</div>
+            </div>
+            <div class="max-w-xl">
+                <Code
+                    code={componentStyledCode}
+                    title="Component.svelte"
+                    lang="svelte"
+                    mark={componentStyledMarks}
+                />
             </div>
         </div>
     </div>

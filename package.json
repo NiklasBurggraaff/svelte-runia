@@ -24,6 +24,8 @@
     },
     "homepage": "https://github.com/NiklasBurggraaff/svelte-runia#readme",
     "devDependencies": {
-        "prettier": "^3.2.5"
+        "prettier": "^3.2.5",
+        "prettier-plugin-astro": "^0.13.0",
+        "prettier-plugin-tailwindcss": "^0.5.13"
     }
 }

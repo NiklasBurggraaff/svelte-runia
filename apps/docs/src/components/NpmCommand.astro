@@ -1,5 +1,5 @@
 ---
-import { Code, Icon } from "@astrojs/starlight/components";
+import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
 
 interface Props {
     command: {
@@ -16,28 +16,14 @@ const pnpmCommand = command.type === "install" ? `pnpm add ${command.package}` :
 const yarnCommand = command.type === "install" ? `yarn add ${command.package}` : "UNKONWN COMMAND";
 ---
 
-<div class="not-content">
-    <!-- <div class="list flex justify-start text-sm font-mono">
-        <div class="trigger flex items-center py-2 px-4 gap-4">
-            <Icon name="seti:npm" size="1rem" />
-            <span>npm</span>
-        </div>
-        <div class="trigger flex items-center py-2 px-4 gap-4">
-            <Icon name="pnpm" size="1rem" />
-            <span>pnpm</span>
-        </div>
-        <div class="trigger flex items-center py-2 px-4 gap-4">
-            <Icon name="seti:yarn" size="1rem" />
-            <span>yarn</span>
-        </div>
-    </div> -->
-    <div class="content">
-        <Code code={npmCommand} lang="sh" />
-    </div>
-    <!-- <div class="content">
-        <Code code={pnpmCommand} lang="sh" />
-    </div>
-    <div class="content">
-        <Code code={yarnCommand} lang="sh" />
-    </div> -->
-</div>
+<Tabs class="tabs">
+    <TabItem label="npm" icon="seti:npm">
+        <div class="-mt-4"><Code code={npmCommand} lang="sh" /></div>
+    </TabItem>
+    <TabItem label="pnpm" icon="pnpm">
+        <div class="-mt-4"><Code code={pnpmCommand} lang="sh" /></div>
+    </TabItem>
+    <TabItem label="yarn" icon="seti:yarn">
+        <div class="-mt-4"><Code code={yarnCommand} lang="sh" /></div>
+    </TabItem>
+</Tabs>
