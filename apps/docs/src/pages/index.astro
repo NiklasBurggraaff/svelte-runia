@@ -1,48 +1,71 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
-import { Hello } from "@niklasburggraaff/svelte-runia";
+import { Code } from "@astrojs/starlight/components";
+import NpmCommand from "../components/NpmCommand.astro";
+
+const componentCode = `
+<script lang="ts">
+    import { Button } from "@niklasburggraaff/svelte-runia";
+</script>
+
+<Button>Click me</Button>
+`;
 ---
 
 <StarlightPage
     frontmatter={{
-        title: "Your Mystical UI Library",
+        title: "Your <span class='runic-gradient'>Mystical</span> UI Library",
         description: "Get started building your docs site with Starlight.",
         template: "splash",
         hero: {
-            tagline: "Next-generation Svelte components. Accessible, Style-free, and Runic!",
+            tagline:
+                "Next-generation Svelte components. Accessible, Style-free, and <span class='runic-gradient'>Runic</span>!",
             actions: [
                 {
-                    text: "Get Started",
-                    link: "/guides/get-started/",
+                    text: "Introduction",
+                    link: "/guides/introduction/",
                     icon: "right-arrow",
-                    variant: "primary"
+                    variant: "primary",
                 },
                 {
                     text: "Component docs",
                     link: "/components/overview",
                     icon: "seti:html",
-                    variant: "secondary"
-                }
-            ]
-        }
+                    variant: "secondary",
+                },
+            ],
+        },
     }}
 >
-    <CardGrid stagger>
-        <Card title="Update content" icon="pencil">
-            Edit `src/content/docs/index.mdx` to see this page change.
-        </Card>
-        <Card title="Add new content" icon="add-document">
-            Add Markdown or MDX files to `src/content/docs` to create new pages.
-        </Card>
-        <Card title="Configure your site" icon="setting">
-            Edit your `sidebar` and other config in `astro.config.mjs`.
-        </Card>
-        <Card title="Read the docs" icon="open-book">
-            Learn more in [the Starlight Docs](https://starlight.astro.build/).
-        </Card>
-    </CardGrid>
-
-    <Hello />
+    <div class="not-content">
+        <h2 class="text-2xl font-bold text-center">Getting started is easy as</h2>
+        <div class="pt-8"></div>
+        <div class="grid grid-cols-[auto,auto] gap-8">
+            <div class="flex flex-col gap-2 justify-start items-end">
+                <div
+                    class="border-2 p-1 rounded-full w-10 h-10 text-center bg-accent text-xl font-mono"
+                >
+                    1
+                </div>
+                <div class="text-lg">Install the package</div>
+            </div>
+            <div class="max-w-xl">
+                <NpmCommand
+                    command={{ type: "install", package: "@niklasburggraaff/svelte-runia" }}
+                />
+            </div>
+            <div class="flex flex-col gap-2 justify-start items-end">
+                <div
+                    class="border-2 p-1 rounded-full w-10 h-10 text-center bg-accent text-xl font-mono"
+                >
+                    2
+                </div>
+                <div class="text-lg">Use a component</div>
+            </div>
+            <div class="max-w-xl">
+                <Code code={componentCode} title="index.svelte" lang="svelte" />
+            </div>
+        </div>
+    </div>
 </StarlightPage>

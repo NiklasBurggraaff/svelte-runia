@@ -1,0 +1,43 @@
+---
+import { Code, Icon } from "@astrojs/starlight/components";
+
+interface Props {
+    command: {
+        type: "install";
+        package: string;
+    };
+}
+
+const { command } = Astro.props;
+
+const npmCommand =
+    command.type === "install" ? `npm install ${command.package}` : "UNKONWN COMMAND";
+const pnpmCommand = command.type === "install" ? `pnpm add ${command.package}` : "UNKONWN COMMAND";
+const yarnCommand = command.type === "install" ? `yarn add ${command.package}` : "UNKONWN COMMAND";
+---
+
+<div class="not-content">
+    <!-- <div class="list flex justify-start text-sm font-mono">
+        <div class="trigger flex items-center py-2 px-4 gap-4">
+            <Icon name="seti:npm" size="1rem" />
+            <span>npm</span>
+        </div>
+        <div class="trigger flex items-center py-2 px-4 gap-4">
+            <Icon name="pnpm" size="1rem" />
+            <span>pnpm</span>
+        </div>
+        <div class="trigger flex items-center py-2 px-4 gap-4">
+            <Icon name="seti:yarn" size="1rem" />
+            <span>yarn</span>
+        </div>
+    </div> -->
+    <div class="content">
+        <Code code={npmCommand} lang="sh" />
+    </div>
+    <!-- <div class="content">
+        <Code code={pnpmCommand} lang="sh" />
+    </div>
+    <div class="content">
+        <Code code={yarnCommand} lang="sh" />
+    </div> -->
+</div>

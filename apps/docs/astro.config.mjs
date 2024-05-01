@@ -19,6 +19,10 @@ export default defineConfig({
                     items: [
                         // Each item here is one entry in the navigation menu.
                         {
+                            label: "Introduction",
+                            link: "/guides/introduction/"
+                        },
+                        {
                             label: "Get Started",
                             link: "/guides/get-started/"
                         }
@@ -38,9 +42,9 @@ export default defineConfig({
                 }
             ],
             components: {
-                SiteTitle: "./src/components/SiteTitle.astro",
-                Hero: "./src/components/Hero.astro",
-                CallToAction: "./src/components/CallToAction.astro"
+                SiteTitle: "./src/components/override/SiteTitle.astro",
+                Hero: "./src/components/override/Hero.astro",
+                CallToAction: "./src/components/override/CallToAction.astro"
             },
             editLink: {
                 baseUrl: "https://github.com/NiklasBurggraaff/svelte-runia/tree/main/apps/docs"
