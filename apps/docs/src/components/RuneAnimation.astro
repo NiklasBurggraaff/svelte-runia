@@ -12,32 +12,7 @@
 </div>
 
 <script>
-    const runes = [
-        "ᚠ",
-        "ᚢ",
-        "ᚦ",
-        "ᚨ",
-        "ᚱ",
-        "ᚲ",
-        "ᚷ",
-        "ᚹ",
-        "ᚻ",
-        "ᚾ",
-        "ᛁ",
-        "ᛃ",
-        "ᛅ",
-        "ᛇ",
-        "ᛉ",
-        "ᛋ",
-        "ᛏ",
-        "ᛒ",
-        "ᛖ",
-        "ᛗ",
-        "ᛚ",
-        "ᛜ",
-        "ᛞ",
-        "ᛟ",
-    ];
+    const runes = "ᚠᚢᚦᚨᚱᚲᚷᚹᚻᚾᛁᛃᛅᛇᛉᛋᛏᛒᛖᛗᛚᛜᛞᛟ".split("");
 
     function generateParticle() {
         const rune = runes[Math.floor(Math.random() * runes.length)];
@@ -57,12 +32,12 @@
             endY,
             delay,
             age: undefined,
-            element: undefined,
+            element: undefined
         };
     }
 
     const numParticles = 15;
-    const element = document.getElementById("rune-animation")!;
+    const element = document.getElementById("rune-animation");
     const particles: Array<{
         rune: string;
         startX: number;
@@ -78,52 +53,55 @@
         particles.push(generateParticle());
     }
 
-    setInterval(() => {
-        const isReduced =
-            // @ts-expect-error
-            window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
-            window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+    if (element !== null) {
+        console.log("element", element);
+        setInterval(() => {
+            const isReduced =
+                // @ts-expect-error
+                window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
+                window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 
-        for (let i = 0; i < particles.length; i++) {
-            const particle = particles[i];
+            for (let i = 0; i < particles.length; i++) {
+                const particle = particles[i];
 
-            if (particle.age === undefined) {
-                if (particle.delay <= 0) {
-                    particle.element = document.createElement("span");
-                    particle.element.classList.add(
-                        "absolute",
-                        "text-xs",
-                        "sm:text-sm",
-                        "md:text-md",
-                        "lg:text-lg",
-                        "opacity-50",
-                        "transition-all",
-                        "duration-[2000ms]",
-                        "ease-in",
-                        "-z-10",
-                        "group-hover:opacity-0",
-                        "select-none"
-                    );
-                    particle.element.ariaHidden = "true";
-                    particle.element.style.left = `${particle.startX}%`;
-                    particle.element.style.top = `calc(${particle.startY}% - 14px)`;
-                    particle.element.innerText = particle.rune;
-                    element.appendChild(particle.element);
-                    particle.age = 0;
-                }
+                if (particle.age === undefined) {
+                    if (particle.delay <= 0) {
+                        particle.element = document.createElement("span");
+                        particle.element.classList.add(
+                            "absolute",
+                            "text-xs",
+                            "sm:text-sm",
+                            "md:text-md",
+                            "lg:text-lg",
+                            "opacity-50",
+                            "transition-all",
+                            "duration-[2000ms]",
+                            "ease-in",
+                            "-z-10",
+                            "group-hover:opacity-0",
+                            "select-none"
+                        );
+                        particle.element.ariaHidden = "true";
+                        particle.element.style.left = `${particle.startX}%`;
+                        particle.element.style.top = `calc(${particle.startY}% - 14px)`;
+                        particle.element.innerText = particle.rune;
+                        element.appendChild(particle.element);
+                        particle.age = 0;
+                    }
 
-                particle.delay -= 1;
-            } else {
-                if (particle.age === 0 && !isReduced) {
-                    particle.element!.style.transform = `translateX(${particle.endX}px) translateY(${particle.endY}px)`;
-                    particle.element!.style.opacity = "0";
+                    particle.delay -= 1;
+                } else {
+                    if (particle.age === 0 && !isReduced) {
+                        particle.element!.style.transform = `translateX(${particle.endX}px) translateY(${particle.endY}px)`;
+                        particle.element!.style.opacity = "0";
+                    }
+                    if (particle.age >= 20) {
+                        element.removeChild(particle.element!);
+                        particles[i] = generateParticle();
+                    }
+                    particle.age += 1;
                 }
-                if (particle.age >= 20) {
-                    element.removeChild(particle.element!);
-                    particles[i] = generateParticle();
-                }
-                particle.age += 1;
             }
-        }
-    }, 100);
+        }, 100);
+    }
 </script>
