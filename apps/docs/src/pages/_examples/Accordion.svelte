@@ -1,34 +1,18 @@
 <script lang="ts">
 import { Accordion } from "@niklasburggraaff/svelte-runia";
 import { slide } from "svelte/transition";
-
-let {
-    type,
-    value = $bindable(),
-    values = $bindable(),
-    collapsible,
-    disabled,
-    loop
-}: any = $props();
 </script>
 
-<Accordion.Root
-    type={type}
-    bind:value={value}
-    bind:values={values}
-    collapsible={collapsible}
-    disabled={disabled}
-    loop={loop}
->
+<Accordion.Root type="single" collapsible>
     <Accordion.Item class="border-b" value="furthark-essentials">
-        <Accordion.Header level={3}>
+        <Accordion.Header level={5}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
             >
                 Furthark Essentials
                 <svg
                     class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
+                    style={`width: "1rem", height: "1rem"`}
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -40,21 +24,21 @@ let {
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
-            <p class="pb-4" transition:slide={{ duration: 200 }}>
+            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
                 The Elder Futhark, used from the 2nd to 8th centuries, comprised 24 runic
                 characters, each bearing significance in magic, divination, and communication.
-            </p>
+            </div>
         </Accordion.Content>
     </Accordion.Item>
     <Accordion.Item class="border-b" value="norse-myths">
-        <Accordion.Header level={3}>
+        <Accordion.Header level={5}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
             >
                 Norse Myths 101
                 <svg
                     class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
+                    style={`width: "1rem", height: "1rem"`}
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -66,22 +50,22 @@ let {
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
-            <p class="pb-4" transition:slide={{ duration: 200 }}>
+            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
                 Norse mythology, a tapestry of gods, giants, and heroes, offers insights into
                 ancient Scandinavian beliefs, from the creation of the cosmos to the battles of
                 Ragnarök.
-            </p>
+            </div>
         </Accordion.Content>
     </Accordion.Item>
     <Accordion.Item class="border-b" value="viking-explorers">
-        <Accordion.Header level={3}>
+        <Accordion.Header level={5}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
             >
                 Viking Explorers
                 <svg
                     class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
+                    style={`width: "1rem", height: "1rem"`}
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -93,10 +77,10 @@ let {
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
-            <p class="pb-4" transition:slide={{ duration: 200 }}>
+            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
                 Vikings, from the 8th to 11th centuries, sailed seas, established trade routes, and
                 left their mark on history through exploration and expansion.
-            </p>
+            </div>
         </Accordion.Content>
     </Accordion.Item>
 </Accordion.Root>

@@ -54,7 +54,7 @@
             <Accordion.Header level={2}>
                 <Accordion.Trigger class="w-full">Accordion Item 3</Accordion.Trigger>
             </Accordion.Header>
-            <Accordion.Content hideDelay={400}>
+            <Accordion.Content>
                 <p transition:slide={{ duration: 200 }}>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, et.
                 </p>

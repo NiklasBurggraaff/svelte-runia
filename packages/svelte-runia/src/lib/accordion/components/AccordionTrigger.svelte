@@ -11,7 +11,13 @@
         element?: HTMLButtonElement | undefined;
     } & HTMLAttributes<HTMLButtonElement>;
 
-    let { children, element = $bindable(undefined), ...props }: Props = $props();
+    let { children, element = $bindable(), ...props }: Props = $props();
+
+    let thisElement: HTMLButtonElement | undefined = $state(undefined);
+    $effect(() => {
+        element = thisElement;
+    });
+
     let { value, itemState } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
     const { accordionId, accordionState, triggerEvents } = getContext<AccordionRootContext>(
         getContextKey("accordion")
@@ -31,7 +37,7 @@
 </script>
 
 <button
-    bind:this={element}
+    bind:this={thisElement}
     {...props}
     {id}
     {...events}

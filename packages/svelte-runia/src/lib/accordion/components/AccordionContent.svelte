@@ -6,12 +6,16 @@
     import { getAccordionItemDataAttributes } from "../data-atts.js";
 
     type Props = {
-        hideDelay?: number;
         children: Snippet;
-        element?: HTMLElement | undefined;
+        element?: HTMLDivElement | undefined;
     } & HTMLAttributes<HTMLElement>;
 
-    let { hideDelay = 0, children, element = $bindable(undefined), ...props }: Props = $props();
+    let { children, element = $bindable(), ...props }: Props = $props();
+
+    let thisElement: HTMLDivElement | undefined = $state(undefined);
+    $effect(() => {
+        element = thisElement;
+    });
 
     let { value, itemState } = getContext<AccordionItemContext>(getContextKey("accordion-item"));
     const { accordionId, accordionState } = getContext<AccordionRootContext>(
@@ -27,7 +31,7 @@
     );
 </script>
 
-<div bind:this={element} {...props} {id} {...dataAttributes}>
+<div bind:this={thisElement} {...props} {id} {...dataAttributes}>
     {#if expanded}
         {@render children()}
     {/if}

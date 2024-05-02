@@ -17,7 +17,7 @@
         type Orientation
     } from "$lib/moves.js";
     import type { AccordionRootContext, AccordionState } from "../context.js";
-    import { getAccordionTriggers } from "../data-atts.js";
+    import { getAccordionRootDataAttributes, getAccordionTriggers } from "../data-atts.js";
 
     type Props = {
         disabled?: boolean;
@@ -58,9 +58,14 @@
         direction = "ltr",
         orientation = "vertical",
         children,
-        element = $bindable(undefined),
+        element = $bindable(),
         ...props
     }: AccordionSingleProps | AccordionMultipleProps = $props();
+
+    let thisElement: HTMLDivElement | undefined = $state(undefined);
+    $effect(() => {
+        element = thisElement;
+    });
 
     // Handle default values
     switch (type) {
@@ -145,11 +150,21 @@
     }
 
     function getMoved(item: string, event: KeyboardEvent) {
-        if (element === undefined) {
+        if (thisElement === undefined) {
             return;
         }
 
-        const accordionTriggers = getAccordionTriggers(element);
+        if (
+            !["Home", "End"].includes(event.key) &&
+            !(orientation === "vertical" && ["ArrowUp", "ArrowDown"].includes(event.key)) &&
+            !(orientation === "horizontal" && ["ArrowLeft", "ArrowRight"].includes(event.key))
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const accordionTriggers = getAccordionTriggers(thisElement);
 
         switch (event.key) {
             case "ArrowUp":
@@ -181,8 +196,10 @@
             moved.element.focus();
         }
     }
+
+    let dataAttributes = $derived(getAccordionRootDataAttributes(orientation));
 </script>
 
-<div bind:this={element} {...props}>
+<div bind:this={thisElement} {...dataAttributes} {...props}>
     {@render children()}
 </div>

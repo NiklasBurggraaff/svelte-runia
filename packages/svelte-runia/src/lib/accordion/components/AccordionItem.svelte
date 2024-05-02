@@ -26,9 +26,14 @@
         disabled: localDisabled = false,
         region = false,
         children,
-        element = $bindable(undefined),
+        element = $bindable(),
         ...props
     }: RegionProps | NonRegionProps = $props();
+
+    let thisElement: HTMLDivElement | HTMLElement | undefined = $state(undefined);
+    $effect(() => {
+        element = thisElement;
+    });
 
     const { accordionId, accordionState } = getContext<AccordionRootContext>(
         getContextKey("accordion")
@@ -66,7 +71,7 @@ On region: (https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
 
 {#if region}
     <section
-        bind:this={element}
+        bind:this={thisElement}
         {...props as HTMLAttributes<HTMLElement>}
         aria-labelledby={triggerId}
         {...dataAttributes}
@@ -74,7 +79,7 @@ On region: (https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
         {@render children()}
     </section>
 {:else}
-    <div bind:this={element} {...props} {...dataAttributes}>
+    <div bind:this={thisElement} {...props} {...dataAttributes}>
         {@render children()}
     </div>
 {/if}
