@@ -4,6 +4,8 @@ import svelte from "@astrojs/svelte";
 
 import tailwind from "@astrojs/tailwind";
 
+import * as path from "path";
+
 // https://astro.build/config
 export default defineConfig({
     integrations: [
@@ -54,5 +56,15 @@ export default defineConfig({
         tailwind({
             applyBaseStyles: false
         })
-    ]
+    ],
+    vite: {
+        resolve: {
+            alias: {
+                "@niklasburggraaff/svelte-runia": path.resolve(
+                    "../../packages/svelte-runia/src/lib/index.js"
+                ),
+                $lib: path.resolve("../../packages/svelte-runia/src/lib")
+            }
+        }
+    }
 });
