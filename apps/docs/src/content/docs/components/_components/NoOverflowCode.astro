@@ -1,0 +1,17 @@
+---
+interface Props {
+    code: string;
+}
+
+const { code } = Astro.props;
+---
+
+<code>
+    {
+        code.split(" ").map((word) => (
+            <>
+                <span class="whitespace-nowrap">{word}</span>{" "}
+            </>
+        ))
+    }
+</code>

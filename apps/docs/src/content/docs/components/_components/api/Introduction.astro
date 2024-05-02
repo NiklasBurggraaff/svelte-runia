@@ -1,0 +1,62 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+interface Props {
+    name: string;
+    element:
+        | string
+        | {
+              default:
+                  | string
+                  | {
+                        values: string[];
+                        condition: string;
+                    };
+              other: string;
+              condition: string;
+          };
+    description: string;
+}
+
+const { name, element, description } = Astro.props;
+---
+
+{
+    typeof element === "string" ? (
+        <div class="not-content inline-flex gap-x-2">
+            <div class="inline-flex h-min items-center rounded-md bg-[var(--sl-color-accent)] px-3 py-1 text-xs font-semibold text-white">
+                {element}
+            </div>
+        </div>
+    ) : (
+        <div class="not-content flex items-center gap-x-2">
+            {typeof element.default === "string" ? (
+                <div class="inline-flex h-min items-center rounded-md bg-[var(--sl-color-accent)] px-3 py-1 text-xs font-semibold text-white">
+                    {element.default}
+                </div>
+            ) : (
+                <div class="inline-flex items-center gap-x-1">
+                    {element.default.values.map((value) => (
+                        <div class="inline-flex h-min items-center rounded-md bg-[var(--sl-color-accent)] px-2 py-1 text-xs font-semibold text-white">
+                            {value}
+                        </div>
+                    ))}
+                    <div title={element.default.condition}>
+                        <Icon name="information" size="1rem" />
+                    </div>
+                </div>
+            )}
+            |
+            <div class="inline-flex items-center gap-x-1">
+                <div class="inline-flex h-min items-center rounded-md border px-3 py-1 text-xs font-semibold">
+                    {element.other}
+                </div>
+                <div title={element.condition}>
+                    <Icon name="information" size="1rem" />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+<p>The <code>{name}</code> component {description}</p>

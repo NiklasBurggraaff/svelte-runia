@@ -4,7 +4,8 @@ description: Documentation on Accordion Svelte Runia component
 ---
 
 import { Card, Icon } from "@astrojs/starlight/components";
-import AccordionExample from "./_accordion/AccordionExample.svelte";
+import AccordionExample from "./accordion/AccordionExample.svelte";
+import { A11y, API, Features, Links } from "./_components";
 
 <div class="text-xl text-[var(--sl-color-gray-2)]">
     Set of interactive headings that allow you to toggle the visibility of the associated section of
@@ -23,62 +24,19 @@ But did you know the accordion is a family of instruments that includes the [har
 
 #### Features
 
-<ul class="not-content flex flex-col gap-2 ps-0">
-    <li class="flex items-center gap-4">
-        <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
-        <span>Full keyboard navigation.</span>
-    </li>
-    <div class="ps-8">
-        <ul>
-            <li>
-                <kbd>Enter</kbd>/<kbd>Space</kbd> to open/close
-            </li>
-            <li>
-                <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> or Arrow keys to navigate
-            </li>
-            <li>
-                <kbd>Home</kbd>/<kdb>End</kdb> to navigate to first/last item
-            </li>
-        </ul>
-    </div>
-    <li class="flex items-center gap-4">
-        <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
-        <span>Supports animating content.</span>
-    </li>
-    <li class="flex items-center gap-4">
-        <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
-        <span>Can expand one or multiple items</span>
-    </li>
-    <li class="flex items-center gap-4">
-        <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
-        <span>Supports horizontal/vertical orientation.</span>
-    </li>
-    <li class="flex items-center gap-4">
-        <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
-        <span>Supports Right to Left direction.</span>
-    </li>
-</ul>
+<Features
+    features={[
+        "Full keyboard navigation.",
+        "Supports animating content.",
+        "Can expand one or multiple items",
+        "Supports horizontal/vertical orientation.",
+        "Supports Right to Left direction."
+    ]}
+/>
 
 <hr />
 
-<div class="not-content flex flex-col">
-    <a
-        class="flex items-center gap-1 text-[var(--sl-color-text-accent)]"
-        href="https://github.com/NiklasBurggraaff/svelte-runia/tree/main/packages/svelte-runia/src/lib/accordion"
-        target="_blank"
-    >
-        View source
-        <Icon name="external" size="1rem" />
-    </a>
-    <a
-        class="flex items-center gap-1 text-[var(--sl-color-text-accent)]"
-        href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/"
-        target="_blank"
-    >
-        ARIA design pattern
-        <Icon name="external" size="1rem" />
-    </a>
-</div>
+<Links componentName="accordion" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" />
 
 ## Usage
 
@@ -107,114 +65,330 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
 
 ### Root
 
-The `Root` component contains all components of the accordion. It manages the state of the accordion.
-
-`Root` is a `div` element.
+<API.Introduction
+    name="Root"
+    element="div"
+    description="contains all other components of an accordion. It manages the state of the accordion."
+/>
 
 #### Props
 
-| Prop            | Type                          | Default      | Description                                                                                           |
-| --------------- | ----------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
-| `type`\*        | `"single" \| "multiple"`      | -            | Determines if a single accordion panel or multiple accordion panels can be visible.                   |
-| `value`         | `string \| null` (bindable)   | -            | If `type="single"`: The value of the expanded accordion panel, `null` if the accordion is collapsed.  |
-| `defaultValue`  | `string`                      | -            | If `type="single"`: The accordion panel to be expanded by default.                                    |
-| `values`        | `string[]` (bindable)         | -            | If `type="multiple"`: The values of the expanded accordion panels.                                    |
-| `defaultValues` | `string[]`                    | -            | If `type="multiple"`: The accordion panels to be expanded by default.                                 |
-| `collapsible`   | `boolean`                     | `false`      | If `type="single"`: When `true`, prevents the currently visible accordion panel from being collapsed. |
-| `disabled`      | `boolean`                     | `false`      | When `true`, prevents the user from interacting with the accordion.                                   |
-| `loop`          | `boolean`                     | `true`       | When `true`, keyboard navigation will loop focus from the last item to the first item and vice versa. |
-| `orientation`   | `"vertical" \| "horizontal"`  | `"vertical"` | The orientation of the accordion, which determines which arrow keys are used for keyboard navigation. |
-| `direction`     | `"ltr" \| rtl"`               | `"ltr"`      | If `orientation="horizontal"`: The reading direction of the accordion.                                |
-| `element`       | `"HTMLDivElement"` (bindable) | -            | The rendered `div` element.                                                                           |
+<API.Props
+    props={[
+        {
+            name: "type",
+            required: true,
+            type: "'single' | 'multiple'",
+            defaultValue: undefined,
+            description:
+                "Determines if a single accordion panel or multiple accordion panels can be visible."
+        },
+        {
+            name: "value",
+            type: "string | null",
+            bindable: true,
+            defaultValue: undefined,
+            description:
+                "If `type = 'single'`: The value of the expanded accordion panel, `null` if the accordion is collapsed."
+        },
+        {
+            name: "defaultValue",
+            type: "string",
+            defaultValue: undefined,
+            description: "If `type = 'single'`: The accordion panel to be expanded by default."
+        },
+        {
+            name: "values",
+            type: "string[]",
+            bindable: true,
+            defaultValue: undefined,
+            description: "If `type = 'multiple'`: The values of the expanded accordion panels."
+        },
+        {
+            name: "defaultValues",
+            type: "string[]",
+            defaultValue: undefined,
+            description: "If `type = 'multiple'`: The accordion panels to be expanded by default."
+        },
+        {
+            name: "collapsible",
+            type: "boolean",
+            defaultValue: "false",
+            description:
+                "If `type = 'single'`: When `true`, prevents the currently visible accordion panel from being collapsed."
+        },
+        {
+            name: "disabled",
+            type: "boolean",
+            defaultValue: "false",
+            description: "When `true`, prevents the user from interacting with the accordion."
+        },
+        {
+            name: "loop",
+            type: "boolean",
+            defaultValue: "true",
+            description:
+                "When `true`, keyboard navigation will loop focus from the last item to the first item and vice versa."
+        },
+        {
+            name: "orientation",
+            type: "'vertical' | 'horizontal'",
+            defaultValue: "'vertical'",
+            description:
+                "The orientation of the accordion, which determines which arrow keys are used for keyboard navigation."
+        },
+        {
+            name: "direction",
+            type: "'ltr' | rtl'",
+            defaultValue: "'ltr'",
+            description: "If `orientation = 'horizontal'`: The reading direction of the accordion."
+        },
+        {
+            name: "element",
+            type: "HTMLDivElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `div` element."
+        }
+    ]}
+/>
 
 #### Data attributes
 
-| Attribute            | Values                      | Description                       |
-| -------------------- | --------------------------- | --------------------------------- |
-| `[data-orientation]` | `"vertical" \| "horizontal" | The orientation of the accordion. |
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description: "The orientation of the accordion."
+        }
+    ]}
+/>
 
 ### Item
 
-The `Item` component represent an accordion panel with it's heading.
-
-`Item` is a `div` (or `section` if the `region` prop is set to `true`) element.
+<API.Introduction
+    name="Item"
+    element={{
+        default: "div",
+        other: "section",
+        condition: "If the `region=true`"
+    }}
+    description="represents one item in the accordion with an accordion panel and it's heading."
+/>
 
 #### Props
 
-| Prop       | Type                                       | Default | Description                                                                                                                                                                                                        |
-| ---------- | ------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `value`\*  | `string`                                   | -       | The value used to identify the accordion panel.                                                                                                                                                                    |
-| `disabled` | `boolean`                                  | `false` | When `true`, prevents the user from interacting with the item.                                                                                                                                                     |
-| `region`   | `boolean`                                  | `false` | When `true`, the item is a `section` element. Avoid using with many (~6) panels to prevent landmark region proliferation. This is especially helpful when accordion panels contain headings or a nested accordion. |
-| `element`  | `HTMLDivElement \| HTMLElement` (bindable) | -       | The rendered `div` or `section` element.                                                                                                                                                                           |
+<API.Props
+    props={[
+        {
+            name: "value",
+            required: true,
+            type: "string",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The value used to identify the accordion panel."
+        },
+        {
+            name: "disabled",
+            type: "boolean",
+            defaultValue: "false",
+            description: "When `true`, prevents the user from interacting with the item."
+        },
+        {
+            name: "region",
+            type: "boolean",
+            defaultValue: "false",
+            description:
+                "When `true`, the item is a `section` element. Avoid using with many (~6) panels to prevent landmark region proliferation. This is especially helpful when accordion panels contain headings or a nested accordion."
+        },
+        {
+            name: "element",
+            type: "HTMLDivElement | HTMLElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `div` or `section` element."
+        }
+    ]}
+/>
 
 #### Data attributes
 
-| Attribute            | Values                      | Description                                     |
-| -------------------- | --------------------------- | ----------------------------------------------- |
-| `[data-state]`       | `"open" \| "closed"`        | The state of the accordion panel.               |
-| `[data-disabled]`    | -                           | Present when the accordion or item is disabled. |
-| `[data-orientation]` | `"vertical" \| "horizontal" | The orientation of the accordion.               |
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-state",
+            public: true,
+            values: "'open' | 'closed'",
+            description: "The state of the accordion panel."
+        },
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description: "Present when the accordion or item is disabled."
+        },
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description: "The orientation of the accordion."
+        }
+    ]}
+/>
 
 ### Header
 
-The `Header` component represents the heading for an accordion panel.
-
-`Header` is a `h2 | h3 | h4 | h5 | h6` (or `div` if the `useHeading` prop is set to `false`) element.
+<API.Introduction
+    name="Header"
+    element={{
+        default: {
+            values: ["h2", "h3", "h4", "h5", "h6"],
+            condition: "`level`"
+        },
+        other: "div",
+        condition: "If `useHeading=false`"
+    }}
+    description="represents the heading for an accordion panel."
+/>
 
 #### Props
 
-| Prop         | Type                                              | Default | Description                                                                                                                  |
-| ------------ | ------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `level`\*    | `2 \| 3 \| 4 \| 5 \| 6`                           | -       | The level of heading for the element (`1` not supported as a page should have a single `h1` element).                        |
-| `useHeading` | `boolean`                                         | `true`  | When `true`, the heading is a `div` element with `aria-level` set to the heading level, instead of a native heading element. |
-| `element`    | `HTMLHeadingElement \| HTMLDivElement` (bindable) | -       | The rendered `heading` or `div` element.                                                                                     |
+<API.Props
+    props={[
+        {
+            name: "level",
+            required: true,
+            type: "2 | 3 | 4 | 5 | 6",
+            defaultValue: undefined,
+            description:
+                "The level of heading for the element (`1` not supported as a page should have a single `h1` element)."
+        },
+        {
+            name: "useHeading",
+            type: "boolean",
+            defaultValue: "true",
+            description:
+                "When `true`, the heading is a `div` element with `aria-level` set to the heading level, instead of a native heading element."
+        },
+        {
+            name: "element",
+            type: "HTMLHeadingElement | HTMLDivElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `heading` or `div` element."
+        }
+    ]}
+/>
 
 #### Data attributes
 
-None
+<API.DataAttributes attributes={[]} />
 
 ### Trigger
 
-The `Trigger` component toggles the visibility of the associated accordion panel.
-
-`Trigger` is a `button` element.
+<API.Introduction
+    name="Trigger"
+    element="button"
+    description="toggles the visibility of the associated accordion panel."
+/>
 
 #### Props
 
-| Prop      | Type                                        | Default | Description                    |
-| --------- | ------------------------------------------- | ------- | ------------------------------ |
-| `element` | `HTMLButtonElement \| undefined` (bindable) | -       | The rendered `button` element. |
+<API.Props
+    props={[
+        {
+            name: "element",
+            type: "HTMLButtonElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `button` element."
+        }
+    ]}
+/>
 
 #### Data attributes
 
-| Attribute                                 | Values                       | Description                                              |
-| ----------------------------------------- | ---------------------------- | -------------------------------------------------------- |
-| `[data-state]`                            | `"open" \| "closed"`         | The state of the accordion panel.                        |
-| `[data-disabled]`                         | -                            | Present when the accordion or item is disabled.          |
-| `[data-orientation]`                      | `"vertical" \| "horizontal"` | The orientation of the accordion.                        |
-| (`[data-svelte-runia-accordion-trigger]`) | -                            | Present on all `Trigger`'s. Used by `Root` to find them. |
-| (`[data-svelte-runia-value]`)             | `string`                     | The value identifying the associated accordion panel.    |
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-state",
+            public: true,
+            values: "'open' | 'closed'",
+            description: "The state of the accordion panel."
+        },
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description: "Present when the accordion or item is disabled."
+        },
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description: "The orientation of the accordion."
+        },
+        {
+            name: "data-svelte-runia-accordion-trigger",
+            values: undefined,
+            description: "Present on all `Trigger`'s. Used by `Root` to find them."
+        },
+        {
+            name: "data-svelte-runia-value",
+            values: "string",
+            description: "The value identifying the associated accordion panel."
+        }
+    ]}
+/>
 
 ### Content
 
-The `Content` component is accordion panel that can be toggled.
-
-`Content` is a `div` element.
+<API.Introduction
+    name="Content"
+    element="div"
+    description="is the accordion panel that can be toggled."
+/>
 
 #### Props
 
-| Prop      | Type                                     | Default | Description                 |
-| --------- | ---------------------------------------- | ------- | --------------------------- |
-| `element` | `HTMLDivElement \| undefined` (bindable) | -       | The rendered `div` element. |
+<API.Props
+    props={[
+        {
+            name: "element",
+            type: "HTMLDivElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `div` element."
+        }
+    ]}
+/>
 
 #### Data attributes
 
-| Attribute            | Values                      | Description                                     |
-| -------------------- | --------------------------- | ----------------------------------------------- |
-| `[data-state]`       | `"open" \| "closed"`        | The state of the accordion panel.               |
-| `[data-disabled]`    | -                           | Present when the accordion or item is disabled. |
-| `[data-orientation]` | `"vertical" \| "horizontal" | The orientation of the accordion.               |
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-state",
+            public: true,
+            values: "'open' | 'closed'",
+            description: "The state of the accordion panel."
+        },
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description: "Present when the accordion or item is disabled."
+        },
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description: "The orientation of the accordion."
+        }
+    ]}
+/>
 
 ## Accessibility
 
@@ -222,49 +396,104 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
 
 ### Keyboard interactions
 
-| Key                        | Action                                                                                                                               |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `Enter`/`Space`            | If focus on a `Trigger`: attempts to toggle the panel.                                                                               |
-| `Tab`/`Shift+Tab`          | Move focus to the next/previous focussable element.                                                                                  |
-| `Arrow Down`/`Arrow Up`    | If focus on a `Trigger` (and the `orientation="vertical"`), move focus to the next/previous `Trigger`.                               |
-| `Arrow Right`/`Arrow Left` | If `orientation="horizontal"` and focus is on a `Trigger`: move focus to the `Trigger` to the right/left (depending on `direction`). |
-| `Home`/`End`               | If focus on a `Trigger`: move focus to the first/last `Trigger`.                                                                     |
+<A11y.Keyboard
+    interactions={[
+        {
+            keys: ["Enter", "Space"],
+            condition: "If focus on a `Trigger`",
+            action: "Attempts to toggle the panel."
+        },
+        {
+            keys: ["Tab", "Shift + Tab"],
+            condition: undefined,
+            action: "Move focus to the next/previous focussable element."
+        },
+        {
+            keys: ["Arrow Down", "Arrow Up"],
+            condition: "If focus on a `Trigger` (and the `orientation = 'vertical'`)",
+            action: "Move focus to the next/previous `Trigger`."
+        },
+        {
+            keys: ["Arrow Right", "Arrow Left"],
+            condition: "If `orientation = 'horizontal'` and focus is on a `Trigger`",
+            action: "Move focus to the `Trigger` to the right/left (depending on `direction`)."
+        },
+        {
+            keys: ["Home", "End"],
+            condition: "If focus on a `Trigger`",
+            action: "Move focus to the first/last `Trigger`."
+        }
+    ]}
+/>
 
 #### Other events
 
-| Element   | Event name | Action                        |
-| --------- | ---------- | ----------------------------- |
-| `Trigger` | `onclick`  | Attempts to toggle the panel. |
+<A11y.Events
+    events={[
+        {
+            element: "Trigger",
+            event: "onclick",
+            action: "Attempts to toggle the panel."
+        }
+    ]}
+/>
 
 ### ARIA attributes
 
 #### Root
 
-None
+<A11y.ARIAAttributes attributes={[]} />
 
 #### Item
 
-| Attribute         | Type     | Description                                |
-| ----------------- | -------- | ------------------------------------------ |
-| `aria-labelledby` | `string` | ID of the corresponding `Trigger` element. |
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "aria-labelledby",
+            type: "string",
+            description: "ID of the corresponding `Trigger` element."
+        }
+    ]}
+/>
 
 #### Header
 
-| Attribute    | Type                 | Description                               |
-| ------------ | -------------------- | ----------------------------------------- |
-| `aria-level` | `string` (of number) | If `useHeading=false`: the heading level. |
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "aria-level",
+            type: "number",
+            description: "If `useHeading = false`: the heading level."
+        }
+    ]}
+/>
 
 #### Trigger
 
-| Attribute       | Values              | Description                                                                                                                                  |
-| --------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `aria-disabled` | `"true" \| "false"` | `"true"` when the accordion or item is disabled, or if the associated accordion panel is visible and the accordion doesn't allow collapsing. |
-| `aria-controls` | `string`            | Present when the accordion or item is disabled.                                                                                              |
-| `aria-expanded` | `"true" \| "false"` | `"true"` when the content of the accordion panel is visible.                                                                                 |
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "aria-disabled",
+            type: "'true' | 'false'",
+            description:
+                "`'true'` when the accordion or item is disabled, or if the associated accordion panel is visible and the accordion doesn't allow collapsing."
+        },
+        {
+            name: "aria-controls",
+            type: "string",
+            description: "Present when the accordion or item is disabled."
+        },
+        {
+            name: "aria-expanded",
+            type: "'true' | 'false'",
+            description: "`'true'` when the content of the accordion panel is visible."
+        }
+    ]}
+/>
 
 #### Content
 
-None
+<A11y.ARIAAttributes attributes={[]} />
 
 ## Examples
 
@@ -301,7 +530,7 @@ Set type `type` props to `"multiple"` to allow multiple items to be expanded.
 </Accordion.Root>
 ```
 
-### Controlled
+### Control the expanded item
 
 Bind the `value: string` prop of the `Root` component to a variable to control the expanded item.
 This allows both reading and writing the value of the expanded item.

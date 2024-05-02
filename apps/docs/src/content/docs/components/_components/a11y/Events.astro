@@ -1,0 +1,55 @@
+---
+import { formatDescription } from "../format";
+
+interface Props {
+    events: Array<{
+        element: string;
+        event: string;
+        action: string;
+    }>;
+}
+
+const { events } = Astro.props;
+---
+
+{
+    events.length === 0 ? (
+        <p>No events.</p>
+    ) : (
+        <>
+            <ul class="lg:hidden">
+                {events.map((event) => (
+                    <li>
+                        <code class="inline-flex">
+                            {event.element}.
+                            <span class="text-[var(--sl-color-text-accent)]">{event.event}</span>
+                        </code>
+                        : <p class="inline" set:html={formatDescription(event.action)} />
+                    </li>
+                ))}
+            </ul>
+            <table class="!hidden w-full lg:!block">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Event</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {events.map((event) => (
+                        <tr>
+                            <td>
+                                <code>{event.element}</code>
+                            </td>
+                            <td>
+                                <code>{event.event}</code>
+                            </td>
+                            <td set:html={formatDescription(event.action)} />
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    )
+}

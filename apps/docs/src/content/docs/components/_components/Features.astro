@@ -1,0 +1,20 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+interface Props {
+    features: Array<string>;
+}
+
+const { features } = Astro.props;
+---
+
+<ul class="not-content flex flex-col gap-2 ps-0">
+    {
+        features.map((feature) => (
+            <li class="flex items-center gap-4">
+                <Icon class="text-green-500" name="approve-check-circle" size="1.75rem" />
+                <span>{feature}</span>
+            </li>
+        ))
+    }
+</ul>

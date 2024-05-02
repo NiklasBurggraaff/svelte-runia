@@ -1,0 +1,64 @@
+---
+import { formatDescription } from "../format";
+
+interface Props {
+    interactions: Array<{
+        keys: string[];
+        condition: string | undefined;
+        action: string;
+    }>;
+}
+
+const { interactions } = Astro.props;
+---
+
+{
+    interactions.length === 0 ? (
+        <p>No keyboard interactions.</p>
+    ) : (
+        <>
+            <ul class="lg:hidden">
+                {interactions.map((interaction) => (
+                    <li>
+                        {interaction.keys.map((key, index) => (
+                            <>
+                                <span>{index > 0 ? "/" : ""}</span>
+                                <kbd class="whitespace-nowrap text-[var(--sl-color-text-accent)]">
+                                    {key}
+                                </kbd>
+                            </>
+                        ))}
+                        : <p class="inline" set:html={formatDescription(interaction.action)} />
+                    </li>
+                ))}
+            </ul>
+            <table class="!hidden w-full lg:!block">
+                <thead>
+                    <tr>
+                        <th>Keys</th>
+                        <th>Condition</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {interactions.map((interaction) => (
+                        <tr>
+                            <td>
+                                {interaction.keys.map((key, index) => (
+                                    <>
+                                        <span>{index > 0 ? "/" : ""}</span>
+                                        <kbd class="whitespace-nowrap text-[var(--sl-color-text-accent)]">
+                                            {key}
+                                        </kbd>
+                                    </>
+                                ))}
+                            </td>
+                            <td set:html={formatDescription(interaction.condition ?? "-")} />
+                            <td set:html={formatDescription(interaction.action)} />
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    )
+}

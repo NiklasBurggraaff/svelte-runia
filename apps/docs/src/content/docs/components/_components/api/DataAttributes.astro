@@ -1,0 +1,65 @@
+---
+import { formatDescription, formatQuotes } from "../format";
+import NoOverflowCode from "../NoOverflowCode.astro";
+
+interface Props {
+    attributes: Array<{
+        name: string;
+        public?: true;
+        values: string | undefined;
+        description: string;
+    }>;
+}
+
+const { attributes } = Astro.props;
+---
+
+{
+    attributes.length === 0 ? (
+        <p>No data attributes.</p>
+    ) : (
+        <>
+            <ul class="lg:hidden">
+                {attributes.map((att) => (
+                    <li>
+                        <div class="flex items-center gap-x-2">
+                            <code>
+                                <span class="text-[var(--sl-color-text-accent)]">[{att.name}]</span>
+                                {att.values !== undefined ? <>: {formatQuotes(att.values)}</> : ""}
+                            </code>{" "}
+                        </div>
+                        <ul class="!my-2">
+                            <li set:html={formatDescription(att.description)} />
+                        </ul>
+                    </li>
+                ))}
+            </ul>
+            <table class="!hidden w-full lg:!block">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Values</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {attributes.map((att) => (
+                        <tr>
+                            <td>
+                                <code>[{att.name}]</code>
+                            </td>
+                            <td>
+                                {att.values !== undefined ? (
+                                    <NoOverflowCode code={formatQuotes(att.values)} />
+                                ) : (
+                                    "-"
+                                )}
+                            </td>
+                            <td set:html={formatDescription(att.description)} />
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    )
+}

@@ -1,0 +1,86 @@
+---
+import { formatDescription, formatQuotes } from "../format";
+import NoOverflowCode from "../NoOverflowCode.astro";
+
+interface Props {
+    props: Array<{
+        name: string;
+        required?: true;
+        type: string;
+        bindable?: true;
+        defaultValue: string | undefined;
+        description: string;
+    }>;
+}
+
+const { props } = Astro.props;
+---
+
+{
+    props.length === 0 ? (
+        <p>No props.</p>
+    ) : (
+        <>
+            <ul class="lg:hidden">
+                {props.map((prop) => (
+                    <li>
+                        <div class="flex items-center gap-x-2">
+                            <code>
+                                <span class="text-[var(--sl-color-text-accent)]">{prop.name}</span>:
+                                {formatQuotes(prop.type)}
+                                {prop.defaultValue !== undefined ? (
+                                    <>= {formatQuotes(prop.defaultValue)}</>
+                                ) : (
+                                    ""
+                                )}
+                            </code>{" "}
+                            {prop.required ? <span class="pr-1 text-xl text-red-500">*</span> : ""}
+                            {prop.bindable ? <span class="text-sm">(bindable)</span> : ""}
+                        </div>
+                        <ul class="!my-2">
+                            <li set:html={formatDescription(prop.description)} />
+                        </ul>
+                    </li>
+                ))}
+            </ul>
+            <table class="!hidden w-full lg:!block">
+                <thead>
+                    <tr>
+                        <th>Prop</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.map((prop) => (
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-x-2">
+                                    <NoOverflowCode code={prop.name} />
+                                    {prop.required ? (
+                                        <span class="text-xl text-red-500">*</span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </div>
+                            </td>
+                            <td>
+                                <NoOverflowCode code={formatQuotes(prop.type)} />
+                                {prop.bindable ? <p>(bindable)</p> : ""}
+                            </td>
+                            <td class="whitespace-nowrap">
+                                {prop.defaultValue ? (
+                                    <NoOverflowCode code={prop.defaultValue} />
+                                ) : (
+                                    "-"
+                                )}
+                            </td>
+                            <td set:html={formatDescription(prop.description)} />
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    )
+}
