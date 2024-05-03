@@ -22,12 +22,7 @@ const { class: customClass, ...attrs } = Astro.props.attrs || {};
             <div class="bg-runic-gradient rounded-full p-0.5">
                 <div class:list={["sl-flex action-container", variant, customClass]}>
                     <slot />
-                    {icon?.type === "icon" && (
-                        <Icon
-                            name={icon.name}
-                            size={icon.name.startsWith("seti") ? "1.1875rem" : "1.5rem"}
-                        />
-                    )}
+                    {icon?.type === "icon" && <Icon name={icon.name} size="1.5rem" />}
                     {icon?.type === "raw" && <Fragment set:html={icon.html} />}
                 </div>
             </div>

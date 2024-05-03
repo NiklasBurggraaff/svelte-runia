@@ -36,13 +36,13 @@ if (image) {
 
 <div class="hero">
     <div class="title py-8 text-center text-4xl">
-        <h1>
+        <h1 id={PAGE_TITLE_ID} aria-live="assertive">
             <RuneAnimation />
         </h1>
     </div>
     <div class="sl-flex stack">
         <div class="sl-flex copy">
-            <h2 id={PAGE_TITLE_ID} data-page-title set:html={title} />
+            <h2 data-page-title set:html={title} />
             {tagline && <div class="tagline" set:html={tagline} />}
         </div>
         {
