@@ -1,5 +1,5 @@
 ---
-import { Icon } from "@astrojs/starlight/components";
+import CallToAction from "@/components/override/CallToAction.astro";
 
 interface Props {
     componentName: string;
@@ -9,25 +9,29 @@ interface Props {
 const { componentName, ariaLink } = Astro.props;
 ---
 
-<div class="not-content flex flex-col">
-    <a
-        class="text-a flex items-center gap-1"
-        href={`https://github.com/NiklasBurggraaff/svelte-runia/tree/main/packages/svelte-runia/src/lib/${componentName}`}
-        target="_blank"
+<div class="not-content flex flex-wrap gap-2">
+    <CallToAction
+        link={`https://github.com/NiklasBurggraaff/svelte-runia/tree/main/packages/svelte-runia/src/lib/${componentName}`}
+        variant="minimal"
+        icon={{ type: "icon", name: "github" }}
+        attrs={{ class: "py-1" }}
     >
         View source
-        <Icon name="external" size="1rem" />
-    </a>
-    <a class="text-a flex items-center gap-1" href={ariaLink} target="_blank">
+    </CallToAction>
+    <CallToAction
+        link={ariaLink}
+        variant="minimal"
+        icon={{ type: "icon", name: "external" }}
+        attrs={{ class: "py-1" }}
+    >
         ARIA design pattern
-        <Icon name="external" size="1rem" />
-    </a>
-    <a
-        class="text-a flex items-center gap-1"
-        href={`https://github.com/NiklasBurggraaff/svelte-runia/issues/new`}
-        target="_blank"
+    </CallToAction>
+    <CallToAction
+        link={`https://github.com/NiklasBurggraaff/svelte-runia/issues/new`}
+        variant="minimal"
+        icon={{ type: "icon", name: "error" }}
+        attrs={{ class: "py-1" }}
     >
         Report an issue
-        <Icon name="external" size="1rem" />
-    </a>
+    </CallToAction>
 </div>

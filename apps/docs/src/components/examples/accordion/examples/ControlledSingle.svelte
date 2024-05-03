@@ -4,6 +4,11 @@
     let value = $state("item-1");
 </script>
 
-<div><input bind:value class="w-full rounded-md border px-4 py-1" /></div>
+<div>
+    <label>
+        Value:
+        <input bind:value class="w-full rounded-md border px-4 py-1" />
+    </label>
+</div>
 
 <Main bind:value type="single" />

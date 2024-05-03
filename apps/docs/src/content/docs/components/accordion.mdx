@@ -8,7 +8,9 @@ import { A11y, API, Features, Links, Example } from "@/components/docs";
 
 import { InteractivePreview, Examples } from "@/components/examples/accordion";
 
-<div class="text-xl text-[var(--sl-color-gray-2)]">
+<Links componentName="accordion" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" />
+
+<div class="py-4 text-xl text-[var(--sl-color-gray-2)]">
     Set of interactive headings that allow you to expand/collapse the associated content.
 </div>
 
@@ -17,8 +19,6 @@ The Accordion component is named after the musical [accordion](https://en.wikipe
 
 But did you know the accordion is a family of instruments that includes the [harmonica](https://en.wikipedia.org/wiki/Harmonica)?
 :::
-
-## Example
 
 <Tabs>
     <TabItem label="Preview" icon="laptop">
@@ -83,7 +83,7 @@ But did you know the accordion is a family of instruments that includes the [har
 
 </Tabs>
 
-#### Features
+### Features
 
 <Features
     features={[
@@ -94,10 +94,6 @@ But did you know the accordion is a family of instruments that includes the [har
         "Supports Right to Left direction."
     ]}
 />
-
-<hr />
-
-<Links componentName="accordion" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" />
 
 ## Usage
 
@@ -525,7 +521,7 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
 <A11y.Events
     events={[
         {
-            element: "Trigger",
+            component: "Trigger",
             event: "onclick",
             action: "Attempts to toggle the associated content."
         }
@@ -604,7 +600,7 @@ Use the `collapsible` prop to allow the currently expanded content to be collaps
         </Accordion.Root>
         ```
     </div>
-    <Examples.Collapsible client:load slot="preview" />
+    <Examples.Collapsible client:visible slot="preview" />
 
 </Example>
 
@@ -621,7 +617,7 @@ Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
         </Accordion.Root>
         ```
     </div>
-    <Examples.Multiple client:load slot="preview" />
+    <Examples.Multiple client:visible slot="preview" />
 
 </Example>
 
@@ -638,7 +634,8 @@ Use the `defaultValue` prop to set the initial item to be expanded.
         </Accordion.Root>
         ```
     </div>
-    <Examples.DefaultSingle client:load slot="preview" />
+    {/* HERE */}
+    <Examples.DefaultSingle client:visible slot="preview" />
 
 </Example>
 
@@ -655,7 +652,8 @@ For `type = "multiple"` instead use the `defaultValues` prop to set the initial 
         </Accordion.Root>
         ```
     </div>
-    <Examples.DefaultMultiple client:load slot="preview" />
+    {/* HERE */}
+    <Examples.DefaultMultiple client:visible slot="preview" />
 
 </Example>
 
@@ -681,7 +679,8 @@ This allows both reading and writing the value of the expanded item.
         </Accordion.Root>
         ```
     </div>
-    <Examples.ControlledSingle client:load slot="preview" />
+    {/* HERE */}
+    <Examples.ControlledSingle client:visible slot="preview" />
 
 </Example>
 
@@ -722,7 +721,7 @@ For `type = "multiple"` instead use the `values` prop to control the expanded it
         </Accordion.Root>
         ```
     </div>
-    <Examples.ControlledMultiple client:load slot="preview" />
+    <Examples.ControlledMultiple client:visible slot="preview" />
 
 </Example>
 
@@ -755,7 +754,7 @@ Apply a Svelte transition, i.e. `slide` which works well with the accordion, to 
         </Accordion.Root>
         ```
     </div>
-    <Examples.AnimatedContent client:load slot="preview" />
+    <Examples.AnimatedContent client:visible slot="preview" />
 
 </Example>
 
@@ -791,6 +790,6 @@ It will be set to `"open"` when the content is expanded.
         </Accordion.Root>
         ```
     </div>
-    <Examples.AnimatedTrigger client:load slot="preview" />
+    <Examples.AnimatedTrigger client:visible slot="preview" />
 
 </Example>

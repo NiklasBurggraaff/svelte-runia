@@ -6,22 +6,18 @@
 
     let {
         type = "single",
-        value = $bindable(),
-        values = $bindable(),
-        collapsible = false,
-        defaultValue = undefined,
-        defaultValues = undefined
+        value = $bindable(null),
+        values = $bindable([]),
+        collapsible = false
     }: {
         type?: "single" | "multiple";
         value?: string;
         values?: string[];
         collapsible?: boolean;
-        defaultValue?: string;
-        defaultValues?: string[];
     } = $props();
 </script>
 
-<Accordion.Root {type} bind:value bind:values {collapsible} {defaultValue} {defaultValues}>
+<Accordion.Root {type} bind:value bind:values {collapsible}>
     <Accordion.Item value="item-1" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger

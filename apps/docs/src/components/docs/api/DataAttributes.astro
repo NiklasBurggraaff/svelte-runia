@@ -27,7 +27,17 @@ const { attributes } = Astro.props;
                             <code>
                                 <span class="text-[var(--sl-color-text-accent)]">[{att.name}]</span>
                                 {att.values !== undefined ? <>: {formatQuotes(att.values)}</> : ""}
-                            </code>{" "}
+                            </code>
+                            {att.public ? (
+                                ""
+                            ) : (
+                                <div
+                                    class="inline-flex pr-2"
+                                    title="This data attribute is an attribute used for thefunctioning of the component and should not be used."
+                                >
+                                    <Icon name="seti:ignored" size="1rem" />
+                                </div>
+                            )}
                         </div>
                         <ul class="!my-2">
                             <li set:html={formatText(att.description)} />
@@ -52,7 +62,7 @@ const { attributes } = Astro.props;
                                 ) : (
                                     <div
                                         class="inline-flex pr-2"
-                                        title="This data attribute is an internal attribute and should not be used."
+                                        title="This data attribute is an attribute used for thefunctioning of the component and should not be used."
                                     >
                                         <Icon name="seti:ignored" size="1rem" />
                                     </div>

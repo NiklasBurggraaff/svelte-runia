@@ -3,7 +3,7 @@ import { formatText } from "../format";
 
 interface Props {
     events: Array<{
-        element: string;
+        component: string;
         event: string;
         action: string;
     }>;
@@ -21,7 +21,7 @@ const { events } = Astro.props;
                 {events.map((event) => (
                     <li>
                         <code class="inline-flex">
-                            {event.element}.
+                            {event.component}.
                             <span class="text-[var(--sl-color-text-accent)]">{event.event}</span>
                         </code>
                         : <p class="inline" set:html={formatText(event.action)} />
@@ -31,7 +31,7 @@ const { events } = Astro.props;
             <table class="!hidden w-full lg:!block">
                 <thead>
                     <tr>
-                        <th>Element</th>
+                        <th>Component</th>
                         <th>Event</th>
                         <th>Action</th>
                     </tr>
@@ -40,7 +40,7 @@ const { events } = Astro.props;
                     {events.map((event) => (
                         <tr>
                             <td>
-                                <code>{event.element}</code>
+                                <code>{event.component}</code>
                             </td>
                             <td>
                                 <code>{event.event}</code>

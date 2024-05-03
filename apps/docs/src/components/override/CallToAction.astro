@@ -18,7 +18,7 @@ const { class: customClass, ...attrs } = Astro.props.attrs || {};
 
 {
     variant === "secondary" ? (
-        <a class="action" href={link} {...attrs}>
+        <a class:list={["action rounded-full", variant]} href={link} {...attrs}>
             <div class="bg-runic-gradient rounded-full p-0.5">
                 <div class:list={["sl-flex action-container", variant, customClass]}>
                     <slot />
@@ -61,12 +61,25 @@ const { class: customClass, ...attrs } = Astro.props.attrs || {};
     .action.primary {
         background: var(--sl-color-accent);
         color: white;
+        padding: 0.375rem 1rem;
+        border: 0.125rem solid var(--sl-color-accent);
     }
     .action-container.secondary {
         background: var(--sl-color-bg);
     }
     .action-container.minimal {
-        padding-inline: 0;
+        padding-inline: 1rem;
+        border: 1px solid var(--sl-color-white);
+    }
+
+    .action.primary:hover {
+        border: 0.125rem solid var(--sl-color-white);
+    }
+    .action.secondary:hover {
+        color: var(--sl-color-text-accent);
+    }
+    .action.minimal:hover {
+        border-color: var(--sl-color-text-accent);
     }
 
     @media (min-width: 50rem) {
@@ -75,6 +88,9 @@ const { class: customClass, ...attrs } = Astro.props.attrs || {};
         }
         .action-container {
             padding: 1rem 1.25rem;
+        }
+        .action.primary {
+            padding: 0.875rem 1.125rem;
         }
     }
 </style>

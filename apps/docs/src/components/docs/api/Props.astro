@@ -29,12 +29,16 @@ const { props } = Astro.props;
                                 <span class="text-[var(--sl-color-text-accent)]">{prop.name}</span>:
                                 {formatQuotes(prop.type)}
                                 {prop.defaultValue !== undefined ? (
-                                    <>= {formatQuotes(prop.defaultValue)}</>
+                                    <> = {formatQuotes(prop.defaultValue)}</>
                                 ) : (
                                     ""
                                 )}
                             </code>{" "}
-                            {prop.required ? <span class="pr-1 text-xl text-red-500">*</span> : ""}
+                            {prop.required ? (
+                                <span class="text-runic-gradient pr-1 text-xl">*</span>
+                            ) : (
+                                ""
+                            )}
                             {prop.bindable ? <span class="text-sm">(bindable)</span> : ""}
                         </div>
                         <ul class="!my-2">
@@ -59,7 +63,7 @@ const { props } = Astro.props;
                                 <div class="flex items-center gap-x-2">
                                     <NoOverflowCode code={prop.name} />
                                     {prop.required ? (
-                                        <span class="text-xl text-red-500">*</span>
+                                        <span class="text-runic-gradient text-xl">*</span>
                                     ) : (
                                         ""
                                     )}

@@ -1,0 +1,242 @@
+---
+title: Components Overview
+description: An overview of the components.
+sidebar:
+    label: Overview
+    order: 1
+---
+
+import { Card, Icon, Tabs, TabItem } from "@astrojs/starlight/components";
+import { A11y, API, Features, Links, Example } from "@/components/docs";
+import InteractivePreviewExample from "@/components/docs/InteractivePreviewExample.svelte";
+
+Reference pages are ideal for outlining how things work in terse and clear terms.
+Less concerned with telling a story or addressing a specific use case, they should give a comprehensive outline of what you're documenting.
+
+## Further reading
+
+-   Read [about reference](https://diataxis.fr/reference/) in the Diátaxis framework
+
+## Structure
+
+The following outlines the structure used for each component page.
+
+### Overview
+
+The overview contain:
+
+-   Links to the source code and the ARIA design pattern
+-   A high-level description of the component
+-   An <span class="text-runic-gradient">interactive example</span> of the component
+    -   Use the controls to change the props and see how the component responds
+    -   View the source code of the example in the "Code" tab
+-   A list of the main features of the component
+
+<Card title="[Component]">
+<Links componentName="" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/" />
+
+<div class="py-4 text-xl text-[var(--sl-color-gray-2)]">[One sentence description].</div>
+
+<Tabs>
+    <TabItem label="Preview" icon="laptop">
+        <InteractivePreviewExample client:load />
+    </TabItem>
+    <TabItem label="Code" icon="seti:svelte">
+        ```svelte
+        // MyComponent.svelte
+        <script lang="ts">
+            let { value, disabled } = $props();
+        </script>
+
+        <button
+            class="rounded-xl border bg-transparent px-4 py-1"
+            onclick={() => alert(`Hello ${value}`)}>Say Hello</button
+            {disabled}
+        >
+        ```
+    </TabItem>
+
+</Tabs>
+
+### Features
+
+<Features
+    features={[
+        "Amazing feature.",
+    ]}
+/>
+</Card>
+
+### Usage
+
+This explains the basic usage of the component.
+Particularly noting which components to use as children of the other components,
+and which props are required.
+
+Here _must_ is used to indicate a required and _can_ is used to indicate something that is optional.
+
+### API
+
+The API of each Svelte component is documented.
+
+It starts my showing the HTML element that the component renders to.
+If there is another element the component can render to, it will be shown as well.
+Hover over the <span class="inline-flex"><Icon name="information" /></span>
+to see the condition when the other element is used.
+
+<Card title="[Component]">
+    <API.Introduction
+        name="[Component]"
+        element={{
+            default: "[Default]",
+            other: "[Other]",
+            condition: "This would show when the other element is used"
+        }}
+        description="..."
+    />
+</Card>
+
+Next, the props are documented, with their type, default value (or "-" if there is none), and a description of it's usage.
+
+-   <span class="text-runic-gradient">\*</span> is shown next to a required prop.
+-   <span class="text-sm">(bindable)</span> is shown to indicate that the prop is bindable.
+
+<Card title="Props">
+    <API.Props
+        props={[
+            {
+                name: "[name]",
+                type: "[type]",
+                defaultValue: undefined,
+                description: "Lorem ipsum"
+            },
+            {
+                name: "defaultProp",
+                type: "[type]",
+                defaultValue: "[value]",
+                description: "Lorem ipsum"
+            },
+            {
+                name: "requiredProp",
+                required: true,
+                type: "[type]",
+                defaultValue: undefined,
+                description: "Lorem ipsum"
+            },
+            {
+                name: "bindableProp",
+                type: "[type]",
+                bindable: true,
+                defaultValue: undefined,
+                description: "Lorem ipsum"
+            }
+        ]}
+    />
+</Card>
+
+All data attributes are documented in the same way as props.
+
+-   The <span class="inline-flex"><Icon name="seti:ignored" /></span> icon
+    is shown next to an attribute (always prefixed with `svelte-runia-`) used for the
+    functioning of the component.
+    -   These attributes **should not be used**.
+
+<Card title="Data attributes">
+    <API.DataAttributes
+        attributes={[
+            {
+                name: "data-[name]",
+                public: true,
+                values: "[values]",
+                description: "Lorem ipsum"
+            },
+            {
+                name: "data-svelte-runia-[name]",
+                values: "[values]",
+                description: "Lorem ipsum"
+            }
+        ]}
+    />
+</Card>
+
+### Accessibility
+
+An important aspect of accessibility is keyboard navigation.
+All keyboard interactions handled by the component are documented.
+
+When multiple keys are described, they are separated by a "/".
+Many keyboard interactions require a condition to be met
+, such as an element being focussed on, before the action is performed.
+
+<Card title="Keyboard interactions">
+    <A11y.Keyboard
+        interactions={[
+            {
+                keys: ["[key]"],
+                condition: undefined,
+                action: "Lorem ipsum"
+            },
+            {
+                keys: ["[key1]", "[key2]"],
+                condition: undefined,
+                action: "Lorem ipsum"
+            },
+            {
+                keys: ["[key]"],
+                condition: "[condition]",
+                action: "Lorem ipsum"
+            }
+        ]}
+    />
+</Card>
+
+Any other events (not `onkeydown`) are also documented.
+
+<Card title="Other events">
+    <A11y.Events
+        events={[
+            {
+                component: "[Component]",
+                event: "[event]",
+                action: "Lorem ipsum"
+            }
+        ]}
+    />
+</Card>
+
+Lastly, all ARIA attributes used to comply with the ARIA design pattern are documented.
+These are grouped by the component they are applied to.
+The description describes when the attribute is used and what value it will have.
+
+<Card title="ARIA attributes">
+    <A11y.ARIAAttributes
+        attributes={[
+            {
+                name: "aria-[name]",
+                type: "[type]",
+                description: "Lorem ipsum"
+            }
+        ]}
+    />
+</Card>
+
+### Examples
+
+At the bottom of the page, there are examples of tasks you might want to
+accomplish with the component.
+
+These contain code snippets, marking the relevant parts of the code.
+A preview of the component, using the code snippets, is shown in the "Preview" tab.
+
+<Card title="Hello World">
+    <Example>
+        <div slot="code">
+            ```svelte "Hello World!"
+            <p>Hello World!</p>
+            ```
+        </div>
+        <div slot="preview">
+            <p>Hello World!</p>
+        </div>
+    </Example>
+</Card>

@@ -1,10 +1,12 @@
 <script lang="ts">
+    import type { Snippet } from "svelte";
+
     type Props = {
         preview: Snippet<[]>;
         controls: Snippet<[]>;
     };
 
-    let { preview, controls } = $props();
+    let { preview, controls }: Props = $props();
 </script>
 
 <div
@@ -17,6 +19,7 @@
     </div>
 
     <div class="flex flex-col gap-4 p-8">
+        <h3 class="text-2xl">Controls</h3>
         {@render controls()}
     </div>
 </div>

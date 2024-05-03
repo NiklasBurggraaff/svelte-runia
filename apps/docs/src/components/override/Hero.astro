@@ -7,7 +7,7 @@ import RuneAnimation from "./RuneAnimation.astro";
 const PAGE_TITLE_ID = "_top";
 
 const { data } = Astro.props.entry;
-const { title = data.title, tagline, image, actions = [] } = data.hero || {};
+const { title = data.title, tagline, actions = [] } = data.hero || {};
 ---
 
 <div
@@ -20,9 +20,9 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
     <a class="text-inherit" href="https: svelte-5-preview.vercel.app docs runes">Runes</a>!
 </div>
 
-<div class="hero">
-    <div class="title py-8 text-center text-4xl">
-        <h1 id={PAGE_TITLE_ID} aria-live="assertive">
+<div class="hero" id={PAGE_TITLE_ID}>
+    <div class="title group py-8 text-center text-4xl" tabindex="0">
+        <h1 aria-live="assertive">
             <RuneAnimation />
         </h1>
     </div>

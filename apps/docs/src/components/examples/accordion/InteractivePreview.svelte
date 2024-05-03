@@ -5,12 +5,27 @@
     let type: "single" | "multiple" = $state("single");
 
     let value: string | null = $state(null);
-    let collapsible = $state(true);
-
-    let values: string[] = $state([]);
+    let collapsible = $state(false);
 
     let disabled = $state(false);
     let loop = $state(true);
+
+    let values: string[] = $state([]);
+    let valuesInput: string = $state("");
+    $effect(() => {
+        valuesInput = values.join(", ");
+    });
+
+    $effect(() => {
+        updateValues(valuesInput);
+    });
+    function updateValues(newValue: string) {
+        if (newValue === "") {
+            return;
+        }
+
+        values = newValue.split(",").map((v) => v.trim());
+    }
 </script>
 
 <InteractivePreview>
@@ -19,9 +34,15 @@
     {/snippet}
     {#snippet controls()}
         {#if type === "single"}
-            <div>Value: <code>{value === null ? "null" : `"${value}"`}</code></div>
+            <label>
+                Value:
+                <input bind:value class="w-full rounded-md border px-4 py-1" />
+            </label>
         {:else}
-            <div>Values: <code>[{values.map((v) => `"${v}"`).join(", ")}]</code></div>
+            <label>
+                Values:
+                <input bind:value={valuesInput} class="w-full rounded-md border px-4 py-1" />
+            </label>
         {/if}
         <div>
             <button
