@@ -7,9 +7,7 @@ import { TabItem, Tabs } from "@astrojs/starlight/components";
         <slot name="code" />
     </TabItem>
     <TabItem label="Preview" icon="laptop">
-        <div
-            class="flex items-center justify-center rounded-3xl bg-gradient-to-r from-orange-500 to-yellow-500 p-8 sm:p-16"
-        >
+        <div class="bg-runic-gradient flex items-center justify-center rounded-3xl p-8 sm:p-16">
             <div class="w-96 rounded-xl bg-[var(--sl-color-bg)] p-8">
                 <slot name="preview" />
             </div>

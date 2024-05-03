@@ -1,6 +1,6 @@
 <script lang="ts">
-import { Accordion } from "@niklasburggraaff/svelte-runia";
-import { slide } from "svelte/transition";
+    import { Accordion } from "@niklasburggraaff/svelte-runia";
+    import { slide } from "svelte/transition";
 </script>
 
 <Accordion.Root type="single" collapsible>

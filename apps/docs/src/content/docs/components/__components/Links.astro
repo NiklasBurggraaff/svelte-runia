@@ -11,23 +11,19 @@ const { componentName, ariaLink } = Astro.props;
 
 <div class="not-content flex flex-col">
     <a
-        class="flex items-center gap-1 text-[var(--sl-color-text-accent)]"
+        class="text-a flex items-center gap-1"
         href={`https://github.com/NiklasBurggraaff/svelte-runia/tree/main/packages/svelte-runia/src/lib/${componentName}`}
         target="_blank"
     >
         View source
         <Icon name="external" size="1rem" />
     </a>
-    <a
-        class="flex items-center gap-1 text-[var(--sl-color-text-accent)]"
-        href={ariaLink}
-        target="_blank"
-    >
+    <a class="text-a flex items-center gap-1" href={ariaLink} target="_blank">
         ARIA design pattern
         <Icon name="external" size="1rem" />
     </a>
     <a
-        class="flex items-center gap-1 text-[var(--sl-color-text-accent)]"
+        class="text-a flex items-center gap-1"
         href={`https://github.com/NiklasBurggraaff/svelte-runia/issues/new`}
         target="_blank"
     >

@@ -1,11 +1,11 @@
 <div class="group relative mx-auto w-fit select-none" id="rune-animation">
     <div
-        class="runic-gradient left-0 top-0 grid grid-cols-5 transition-[opacity,filter] delay-100 duration-1000 group-hover:opacity-0 group-hover:blur-lg group-hover:delay-0"
+        class="font-runic text-runic-gradient left-0 top-0 grid grid-cols-5 transition-[opacity,filter] delay-100 duration-1000 group-hover:opacity-0 group-hover:blur-lg group-hover:delay-0"
     >
-        {"ᚱᚢᚾᛁᚨ".split("").map((rune) => <div class="font-runic">{rune}</div>)}
+        {"ᚱᚢᚾᛁᚨ".split("").map((rune) => <div>{rune}</div>)}
     </div>
     <div
-        class="runic-gradient absolute left-0 top-0 grid w-full grid-cols-5 opacity-0 transition-opacity duration-1000 group-hover:opacity-100 group-hover:delay-200 md:top-1"
+        class="font-runic text-runic-gradient absolute left-0 top-0 grid w-full grid-cols-5 opacity-0 transition-opacity duration-1000 group-hover:opacity-100 group-hover:delay-200 md:top-1"
     >
         {"RUNIA".split("").map((rune) => <div class="font-mono">{rune}</div>)}
     </div>

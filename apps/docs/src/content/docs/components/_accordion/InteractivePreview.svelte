@@ -1,5 +1,5 @@
 <script lang="ts">
-    import InteractivePreview from "../_components/InteractivePreview.svelte";
+    import InteractivePreview from "../__components/InteractivePreview.svelte";
 
     import Accordion from "./Accordion.svelte";
 

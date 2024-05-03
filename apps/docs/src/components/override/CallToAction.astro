@@ -16,41 +16,69 @@ const { link, variant, icon } = Astro.props;
 const { class: customClass, ...attrs } = Astro.props.attrs || {};
 ---
 
-<a class:list={["sl-flex action", variant, customClass]} href={link} {...attrs}>
-    <slot />
-    {
-        icon?.type === "icon" && (
-            <Icon name={icon.name} size={icon.name.startsWith("seti") ? "1.1875rem" : "1.5rem"} />
-        )
-    }
-    {icon?.type === "raw" && <Fragment set:html={icon.html} />}
-</a>
+{
+    variant === "secondary" ? (
+        <a class="action" href={link} {...attrs}>
+            <div class="bg-runic-gradient rounded-full p-0.5">
+                <div class:list={["sl-flex action-container", variant, customClass]}>
+                    <slot />
+                    {icon?.type === "icon" && (
+                        <Icon
+                            name={icon.name}
+                            size={icon.name.startsWith("seti") ? "1.1875rem" : "1.5rem"}
+                        />
+                    )}
+                    {icon?.type === "raw" && <Fragment set:html={icon.html} />}
+                </div>
+            </div>
+        </a>
+    ) : (
+        <a
+            class:list={["sl-flex action action-container", variant, customClass]}
+            href={link}
+            {...attrs}
+        >
+            <slot />
+            {icon?.type === "icon" && (
+                <Icon
+                    name={icon.name}
+                    size={icon.name.startsWith("seti") ? "1.1875rem" : "1.5rem"}
+                />
+            )}
+            {icon?.type === "raw" && <Fragment set:html={icon.html} />}
+        </a>
+    )
+}
 
 <style>
     .action {
-        gap: 0.5em;
-        align-items: center;
-        border-radius: 999rem;
-        padding: 0.5rem 1.125rem;
         color: var(--sl-color-white);
         line-height: 1.1875;
         text-decoration: none;
         font-size: var(--sl-text-sm);
     }
+    .action-container {
+        gap: 0.5em;
+        align-items: center;
+        border-radius: 999rem;
+        padding: 0.5rem 1.125rem;
+    }
     .action.primary {
         background: var(--sl-color-accent);
         color: white;
     }
-    .action.secondary {
-        border: 1px solid;
+    .action-container.secondary {
+        background: var(--sl-color-bg);
     }
-    .action.minimal {
+    .action-container.minimal {
         padding-inline: 0;
     }
 
     @media (min-width: 50rem) {
         .action {
             font-size: var(--sl-text-base);
+        }
+        .action-container {
             padding: 1rem 1.25rem;
         }
     }

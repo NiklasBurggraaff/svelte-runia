@@ -1,0 +1,24 @@
+---
+import { Card } from "@astrojs/starlight/components";
+
+interface Props {
+    title: string;
+    slug: string;
+}
+
+const { title, slug } = Astro.props;
+---
+
+<Card title={title}>
+    <a href={`/components/${slug}`} class="text-a"> View docs </a>
+    <div class="pb-4"></div>
+    <div
+        class="bg-runic-gradient -m-4 mt-0 h-72 w-72 overflow-y-auto overflow-x-clip rounded-2xl p-1"
+    >
+        <div
+            class="flex h-full w-full items-center justify-center rounded-xl bg-[var(--sl-color-bg)] p-4"
+        >
+            <slot />
+        </div>
+    </div>
+</Card>

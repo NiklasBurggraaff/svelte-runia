@@ -5,6 +5,7 @@ import { Card, Code, TabItem, Tabs } from "@astrojs/starlight/components";
 import NpmCommand from "../components/NpmCommand.astro";
 import CallToAction from "../components/override/CallToAction.astro";
 import Accordion from "./_examples/Accordion.svelte";
+import ExampleCard from "./_examples/ExampleCard.astro";
 
 const componentCode = `
 <script lang="ts">
@@ -30,12 +31,12 @@ const componentStyledMarks = [`class="bg-blue-500"`];
 
 <StarlightPage
     frontmatter={{
-        title: "Your <span class='runic-gradient'>Mystical</span> UI Library",
+        title: "Your <span class='text-runic-gradient'>Mystical</span> UI Library",
         description: "Get started building your docs site with Starlight.",
         template: "splash",
         hero: {
             tagline:
-                "Next-generation Svelte components. Accessible, Style-free, and <span class='runic-gradient'>Runic</span>!",
+                "Next-generation Svelte components. Accessible, Style-free, and <span class='text-runic-gradient'>Runic</span>!",
             actions: [
                 {
                     text: "Introduction",
@@ -55,97 +56,72 @@ const componentStyledMarks = [`class="bg-blue-500"`];
 >
     <div class="not-content">
         <div class="flex gap-4 overflow-x-auto">
-            <Card title="Accordion">
-                <a
-                    href="/components/accordion"
-                    class="text-orange-200 hover:text-[var(--sl-color-white)]"
-                >
-                    View docs
-                </a>
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
+            <ExampleCard title="Accordion" slug="accordion">
+                <div class="w-full">
                     <Accordion client:load />
                 </div>
-            </Card>
-            <Card title="Dialog">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Dropdown Menu">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Popover">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Slider">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Tabs">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Radio Group">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Toggle Group">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="Switch">
-                <div class="h-52 w-80 overflow-y-auto overflow-x-clip">
-                    <Tabs class="tabs">
-                        <TabItem label="World" icon="laptop"> Hello </TabItem>
-                        <TabItem label="Item" icon="error"> Goodbye </TabItem>
-                    </Tabs>
-                </div>
-            </Card>
-            <Card title="and many more...">
+            </ExampleCard>
+            <ExampleCard title="Dialog" slug="dialog">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Dropdown Menu" slug="dropdown-menu">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Popover" slug="popover">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Slider" slug="slider">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Tabs" slug="tabs">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Radio Group" slug="radio-group">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Toggle Group" slug="toggle-group">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <ExampleCard title="Switch" slug="switch">
+                <Tabs class="tabs">
+                    <TabItem label="World" icon="laptop"> Hello </TabItem>
+                    <TabItem label="Item" icon="error"> Goodbye </TabItem>
+                </Tabs>
+            </ExampleCard>
+            <Card title="Many more...">
                 <div
-                    class="flex h-52 w-80 flex-col items-center justify-center overflow-y-auto overflow-x-clip"
+                    class="flex h-72 w-72 flex-col justify-center overflow-y-auto overflow-x-clip align-middle"
                 >
-                    <div>
-                        <div class="m-auto">See the component docs for more examples</div>
-                        <div class="pt-4"></div>
-                        <div class="mx-auto w-fit">
-                            <CallToAction
-                                link="/components/overview"
-                                icon={{ type: "icon", name: "seti:html" }}
-                                variant="primary"
-                            >
-                                View docs
-                            </CallToAction>
-                        </div>
+                    See the component docs for more examples
+                    <div class="mx-auto w-fit">
+                        <CallToAction
+                            link="/components/overview"
+                            icon={{ type: "icon", name: "seti:html" }}
+                            variant="primary"
+                        >
+                            View docs
+                        </CallToAction>
                     </div>
                 </div>
             </Card>

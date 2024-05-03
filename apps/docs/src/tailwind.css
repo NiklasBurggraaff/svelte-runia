@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.runic-gradient {
-    @apply bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent;
+@layer utilities {
+    .text-runic-gradient {
+        @apply bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent;
+    }
+
+    .bg-runic-gradient {
+        @apply bg-gradient-to-r from-orange-500 to-yellow-500;
+    }
+
+    .text-a {
+        @apply text-[var(--sl-color-text-accent)] hover:text-[var(--sl-color-white)];
+    }
 }
