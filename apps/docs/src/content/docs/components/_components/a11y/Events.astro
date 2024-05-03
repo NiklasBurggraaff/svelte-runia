@@ -1,5 +1,5 @@
 ---
-import { formatDescription } from "../format";
+import { formatText } from "../format";
 
 interface Props {
     events: Array<{
@@ -24,7 +24,7 @@ const { events } = Astro.props;
                             {event.element}.
                             <span class="text-[var(--sl-color-text-accent)]">{event.event}</span>
                         </code>
-                        : <p class="inline" set:html={formatDescription(event.action)} />
+                        : <p class="inline" set:html={formatText(event.action)} />
                     </li>
                 ))}
             </ul>
@@ -45,7 +45,7 @@ const { events } = Astro.props;
                             <td>
                                 <code>{event.event}</code>
                             </td>
-                            <td set:html={formatDescription(event.action)} />
+                            <td set:html={formatText(event.action)} />
                         </tr>
                     ))}
                 </tbody>

@@ -1,5 +1,5 @@
 ---
-import { formatDescription } from "../format";
+import { formatText } from "../format";
 
 interface Props {
     interactions: Array<{
@@ -28,7 +28,7 @@ const { interactions } = Astro.props;
                                 </kbd>
                             </>
                         ))}
-                        : <p class="inline" set:html={formatDescription(interaction.action)} />
+                        : <p class="inline" set:html={formatText(interaction.action)} />
                     </li>
                 ))}
             </ul>
@@ -46,15 +46,15 @@ const { interactions } = Astro.props;
                             <td>
                                 {interaction.keys.map((key, index) => (
                                     <>
-                                        <span>{index > 0 ? "/" : ""}</span>
+                                        <span>{index > 0 ? " / " : ""}</span>
                                         <kbd class="whitespace-nowrap text-[var(--sl-color-text-accent)]">
                                             {key}
                                         </kbd>
                                     </>
                                 ))}
                             </td>
-                            <td set:html={formatDescription(interaction.condition ?? "-")} />
-                            <td set:html={formatDescription(interaction.action)} />
+                            <td set:html={formatText(interaction.condition ?? "-")} />
+                            <td set:html={formatText(interaction.action)} />
                         </tr>
                     ))}
                 </tbody>

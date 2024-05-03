@@ -1,42 +1,37 @@
 <script lang="ts">
-import { Accordion } from "@niklasburggraaff/svelte-runia";
-import { slide } from "svelte/transition";
+    import { slide } from "svelte/transition";
+    import { Accordion } from "@niklasburggraaff/svelte-runia";
 
-let {
-    type,
-    value = $bindable(),
-    values = $bindable(),
-    collapsible,
-    disabled,
-    loop
-}: any = $props();
+    let {
+        type,
+        value = $bindable(),
+        values = $bindable(),
+        collapsible,
+        disabled,
+        loop
+    }: any = $props();
 </script>
 
-<Accordion.Root
-    type={type}
-    bind:value={value}
-    bind:values={values}
-    collapsible={collapsible}
-    disabled={disabled}
-    loop={loop}
->
-    <Accordion.Item class="border-b" value="furthark-essentials">
+{#snippet chevronDown()}
+    <svg
+        class="size-8 transition-transform duration-200"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+    >
+        <path
+            d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
+        />
+    </svg>
+{/snippet}
+
+<Accordion.Root {type} bind:value bind:values {collapsible} {disabled} {loop}>
+    <Accordion.Item value="furthark-essentials" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
                 class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
             >
-                Furthark Essentials
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
+                Furthark Essentials {@render chevronDown()}
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
@@ -46,23 +41,12 @@ let {
             </div>
         </Accordion.Content>
     </Accordion.Item>
-    <Accordion.Item class="border-b" value="norse-myths">
+    <Accordion.Item value="norse-myths" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
                 class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
             >
-                Norse Myths 101
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
+                Norse Myths 101 {@render chevronDown()}
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
@@ -73,23 +57,12 @@ let {
             </div>
         </Accordion.Content>
     </Accordion.Item>
-    <Accordion.Item class="border-b" value="viking-explorers">
+    <Accordion.Item value="viking-explorers" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
                 class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
             >
-                Viking Explorers
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1.5rem", height: "1.5rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
+                Viking Explorers {@render chevronDown()}
             </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>

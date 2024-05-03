@@ -11,7 +11,7 @@ export default {
                 accent: {
                     200: colors.orange[200],
                     600: colors.orange[500],
-                    900: colors.orange[500],
+                    900: colors.orange[900],
                     950: colors.orange[950]
                 },
                 gray: colors.stone

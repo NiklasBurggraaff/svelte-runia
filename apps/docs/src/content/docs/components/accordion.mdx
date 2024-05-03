@@ -3,16 +3,17 @@ title: Accordion
 description: Documentation on Accordion Svelte Runia component
 ---
 
-import { Card, Icon } from "@astrojs/starlight/components";
-import AccordionExample from "./accordion/AccordionExample.svelte";
-import { A11y, API, Features, Links } from "./_components";
+import { Card, Icon, Tabs, TabItem } from "@astrojs/starlight/components";
+import { A11y, API, Features, Links, Example } from "./_components";
+
+import InteractivePreview from "./accordion/InteractivePreview.svelte";
+import * as Examples from "./accordion/examples";
 
 <div class="text-xl text-[var(--sl-color-gray-2)]">
-    Set of interactive headings that allow you to toggle the visibility of the associated section of
-    content - the accordion panel.
+    Set of interactive headings that allow you to expand/collapse the associated content.
 </div>
 
-:::tip[Fun fact]
+:::tip[Did you know?]
 The Accordion component is named after the musical [accordion](https://en.wikipedia.org/wiki/Accordion).
 
 But did you know the accordion is a family of instruments that includes the [harmonica](https://en.wikipedia.org/wiki/Harmonica)?
@@ -20,7 +21,68 @@ But did you know the accordion is a family of instruments that includes the [har
 
 ## Example
 
-<AccordionExample client:load />
+<Tabs>
+    <TabItem label="Preview" icon="laptop">
+        <InteractivePreview client:load />
+    </TabItem>
+    <TabItem label="Code" icon="seti:svelte">
+        ```svelte
+        // MyAccordion.svelte
+        <script lang="ts">
+            import { slide } from "svelte/transition";
+            import { Accordion } from "@niklasburggraaff/svelte-runia";
+
+            let { type, value = $bindable(), values = $bindable(), collapsible, disabled, loop }: any = $props();
+        </script>
+
+        {#snippet chevronDown()}
+            <svg class="size-8 transition-transform duration-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/>
+            </svg>
+        {/snippet}
+
+        <Accordion.Root type={type} bind:value={value} bind:values={values} collapsible={collapsible} disabled={disabled} loop={loop}>
+            <Accordion.Item value="furthark-essentials" class="border-b">
+                <Accordion.Header level={3}>
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                        Furthark Essentials {@render chevronDown()}
+                    </Accordion.Trigger>
+                </Accordion.Header>
+                <Accordion.Content>
+                    <div class="px-1.5 pb-4" transition:slide={{ duration: 200 }}>
+                        The Elder Futhark, used from the 2nd to 8th centuries, comprised 24 runic characters, each bearing significance in magic, divination, and communication.
+                    </div>
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item value="norse-myths" class="border-b">
+                <Accordion.Header level={3}>
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                        Norse Myths 101 {@render chevronDown()}
+                    </Accordion.Trigger>
+                </Accordion.Header>
+                <Accordion.Content>
+                    <div class="px-1.5 pb-4" transition:slide={{ duration: 200 }}>
+                        Norse mythology, a tapestry of gods, giants, and heroes, offers insights into ancient Scandinavian beliefs, from the creation of the cosmos to the battles of Ragnarök.
+                    </div>
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item value="viking-explorers" class="border-b">
+                <Accordion.Header level={3}>
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                        Viking Explorers {@render chevronDown()}
+                    </Accordion.Trigger>
+                </Accordion.Header>
+                <Accordion.Content>
+                    <div class="px-1.5 pb-4" transition:slide={{ duration: 200 }}>
+                        Vikings, from the 8th to 11th centuries, sailed seas, established trade routes, and left their mark on history through exploration and expansion.
+                    </div>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion.Root>
+        ```
+    </TabItem>
+
+</Tabs>
 
 #### Features
 
@@ -42,24 +104,25 @@ But did you know the accordion is a family of instruments that includes the [har
 
 Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger`, and `Content` components.
 
-```svelte
+```svelte {2} /<(Accordion.Root)/ /<(Accordion.Item)/ /<(Accordion.Header)/ /<(Accordion.Trigger)/ /<(Accordion.Content)/
 <script lang="ts">
     import { Accordion } from "@niklasburggraaff/svelte-runia";
 </script>
 
+// MyAccordion.svelte
 <Accordion.Root type="single">
     <Accordion.Item value="item">
         <Accordion.Header level={3}>
-            <Accordion.Trigger />
+            <Accordion.Trigger>[Heading]</Accordion.Trigger>
         </Accordion.Header>
-        <Accordion.Content />
+        <Accordion.Content>[Content]</Accordion.Content>
     </Accordion.Item>
 </Accordion.Root>
 ```
 
 -   The `Root` _can_ contain multiple `Item`'s and _must_ be passed a `type` prop
 -   Each `Item` _must_ contain a `Header` and `Content` and _must_ be passed a **unique** `value` prop
--   A `Header` _must_ contain (_only_) a `Trigger` and is _must_ be passed a `level` prop
+-   A `Header` _must_ contain a `Trigger` and is _must_ be passed a `level` prop
 
 ## API
 
@@ -80,8 +143,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             required: true,
             type: "'single' | 'multiple'",
             defaultValue: undefined,
-            description:
-                "Determines if a single accordion panel or multiple accordion panels can be visible."
+            description: "Determines if a single or multiple items can have expanded content."
         },
         {
             name: "value",
@@ -89,33 +151,33 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             bindable: true,
             defaultValue: undefined,
             description:
-                "If `type = 'single'`: The value of the expanded accordion panel, `null` if the accordion is collapsed."
+                "If `type = 'single'`: The value of the expanded item, `null` if the accordion is collapsed."
         },
         {
             name: "defaultValue",
             type: "string",
             defaultValue: undefined,
-            description: "If `type = 'single'`: The accordion panel to be expanded by default."
+            description: "If `type = 'single'`: The item to be expanded by default."
         },
         {
             name: "values",
             type: "string[]",
             bindable: true,
             defaultValue: undefined,
-            description: "If `type = 'multiple'`: The values of the expanded accordion panels."
+            description: "If `type = 'multiple'`: The values of the expanded items."
         },
         {
             name: "defaultValues",
             type: "string[]",
             defaultValue: undefined,
-            description: "If `type = 'multiple'`: The accordion panels to be expanded by default."
+            description: "If `type = 'multiple'`: The items to be expanded by default."
         },
         {
             name: "collapsible",
             type: "boolean",
             defaultValue: "false",
             description:
-                "If `type = 'single'`: When `true`, prevents the currently visible accordion panel from being collapsed."
+                "If `type = 'single'`: When `true`, prevents expanded content from being collapsed."
         },
         {
             name: "disabled",
@@ -128,7 +190,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             type: "boolean",
             defaultValue: "true",
             description:
-                "When `true`, keyboard navigation will loop focus from the last item to the first item and vice versa."
+                "When `true`, keyboard navigation will loop focus from the last to the first `Trigger` and vice versa."
         },
         {
             name: "orientation",
@@ -141,7 +203,8 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "direction",
             type: "'ltr' | rtl'",
             defaultValue: "'ltr'",
-            description: "If `orientation = 'horizontal'`: The reading direction of the accordion."
+            description:
+                "If `orientation = 'horizontal'`: The reading direction of the accordion, used to correct keyboard navigation."
         },
         {
             name: "element",
@@ -175,7 +238,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
         other: "section",
         condition: "If the `region=true`"
     }}
-    description="represents one item in the accordion with an accordion panel and it's heading."
+    description="represents one item in the accordion with a heading and associated content."
 />
 
 #### Props
@@ -188,7 +251,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             type: "string",
             bindable: true,
             defaultValue: undefined,
-            description: "The value used to identify the accordion panel."
+            description: "The value used to identify the item."
         },
         {
             name: "disabled",
@@ -201,7 +264,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             type: "boolean",
             defaultValue: "false",
             description:
-                "When `true`, the item is a `section` element. Avoid using with many (~6) panels to prevent landmark region proliferation. This is especially helpful when accordion panels contain headings or a nested accordion."
+                "When `true`, the item is a `section` element. Avoid using with many (~6) items to prevent landmark region proliferation. This is especially helpful when content contain headings or a nested accordion."
         },
         {
             name: "element",
@@ -221,13 +284,15 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "data-state",
             public: true,
             values: "'open' | 'closed'",
-            description: "The state of the accordion panel."
+            description:
+                "The state of the item. `'open'` when the item's content is expanded and `'closed'` when the item's content is collapsed."
         },
         {
             name: "data-disabled",
             public: true,
             values: undefined,
-            description: "Present when the accordion or item is disabled."
+            description:
+                "Present when the item is disabled. This can be due to the whole accordion or this item being disabled."
         },
         {
             name: "data-orientation",
@@ -245,12 +310,12 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
     element={{
         default: {
             values: ["h2", "h3", "h4", "h5", "h6"],
-            condition: "`level`"
+            condition: "Based on `level`"
         },
         other: "div",
-        condition: "If `useHeading=false`"
+        condition: "If `useHeading = false`"
     }}
-    description="represents the heading for an accordion panel."
+    description="is the heading for the content of an item."
 />
 
 #### Props
@@ -291,7 +356,8 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
 <API.Introduction
     name="Trigger"
     element="button"
-    description="toggles the visibility of the associated accordion panel."
+    focussable={true}
+    description="toggle button that expands/collapses the item's content."
 />
 
 #### Props
@@ -316,13 +382,15 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "data-state",
             public: true,
             values: "'open' | 'closed'",
-            description: "The state of the accordion panel."
+            description:
+                "The state of the item. `'open'` when the item's content is expanded and `'closed'` when the item's content is collapsed."
         },
         {
             name: "data-disabled",
             public: true,
             values: undefined,
-            description: "Present when the accordion or item is disabled."
+            description:
+                "Present when the item is disabled. This can be due to the whole accordion or the item being disabled."
         },
         {
             name: "data-orientation",
@@ -338,7 +406,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
         {
             name: "data-svelte-runia-value",
             values: "string",
-            description: "The value identifying the associated accordion panel."
+            description: "The value identifying the item."
         }
     ]}
 />
@@ -348,8 +416,33 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
 <API.Introduction
     name="Content"
     element="div"
-    description="is the accordion panel that can be toggled."
+    description="is the content of an items that can be expanded/collapsed."
 />
+
+:::caution
+The `Content` element is always rendered <span class="inline-flex" title="This is to ensure the `aria-controls` attribute on the `Trigger` is the `id` of a rendered element"> <Icon name="information" /> </span> .
+The children of the `Content` element are only rendered when the content is expanded.
+
+Therefore, if you want to animate the content
+(using [Svelte transitions](https://svelte.dev/docs/element-directives#transition-fn))
+or apply styling affecting the content size (such as padding), you will likely want to apply this to a child element.
+:::
+
+The following is a pseudocode representing the implementation of the `Content` component.
+
+```svelte
+<script lang="ts">
+    let expanded = $...;
+    // The `id` used for the `aria-controls` attribute in the `Trigger` component.
+    let id = $...;
+</script>
+
+<div {id}>
+    {#if expanded}
+        {@render children()}
+    {/if}
+</div>
+```
 
 #### Props
 
@@ -373,13 +466,15 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "data-state",
             public: true,
             values: "'open' | 'closed'",
-            description: "The state of the accordion panel."
+            description:
+                "The state of the item. `'open'` when the item's content is expanded and `'closed'` when the item's content is collapsed."
         },
         {
             name: "data-disabled",
             public: true,
             values: undefined,
-            description: "Present when the accordion or item is disabled."
+            description:
+                "Present when the item is disabled. This can be due to the whole accordion or the item being disabled."
         },
         {
             name: "data-orientation",
@@ -401,7 +496,7 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
         {
             keys: ["Enter", "Space"],
             condition: "If focus on a `Trigger`",
-            action: "Attempts to toggle the panel."
+            action: "Attempts to toggle the associated content."
         },
         {
             keys: ["Tab", "Shift + Tab"],
@@ -411,12 +506,12 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
         {
             keys: ["Arrow Down", "Arrow Up"],
             condition: "If focus on a `Trigger` (and the `orientation = 'vertical'`)",
-            action: "Move focus to the next/previous `Trigger`."
+            action: "Move focus to the next/previous `Trigger`. If `loop = true`, loops focus from the last to the first `Trigger` and vice versa."
         },
         {
             keys: ["Arrow Right", "Arrow Left"],
             condition: "If `orientation = 'horizontal'` and focus is on a `Trigger`",
-            action: "Move focus to the `Trigger` to the right/left (depending on `direction`)."
+            action: "Move focus to the `Trigger` to the right/left (depending on `direction`). If `loop = true`, loops focus from the last to the first `Trigger` and vice versa."
         },
         {
             keys: ["Home", "End"],
@@ -433,7 +528,7 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
         {
             element: "Trigger",
             event: "onclick",
-            action: "Attempts to toggle the panel."
+            action: "Attempts to toggle the associated content."
         }
     ]}
 />
@@ -476,7 +571,7 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
             name: "aria-disabled",
             type: "'true' | 'false'",
             description:
-                "`'true'` when the accordion or item is disabled, or if the associated accordion panel is visible and the accordion doesn't allow collapsing."
+                "`'true'` when the accordion or item is disabled, or if the content is expanded and `collapsible = false`."
         },
         {
             name: "aria-controls",
@@ -499,95 +594,199 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
 
 ### Collapse all items
 
-Use the `collapsible` prop to allow the currently expanded accordion panel to be collapsed.
+Use the `collapsible` prop to allow the currently expanded content to be collapsed.
 
-```svelte
-<Accordion.Root type="single" collapsible>
-    <Accordion.Item value="item-1">...</Accordion.Item>
-    <Accordion.Item value="item-2">...</Accordion.Item>
-</Accordion.Root>
-```
+<Example>
+    <div slot="code">
+        ```svelte collapsible"
+        <Accordion.Root type="single" collapsible>
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.Collapsible client:load slot="preview" />
+
+</Example>
 
 ### Expand by default
 
+#### Single
+
 Use the `defaultValue` prop to set the initial item to be expanded.
 
-```svelte
-<Accordion.Root type="single" defaultValue="item-1">
-    <Accordion.Item value="item-1">...</Accordion.Item>
-    <Accordion.Item value="item-2">...</Accordion.Item>
-</Accordion.Root>
-```
+<Example>
+    <div slot="code">
+        ```svelte defaultValue="item-1""
+        <Accordion.Root type="single" defaultValue="item-1">
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.DefaultSingle client:load slot="preview" />
+
+</Example>
+
+#### Multiple
+
+For `type = "multiple"` instead use the `defaultValues` prop to set the initial items to be expanded.
+
+<Example>
+    <div slot="code">
+        ```svelte defaultValues="['item-1', 'item-2']"
+        <Accordion.Root type="multiple" defaultValues={["item-1", "item-2"]}>
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.DefaultMultiple client:load slot="preview" />
+
+</Example>
 
 ### Expand multiple items
 
-Set type `type` props to `"multiple"` to allow multiple items to be expanded.
+Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
 
-```svelte
-<Accordion.Root type="multiple">
-    <Accordion.Item value="item-1">...</Accordion.Item>
-    <Accordion.Item value="item-2">...</Accordion.Item>
-</Accordion.Root>
-```
+<Example>
+    <div slot="code">
+        ```svelte "type="multiple""
+        <Accordion.Root type="multiple">
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.Multiple client:load slot="preview" />
+
+</Example>
 
 ### Control the expanded item
 
-Bind the `value: string` prop of the `Root` component to a variable to control the expanded item.
+#### Single
+
+Bind the `value` prop of the `Root` component to a variable to control the expanded item.
 This allows both reading and writing the value of the expanded item.
 
-```svelte
-<script>
-    let value = $state("item-1");
-</script>
+<Example>
+    <div slot="code">
+        ```svelte "bind:value" "let value = $state("item-1");"
+        // MyAccordion.svelte
+        <script>
+            import { Accordion } from "@niklasburggraaff/svelte-runia";
+            let value = $state("item-1");
+        </script>
 
-<Accordion.Root type="single" bind:value>
-    <Accordion.Item value="item-1">...</Accordion.Item>
-    <Accordion.Item value="item-2">...</Accordion.Item>
-</Accordion.Root>
-```
+        <input bind:value />
 
-For `type="multiple"` instead use the `values: string[]` prop to control the expanded items.
+        <Accordion.Root bind:value type="single">
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.ControlledSingle client:load slot="preview" />
+
+</Example>
+
+#### Multiple
+
+For `type = "multiple"` instead use the `values` prop to control the expanded items.
+Make sure to handle `values` being an array of strings appropriately.
+
+<Example>
+    <div slot="code">
+        ```svelte "bind:values" "let values = $state([]);"
+        // MyAccordion.svelte
+        <script>
+            import { Accordion } from "@niklasburggraaff/svelte-runia";
+
+            let values = $state([]);
+            let value = $state("");
+            $effect(() => {
+                value = values.join(", ");
+            });
+
+            $effect(() => {
+                updateValues(value);
+            });
+            function updateValues(newValue: string) {
+                values = newValue.split(",").map((v) => v.trim());
+            }
+        </script>
+
+        <input bind:value />
+
+        <Accordion.Root bind:values type="multiple">
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.ControlledMultiple client:load slot="preview" />
+
+</Example>
 
 ### Animated content
 
-Apply a transition, i.e. `slide` which works well with the accordion, to a child of the `Content` component.
+Apply a Svelte transition, i.e. `slide` which works well with the accordion, to a child of the `Content` component.
 
-```svelte
-<script lang="ts">
-    import { slide } from "svelte/transition";
-</script>
+<Example>
+    <div slot="code">
+        ```svelte "<div transition:slide={{ duration: 200 }}>...</div>"
+        // MyAccordion.svelte
+        <script lang="ts">
+            import { slide } from "svelte/transition";
+        </script>
 
-<Accordion.Root type="single" animate>
-    <Accordion.Item value="item-1">
-        <Accordion.Header level={3}>...</Accordion.Header>
-        <Accordion.Content>
-            <div transition:slide={{ duration: 200 }}>...</div>
-        </Accordion.Content>
-    </Accordion.Item>
-    ...
-</Accordion.Root>
-```
+        <Accordion.Root type="single" animate>
+            <Accordion.Item value="item-1">
+                <Accordion.Header level={3}>...</Accordion.Header>
+                <Accordion.Content>
+                    <div transition:slide={{ duration: 200 }}>...</div>
+                </Accordion.Content>
+            </Accordion.Item>
+            ...
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.AnimatedContent client:load slot="preview" />
+
+</Example>
+
+:::caution
+The `Content` component itself cannot be animated using
+[Svelte transitions](https://svelte.dev/docs/element-directives#transition-fn)
+as it is always rendered.
+:::
 
 ### Animated trigger icon
 
 The `data-state` data attribute can be used to animate the trigger icon.
-It will be set to `open` when the content of the accordion panel is visible.
+It will be set to `"open"` when the content is expanded.
 
-```svelte
-<script lang="ts">
-    import { IconSVG } from "...";
-</script>
+<Example>
+    <div slot="code">
+        ```svelte "[&[data-state=open]>span>svg]:rotate-180" {8-10}
+        {#snippet chevronDown()}...{/snippet}
 
-<Accordion.Root type="single" animate>
-    <Accordion.Item value="item-1">
-        <Accordion.Header level={3}>
-            <Accordion.Trigger class="[&[data-state=open]>span>svg]:rotate-180">
-                Item 1
-                <IconSVG class="transition-transform duration-200" />
-            </Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content>...</Accordion.Content>
-    </Accordion.Item>
-    ...
-</Accordion.Root>
-```
+        <Accordion.Root type="single" collapsible>
+            <Accordion.Item value="item-1">
+                <Accordion.Header level={3}>
+                    <Accordion.Trigger class="[&[data-state=open]>span>svg]:rotate-180 flex w-full items-center justify-between bg-transparent py-2 text-center text-xl">
+                        Item 1
+                        <span class="transition-transform duration-200">
+                            {@render chevronDown()}
+                        </span>
+                    </Accordion.Trigger>
+                </Accordion.Header>
+                <Accordion.Content>...</Accordion.Content>
+            </Accordion.Item>
+            ...
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.AnimatedTrigger client:load slot="preview" />
+
+</Example>

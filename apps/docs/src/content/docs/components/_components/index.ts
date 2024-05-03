@@ -1,5 +1,6 @@
 export { default as Features } from "./Features.astro";
 export { default as Links } from "./Links.astro";
+export { default as Example } from "./Example.astro";
 
 import Introduction from "./api/Introduction.astro";
 import Props from "./api/Props.astro";

@@ -1,5 +1,5 @@
 ---
-import { formatDescription, formatQuotes } from "../format";
+import { formatText, formatQuotes } from "../format";
 import NoOverflowCode from "../NoOverflowCode.astro";
 
 interface Props {
@@ -28,7 +28,7 @@ const { attributes } = Astro.props;
                             </code>{" "}
                         </div>
                         <ul class="!my-2">
-                            <li set:html={formatDescription(att.description)} />
+                            <li set:html={formatText(att.description)} />
                         </ul>
                     </li>
                 ))}
@@ -50,7 +50,7 @@ const { attributes } = Astro.props;
                             <td>
                                 <NoOverflowCode code={formatQuotes(att.type)} />
                             </td>
-                            <td set:html={formatDescription(att.description)} />
+                            <td set:html={formatText(att.description)} />
                         </tr>
                     ))}
                 </tbody>
