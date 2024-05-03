@@ -63,7 +63,8 @@ export default defineConfig({
                 "@niklasburggraaff/svelte-runia": path.resolve(
                     "../../packages/svelte-runia/src/lib/index.js"
                 ),
-                $lib: path.resolve("../../packages/svelte-runia/src/lib")
+                $lib: path.resolve("../../packages/svelte-runia/src/lib"),
+                "@": path.resolve("./src")
             }
         }
     }

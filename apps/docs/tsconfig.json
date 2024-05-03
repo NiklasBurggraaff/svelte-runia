@@ -3,7 +3,8 @@
     "compilerOptions": {
         "paths": {
             "$lib": ["../../packages/svelte-runia/src/lib"],
-            "@niklasburggraaff/svelte-runia": ["../../packages/svelte-runia/src/lib/index.js"]
+            "@niklasburggraaff/svelte-runia": ["../../packages/svelte-runia/src/lib/index.js"],
+            "@/*": ["./src/*"]
         }
     }
 }

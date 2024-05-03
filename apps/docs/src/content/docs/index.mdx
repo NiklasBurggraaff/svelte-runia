@@ -16,19 +16,17 @@ hero:
           variant: secondary
 ---
 
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-
 import { Card, Code, TabItem, Tabs } from "@astrojs/starlight/components";
-import NpmCommand from "../../components/NpmCommand.astro";
-import CallToAction from "../../components/override/CallToAction.astro";
-import Accordion from "../../pages/_examples/Accordion.svelte";
-import ExampleCard from "../../pages/_examples/ExampleCard.astro";
+import CallToAction from "@/components/override/CallToAction.astro";
+import NpmCommand from "@/components/NpmCommand.astro";
+import * as Examples from "@/components/examples/home";
+import ExampleCard from "@/components/examples/ExampleCard.astro";
 
 <div class="not-content">
     <div class="flex gap-4 overflow-x-auto">
         <ExampleCard title="Accordion" slug="accordion">
             <div class="w-full">
-                <Accordion client:load />
+                <Examples.Accordion client:load />
             </div>
         </ExampleCard>
         <ExampleCard title="Dialog" slug="dialog">

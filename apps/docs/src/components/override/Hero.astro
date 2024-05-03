@@ -2,26 +2,12 @@
 import type { Props } from "@astrojs/starlight/props";
 import CallToAction from "./CallToAction.astro";
 import { Icon } from "@astrojs/starlight/components";
-import RuneAnimation from "../RuneAnimation.astro";
+import RuneAnimation from "./RuneAnimation.astro";
 
 const PAGE_TITLE_ID = "_top";
 
 const { data } = Astro.props.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
-
-let darkImage: ImageMetadata | undefined;
-let lightImage: ImageMetadata | undefined;
-let rawHtml: string | undefined;
-if (image) {
-    if ("file" in image) {
-        darkImage = image.file;
-    } else if ("dark" in image) {
-        darkImage = image.dark;
-        lightImage = image.light;
-    } else {
-        rawHtml = image.html;
-    }
-}
 ---
 
 <div

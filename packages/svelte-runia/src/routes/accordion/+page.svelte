@@ -1,7 +1,7 @@
 <script lang="ts">
     import { slide } from "svelte/transition";
 
-    import { Accordion } from "../../lib/index.js";
+    import { Accordion } from "$lib/index.js";
 
     let value = $state("1");
 

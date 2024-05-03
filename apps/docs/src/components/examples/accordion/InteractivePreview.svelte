@@ -1,7 +1,6 @@
 <script lang="ts">
-    import InteractivePreview from "../__components/InteractivePreview.svelte";
-
-    import Accordion from "./Accordion.svelte";
+    import InteractivePreview from "@/components/docs/InteractivePreview.svelte";
+    import InteractiveAccordion from "./InteractiveAccordion.svelte";
 
     let type: "single" | "multiple" = $state("single");
 
@@ -16,7 +15,7 @@
 
 <InteractivePreview>
     {#snippet preview()}
-        <Accordion {type} bind:value bind:values {collapsible} {disabled} {loop} />
+        <InteractiveAccordion {type} bind:value bind:values {collapsible} {disabled} {loop} />
     {/snippet}
     {#snippet controls()}
         {#if type === "single"}
