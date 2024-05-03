@@ -43,7 +43,7 @@ But did you know the accordion is a family of instruments that includes the [har
         <Accordion.Root type={type} bind:value={value} bind:values={values} collapsible={collapsible} disabled={disabled} loop={loop}>
             <Accordion.Item value="furthark-essentials" class="border-b">
                 <Accordion.Header level={3}>
-                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180">
                         Furthark Essentials {@render chevronDown()}
                     </Accordion.Trigger>
                 </Accordion.Header>
@@ -55,7 +55,7 @@ But did you know the accordion is a family of instruments that includes the [har
             </Accordion.Item>
             <Accordion.Item value="norse-myths" class="border-b">
                 <Accordion.Header level={3}>
-                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180">
                         Norse Myths 101 {@render chevronDown()}
                     </Accordion.Trigger>
                 </Accordion.Header>
@@ -67,7 +67,7 @@ But did you know the accordion is a family of instruments that includes the [har
             </Accordion.Item>
             <Accordion.Item value="viking-explorers" class="border-b">
                 <Accordion.Header level={3}>
-                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180">
+                    <Accordion.Trigger class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180">
                         Viking Explorers {@render chevronDown()}
                     </Accordion.Trigger>
                 </Accordion.Header>
@@ -591,13 +591,13 @@ Adheres to the [WAI-ARIA Accordion Pattern (Sections With Show/Hide Functionalit
 
 ## Examples
 
-### Collapse all items
+### Allow collapsing all items
 
 Use the `collapsible` prop to allow the currently expanded content to be collapsed.
 
 <Example>
     <div slot="code">
-        ```svelte collapsible"
+        ```svelte "collapsible"
         <Accordion.Root type="single" collapsible>
             <Accordion.Item value="item-1">...</Accordion.Item>
             <Accordion.Item value="item-2">...</Accordion.Item>
@@ -608,43 +608,7 @@ Use the `collapsible` prop to allow the currently expanded content to be collaps
 
 </Example>
 
-### Expand by default
-
-#### Single
-
-Use the `defaultValue` prop to set the initial item to be expanded.
-
-<Example>
-    <div slot="code">
-        ```svelte defaultValue="item-1""
-        <Accordion.Root type="single" defaultValue="item-1">
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
-        </Accordion.Root>
-        ```
-    </div>
-    <Examples.DefaultSingle client:load slot="preview" />
-
-</Example>
-
-#### Multiple
-
-For `type = "multiple"` instead use the `defaultValues` prop to set the initial items to be expanded.
-
-<Example>
-    <div slot="code">
-        ```svelte defaultValues="['item-1', 'item-2']"
-        <Accordion.Root type="multiple" defaultValues={["item-1", "item-2"]}>
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
-        </Accordion.Root>
-        ```
-    </div>
-    <Examples.DefaultMultiple client:load slot="preview" />
-
-</Example>
-
-### Expand multiple items
+### Allow expanding multiple items
 
 Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
 
@@ -661,16 +625,48 @@ Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
 
 </Example>
 
-### Control the expanded item
+### Expand an item by default
 
-#### Single
+Use the `defaultValue` prop to set the initial item to be expanded.
+
+<Example>
+    <div slot="code">
+        ```svelte "defaultValue="item-1""
+        <Accordion.Root type="single" defaultValue="item-1">
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.DefaultSingle client:load slot="preview" />
+
+</Example>
+
+#### Multiple
+
+For `type = "multiple"` instead use the `defaultValues` prop to set the initial items to be expanded.
+
+<Example>
+    <div slot="code">
+        ```svelte "defaultValues={["item-1", "item-2"]}"
+        <Accordion.Root type="multiple" defaultValues={["item-1", "item-2"]}>
+            <Accordion.Item value="item-1">...</Accordion.Item>
+            <Accordion.Item value="item-2">...</Accordion.Item>
+        </Accordion.Root>
+        ```
+    </div>
+    <Examples.DefaultMultiple client:load slot="preview" />
+
+</Example>
+
+### Control the expanded item
 
 Bind the `value` prop of the `Root` component to a variable to control the expanded item.
 This allows both reading and writing the value of the expanded item.
 
 <Example>
     <div slot="code">
-        ```svelte "bind:value" "let value = $state("item-1");"
+        ```svelte /Root (bind:value)/ "let value = $state("item-1");"
         // MyAccordion.svelte
         <script>
             import { Accordion } from "@niklasburggraaff/svelte-runia";
@@ -689,10 +685,13 @@ This allows both reading and writing the value of the expanded item.
 
 </Example>
 
+:::caution
+If `collapsible = true` make sure to appropriately handle `values` being `null`, when all items are collapsed.
+:::
+
 #### Multiple
 
 For `type = "multiple"` instead use the `values` prop to control the expanded items.
-Make sure to handle `values` being an array of strings appropriately.
 
 <Example>
     <div slot="code">
@@ -727,23 +726,29 @@ Make sure to handle `values` being an array of strings appropriately.
 
 </Example>
 
-### Animated content
+:::caution
+Make sure to appropriately handle `values` being an array of strings, which can be empty.
+:::
+
+### Animate content
 
 Apply a Svelte transition, i.e. `slide` which works well with the accordion, to a child of the `Content` component.
 
 <Example>
     <div slot="code">
-        ```svelte "<div transition:slide={{ duration: 200 }}>...</div>"
+        ```svelte {10-12}
         // MyAccordion.svelte
         <script lang="ts">
             import { slide } from "svelte/transition";
         </script>
 
-        <Accordion.Root type="single" animate>
+        <Accordion.Root type="single" collapsible>
             <Accordion.Item value="item-1">
                 <Accordion.Header level={3}>...</Accordion.Header>
                 <Accordion.Content>
-                    <div transition:slide={{ duration: 200 }}>...</div>
+                    <div transition:slide={{ duration: 200 }}>
+                        ...
+                    </div>
                 </Accordion.Content>
             </Accordion.Item>
             ...
@@ -760,7 +765,7 @@ The `Content` component itself cannot be animated using
 as it is always rendered.
 :::
 
-### Animated trigger icon
+### Animate trigger icon
 
 The `data-state` data attribute can be used to animate the trigger icon.
 It will be set to `"open"` when the content is expanded.
@@ -773,7 +778,7 @@ It will be set to `"open"` when the content is expanded.
         <Accordion.Root type="single" collapsible>
             <Accordion.Item value="item-1">
                 <Accordion.Header level={3}>
-                    <Accordion.Trigger class="[&[data-state=open]>span>svg]:rotate-180 flex w-full items-center justify-between bg-transparent py-2 text-center text-xl">
+                    <Accordion.Trigger class="[&[data-state=open]>span>svg]:rotate-180 flex w-full items-center justify-between bg-transparent py-2 text-xl">
                         Item 1
                         <span class="transition-transform duration-200">
                             {@render chevronDown()}

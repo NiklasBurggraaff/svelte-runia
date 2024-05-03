@@ -29,7 +29,7 @@
     <Accordion.Item value="furthark-essentials" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180"
             >
                 Furthark Essentials {@render chevronDown()}
             </Accordion.Trigger>
@@ -44,7 +44,7 @@
     <Accordion.Item value="norse-myths" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180"
             >
                 Norse Myths 101 {@render chevronDown()}
             </Accordion.Trigger>
@@ -60,7 +60,7 @@
     <Accordion.Item value="viking-explorers" class="border-b">
         <Accordion.Header level={3}>
             <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-2 text-center text-xl [&[data-state=open]>svg]:rotate-180"
+                class="flex w-full items-center justify-between bg-transparent py-2 text-xl [&[data-state=open]>svg]:rotate-180"
             >
                 Viking Explorers {@render chevronDown()}
             </Accordion.Trigger>
