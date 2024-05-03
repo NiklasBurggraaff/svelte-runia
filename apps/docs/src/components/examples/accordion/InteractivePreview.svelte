@@ -16,15 +16,11 @@
         valuesInput = values.join(", ");
     });
 
-    $effect(() => {
-        updateValues(valuesInput);
-    });
-    function updateValues(newValue: string) {
-        if (newValue === "") {
-            return;
-        }
-
-        values = newValue.split(",").map((v) => v.trim());
+    function updateValues() {
+        values = valuesInput
+            .split(",")
+            .map((v) => v.trim())
+            .filter((v) => v !== "");
     }
 </script>
 
@@ -41,7 +37,11 @@
         {:else}
             <label>
                 Values:
-                <input bind:value={valuesInput} class="w-full rounded-md border px-4 py-1" />
+                <input
+                    bind:value={valuesInput}
+                    onfocusout={updateValues}
+                    class="w-full rounded-md border px-4 py-1"
+                />
             </label>
         {/if}
         <div>

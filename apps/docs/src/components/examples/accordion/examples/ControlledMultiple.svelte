@@ -7,23 +7,18 @@
         value = values.join(", ");
     });
 
-    $effect(() => {
-        updateValues(value);
-    });
-    function updateValues(newValue: string) {
-        if (newValue === "") {
-            values = [];
-            return;
-        }
-
-        values = newValue.split(",").map((v) => v.trim());
+    function updateValues() {
+        values = value
+            .split(",")
+            .map((v) => v.trim())
+            .filter((v) => v !== "");
     }
 </script>
 
 <div>
     <label>
         Values:
-        <input bind:value class="w-full rounded-md border px-4 py-1" />
+        <input bind:value onfocusout={updateValues} class="w-full rounded-md border px-4 py-1" />
     </label>
 </div>
 
