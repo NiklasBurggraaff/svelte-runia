@@ -5,8 +5,9 @@
     type OtherAttributes = Omit<HTMLButtonAttributes, "aria-label" | "aria-labelledby" | "onclick">;
 
     type ARIALabelOrLabelledByProps =
-        | { "aria-label": string; "aria-labelledby"?: null }
-        | { "aria-labelledby": string; "aria-label"?: null };
+        | { "aria-label": string; "aria-labelledby"?: never; text?: never }
+        | { "aria-labelledby": string; "aria-label"?: never; text?: never }
+        | { text: true; "aria-label"?: never; "aria-labelledby"?: never };
 
     type Props = ARIALabelOrLabelledByProps & {
         pressed?: boolean;

@@ -11,7 +11,7 @@ import { InteractivePreview, Examples } from "@/components/examples/toggle";
 <Links componentName="toggle" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/button/" />
 
 <div class="py-4 text-xl text-[var(--sl-color-gray-2)]">
-    A icon button that can be toggled between the on and off states.
+    A button that can be toggled between the on and off states.
 </div>
 
 {/* TODO see also... Switch */}
@@ -63,19 +63,19 @@ Importing `Toggle` gives you access the components.
         import { Toggle } from "@niklasburggraaff/svelte-runia";
     </script>
 
-    {#snippet icon()}...{/snippet}
-    <Toggle aria-label="Toggle">
-        {@render icon()}
+    <Toggle text>
+        Toggle
     </Toggle>
 
     ```
 
--   The `Toggle` _must_ be passed a `aria-label` or `aria-labelledby` prop
-    -   The `aria-label` should describe what the toggle does when pressed
+-   The `Toggle` _must_ be passed `text`, `aria-label`, or `aria-labelledby` prop
+    -   `text` should be passed if the toggle contains text describing what the toggle does
+    -   Otherwise, the `aria-label` should describe what the toggle does when pressed
     -   If the description is already in an element, use `aria-labelledby` to reference the id of that element
 
 :::caution
-Do NOT change the `aria-label` based on the state of the toggle.
+Do NOT change the `aria-label` (or content if `text`) based on the state of the toggle.
 The `aria-pressed` attribute is handled by the component to determine the state.
 
 As an example, if the toggle is for arming an axe with the `aria-label` set to `"Arm axe"`.
@@ -107,6 +107,13 @@ So is it `true` that the axe is disarmed? No, of course not!
             type: "boolean",
             defaultValue: "false",
             description: "When `true`, prevents the user from interacting with the toggle."
+        },
+        {
+            name: "text",
+            type: "boolean",
+            defaultValue: undefined,
+            description:
+                "Inidicate the toggle contains text describing what the toggle does when pressed."
         },
         {
             name: "aria-label",
@@ -211,7 +218,7 @@ Use the `pressed` prop to set the initial state of the toggle to be pressed.
 <Example>
     <div slot="code">
         ```svelte "pressed"
-        <Toggle pressed>
+        <Toggle pressed ...>
             ...
         </Toggle>
         ```
