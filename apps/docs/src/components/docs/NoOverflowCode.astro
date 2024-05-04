@@ -1,12 +1,13 @@
 ---
 interface Props {
     code: string;
+    class?: string;
 }
 
-const { code } = Astro.props;
+const { code, class: className = undefined } = Astro.props;
 ---
 
-<code>
+<code class={className}>
     {
         code.split(" ").map((word) => (
             <>

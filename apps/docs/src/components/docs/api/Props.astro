@@ -25,15 +25,20 @@ const { props } = Astro.props;
                 {props.map((prop) => (
                     <li>
                         <div class="flex items-center gap-x-2">
-                            <code>
-                                <span class="text-[var(--sl-color-text-accent)]">{prop.name}</span>:
-                                {formatQuotes(prop.type)}
-                                {prop.defaultValue !== undefined ? (
-                                    <> = {formatQuotes(prop.defaultValue)}</>
-                                ) : (
-                                    ""
-                                )}
-                            </code>{" "}
+                            <span>
+                                <code class="!bg-orange-500 text-[var(--sl-color-white)]">
+                                    {prop.name}
+                                </code>
+                                <code>
+                                    {":"}
+                                    {formatQuotes(prop.type)}
+                                    {prop.defaultValue !== undefined ? (
+                                        <> = {formatQuotes(prop.defaultValue)}</>
+                                    ) : (
+                                        ""
+                                    )}
+                                </code>
+                            </span>{" "}
                             {prop.required ? (
                                 <span class="text-runic-gradient pr-1 text-xl">*</span>
                             ) : (
@@ -61,7 +66,10 @@ const { props } = Astro.props;
                         <tr>
                             <td>
                                 <div class="flex items-center gap-x-2">
-                                    <NoOverflowCode code={prop.name} />
+                                    <NoOverflowCode
+                                        class="!bg-orange-500 text-[var(--sl-color-white)]"
+                                        code={prop.name}
+                                    />
                                     {prop.required ? (
                                         <span class="text-runic-gradient text-xl">*</span>
                                     ) : (

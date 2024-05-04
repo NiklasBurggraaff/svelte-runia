@@ -1,5 +1,13 @@
 @tailwind base;
 @tailwind components;
+
+@layer components {
+    kbd {
+        @apply whitespace-nowrap rounded-lg px-2 py-1 font-mono text-sm text-[var(--sl-color-text-accent)] shadow-md;
+        background: rgb(from var(--sl-color-bg-inline-code) r g b / 0.5);
+    }
+}
+
 @tailwind utilities;
 
 @layer utilities {

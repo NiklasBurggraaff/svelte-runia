@@ -24,10 +24,16 @@ const { attributes } = Astro.props;
                 {attributes.map((att) => (
                     <li>
                         <div class="flex items-center gap-x-2">
-                            <code>
-                                <span class="text-[var(--sl-color-text-accent)]">[{att.name}]</span>
-                                {att.values !== undefined ? <>: {formatQuotes(att.values)}</> : ""}
-                            </code>
+                            <span>
+                                <code class="!bg-orange-500 text-[var(--sl-color-white)]">
+                                    {att.name}
+                                </code>
+                                {att.values !== undefined ? (
+                                    <code>: {formatQuotes(att.values)}</code>
+                                ) : (
+                                    ""
+                                )}
+                            </span>
                             {att.public ? (
                                 ""
                             ) : (
@@ -61,13 +67,15 @@ const { attributes } = Astro.props;
                                     ""
                                 ) : (
                                     <div
-                                        class="inline-flex pr-2"
+                                        class="inline-flex"
                                         title="This data attribute is an attribute used for thefunctioning of the component and should not be used."
                                     >
                                         <Icon name="seti:ignored" size="1rem" />
                                     </div>
                                 )}
-                                <code>[{att.name}]</code>
+                                <code class="!bg-orange-500 text-[var(--sl-color-white)]">
+                                    [{att.name}]
+                                </code>
                             </td>
                             <td>
                                 {att.values !== undefined ? (

@@ -3,7 +3,7 @@ import { formatText } from "../format";
 
 interface Props {
     interactions: Array<{
-        keys: string[];
+        keys: Array<string | Array<string>>;
         condition: string | undefined;
         action: string;
     }>;
@@ -23,9 +23,15 @@ const { interactions } = Astro.props;
                         {interaction.keys.map((key, index) => (
                             <>
                                 <span>{index > 0 ? "/" : ""}</span>
-                                <kbd class="whitespace-nowrap text-[var(--sl-color-text-accent)]">
-                                    {key}
-                                </kbd>
+                                {typeof key === "string" ? (
+                                    <kbd class="whitespace-nowrap">{key}</kbd>
+                                ) : (
+                                    <span class="whitespace-nowrap">
+                                        {key.map((k) => (
+                                            <kbd>{k}</kbd>
+                                        ))}
+                                    </span>
+                                )}
                             </>
                         ))}
                         : <p class="inline" set:html={formatText(interaction.action)} />
@@ -47,9 +53,15 @@ const { interactions } = Astro.props;
                                 {interaction.keys.map((key, index) => (
                                     <>
                                         <span>{index > 0 ? " / " : ""}</span>
-                                        <kbd class="whitespace-nowrap text-[var(--sl-color-text-accent)]">
-                                            {key}
-                                        </kbd>
+                                        {typeof key === "string" ? (
+                                            <kbd class="whitespace-nowrap">{key}</kbd>
+                                        ) : (
+                                            <span class="whitespace-nowrap">
+                                                {key.map((k) => (
+                                                    <kbd>{k}</kbd>
+                                                ))}
+                                            </span>
+                                        )}
                                     </>
                                 ))}
                             </td>

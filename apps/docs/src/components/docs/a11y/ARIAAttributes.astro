@@ -22,10 +22,16 @@ const { attributes } = Astro.props;
                 {attributes.map((att) => (
                     <li>
                         <div class="flex items-center gap-x-2">
-                            <code>
-                                <span class="text-[var(--sl-color-text-accent)]">[{att.name}]</span>
-                                {att.type !== undefined ? <>: {formatQuotes(att.type)}</> : ""}
-                            </code>{" "}
+                            <span>
+                                <code class="!bg-orange-500 text-[var(--sl-color-white)]">
+                                    {att.name}
+                                </code>
+                                {att.type !== undefined ? (
+                                    <code>: {formatQuotes(att.type)}</code>
+                                ) : (
+                                    ""
+                                )}
+                            </span>
                         </div>
                         <ul class="!my-2">
                             <li set:html={formatText(att.description)} />
@@ -45,7 +51,9 @@ const { attributes } = Astro.props;
                     {attributes.map((att) => (
                         <tr>
                             <td>
-                                <code>[{att.name}]</code>
+                                <code class="!bg-orange-500 text-[var(--sl-color-white)]">
+                                    [{att.name}]
+                                </code>
                             </td>
                             <td>
                                 <NoOverflowCode code={formatQuotes(att.type)} />
