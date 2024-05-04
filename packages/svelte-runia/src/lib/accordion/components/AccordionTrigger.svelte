@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContext, type Snippet } from "svelte";
-    import type { HTMLAttributes } from "svelte/elements";
+    import type { HTMLButtonAttributes } from "svelte/elements";
     import { getContextKey } from "$lib/context.js";
     import { addValueParam } from "$lib/events.js";
     import type { AccordionItemContext, AccordionRootContext } from "../context.js";
@@ -9,7 +9,7 @@
     type Props = {
         children: Snippet;
         element?: HTMLButtonElement | undefined;
-    } & HTMLAttributes<HTMLButtonElement>;
+    } & HTMLButtonAttributes;
 
     let { children, element = $bindable(), ...props }: Props = $props();
 

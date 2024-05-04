@@ -74,7 +74,7 @@ const { props } = Astro.props;
                                 {prop.bindable ? <p>(bindable)</p> : ""}
                             </td>
                             <td class="whitespace-nowrap">
-                                {prop.defaultValue ? (
+                                {prop.defaultValue !== undefined ? (
                                     <NoOverflowCode code={prop.defaultValue} />
                                 ) : (
                                     "-"

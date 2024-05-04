@@ -9,12 +9,12 @@ export function getAccordionTriggers(element: HTMLElement) {
     return getChildElements(element, "accordion-trigger");
 }
 
-export const stateDataAttr = getPublicDataAttribute("state");
-export const disabledDataAttr = getPublicDataAttribute("disabled");
-export const orientationDataAttr = getPublicDataAttribute("orientation");
+const stateDataAttr = getPublicDataAttribute("state");
+const disabledDataAttr = getPublicDataAttribute("disabled");
+const orientationDataAttr = getPublicDataAttribute("orientation");
 
-export const valueDataAttr = getPrivateDataAttribute("value");
-export const accordionTriggerDataAttr = getPrivateDataAttribute("accordion-trigger");
+const valueDataAttr = getPrivateDataAttribute("value");
+const accordionTriggerDataAttr = getPrivateDataAttribute("accordion-trigger");
 
 export function getAccordionRootDataAttributes(orientation: Orientation) {
     return {

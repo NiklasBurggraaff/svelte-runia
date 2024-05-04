@@ -99,21 +99,21 @@ But did you know the accordion is a family of instruments that includes the [har
 
 Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger`, and `Content` components.
 
-```svelte {2} /<(Accordion.[^ >]+)/
-<script lang="ts">
-    import { Accordion } from "@niklasburggraaff/svelte-runia";
-</script>
+    ```svelte {2} /<(Accordion.[^ >]+)/
+    // MyComponent.svelte
+    <script lang="ts">
+        import { Accordion } from "@niklasburggraaff/svelte-runia";
+    </script>
 
-// MyAccordion.svelte
-<Accordion.Root type="single">
-    <Accordion.Item value="item">
-        <Accordion.Header level={3}>
-            <Accordion.Trigger>[Heading]</Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content>[Content]</Accordion.Content>
-    </Accordion.Item>
-</Accordion.Root>
-```
+    <Accordion.Root type="single">
+        <Accordion.Item value="item">
+            <Accordion.Header level={3}>
+                <Accordion.Trigger>[Heading]</Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content>[Content]</Accordion.Content>
+        </Accordion.Item>
+    </Accordion.Root>
+    ```
 
 -   The `Root` _can_ contain multiple `Item`'s and _must_ be passed a `type` prop
 -   Each `Item` _must_ contain a `Header` and `Content` and _must_ be passed a **unique** `value` prop
@@ -144,7 +144,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "value",
             type: "string | null",
             bindable: true,
-            defaultValue: undefined,
+            defaultValue: "null",
             description:
                 "If `type = 'single'`: The value of the expanded item, `null` if the accordion is collapsed."
         },
@@ -158,7 +158,7 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
             name: "values",
             type: "string[]",
             bindable: true,
-            defaultValue: undefined,
+            defaultValue: "[]",
             description: "If `type = 'multiple'`: The values of the expanded items."
         },
         {

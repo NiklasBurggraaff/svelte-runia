@@ -8,7 +8,7 @@
     type Props = {
         children: Snippet;
         element?: HTMLDivElement | undefined;
-    } & HTMLAttributes<HTMLElement>;
+    } & HTMLAttributes<HTMLDivElement>;
 
     let { children, element = $bindable(), ...props }: Props = $props();
 

@@ -48,9 +48,9 @@
 
     let {
         type,
-        value = $bindable(),
+        value = $bindable(null),
         defaultValue,
-        values = $bindable(),
+        values = $bindable([]),
         defaultValues,
         collapsible = false,
         disabled = false,

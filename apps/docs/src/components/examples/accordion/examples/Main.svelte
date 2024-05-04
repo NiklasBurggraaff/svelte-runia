@@ -9,12 +9,7 @@
         value = $bindable(null),
         values = $bindable([]),
         collapsible = false
-    }: {
-        type?: "single" | "multiple";
-        value?: string;
-        values?: string[];
-        collapsible?: boolean;
-    } = $props();
+    }: any = $props();
 </script>
 
 <Accordion.Root {type} bind:value bind:values {collapsible}>
