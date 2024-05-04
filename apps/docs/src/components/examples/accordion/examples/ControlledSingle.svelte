@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Main from "./Main.svelte";
+    import InteractiveAccordion from "../InteractiveAccordion.svelte";
 
-    let value = $state("item-1");
+    let value = $state(null);
 </script>
 
 <div>
@@ -11,4 +11,4 @@
     </label>
 </div>
 
-<Main bind:value type="single" />
+<InteractiveAccordion bind:value type="single" />

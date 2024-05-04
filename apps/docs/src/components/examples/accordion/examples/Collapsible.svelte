@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Main from "./Main.svelte";
+    import InteractiveAccordion from "../InteractiveAccordion.svelte";
 </script>
 
-<Main collapsible />
+<InteractiveAccordion type="single" collapsible />

@@ -583,8 +583,9 @@ Use the `collapsible` prop to allow the currently expanded content to be collaps
     <div slot="code">
         ```svelte "collapsible"
         <Accordion.Root type="single" collapsible>
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -600,8 +601,9 @@ Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
     <div slot="code">
         ```svelte "type="multiple""
         <Accordion.Root type="multiple">
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -620,10 +622,11 @@ This makes it easy to set the default value in Svelte.
 
 <Example>
     <div slot="code">
-        ```svelte /" (value="item-1")/
-        <Accordion.Root type="single" value="item-1">
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+        ```svelte /" (value="furthark-essentials")/
+        <Accordion.Root type="single" value="furthark-essentials">
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -637,10 +640,11 @@ For `type = "multiple"` instead use the `values` prop to set the initial items t
 
 <Example>
     <div slot="code">
-        ```svelte "values={["item-1", "item-2"]}"
-        <Accordion.Root type="multiple" values={["item-1", "item-2"]}>
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+        ```svelte "values={["furthark-essentials", "norse-myths"]}"
+        <Accordion.Root type="multiple" values={["furthark-essentials", "norse-myths"]}>
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -655,18 +659,19 @@ This allows both reading and writing the value of the expanded item.
 
 <Example>
     <div slot="code">
-        ```svelte /Root (bind:value)/ "let value = $state("item-1");"
+        ```svelte /Root (bind:value)/ "let value = $state(null);"
         // MyAccordion.svelte
         <script>
             import { Accordion } from "@niklasburggraaff/svelte-runia";
-            let value = $state("item-1");
+            let value = $state(null);
         </script>
 
         <input bind:value />
 
         <Accordion.Root bind:value type="single">
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -676,7 +681,8 @@ This allows both reading and writing the value of the expanded item.
 </Example>
 
 :::caution
-If `collapsible = true` make sure to appropriately handle `values` being `null`, when all items are collapsed.
+If `collapsible = true` make sure to appropriately handle `values` being `null`,
+when no item is expanded.
 :::
 
 #### Multiple
@@ -707,8 +713,9 @@ For `type = "multiple"` instead use the `values` prop to control the expanded it
         <input bind:value />
 
         <Accordion.Root bind:values type="multiple">
-            <Accordion.Item value="item-1">...</Accordion.Item>
-            <Accordion.Item value="item-2">...</Accordion.Item>
+            <Accordion.Item value="furthark-essentials">...</Accordion.Item>
+            <Accordion.Item value="norse-myths">...</Accordion.Item>
+            <Accordion.Item value="viking-explorers">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
@@ -733,7 +740,7 @@ Apply a Svelte transition, i.e. `slide` which works well with the accordion, to 
         </script>
 
         <Accordion.Root type="single" collapsible>
-            <Accordion.Item value="item-1">
+            <Accordion.Item value="furthark-essentials">
                 <Accordion.Header level={3}>...</Accordion.Header>
                 <Accordion.Content>
                     <div transition:slide={{ duration: 200 }}>
@@ -766,10 +773,10 @@ It will be set to `"open"` when the content is expanded.
         {#snippet chevronDown()}...{/snippet}
 
         <Accordion.Root type="single" collapsible>
-            <Accordion.Item value="item-1">
+            <Accordion.Item value="furthark-essentials">
                 <Accordion.Header level={3}>
                     <Accordion.Trigger class="[&[data-state=open]>span>svg]:rotate-180 flex w-full items-center justify-between bg-transparent py-2 text-xl">
-                        Item 1
+                        Furthark Essentials
                         <span class="transition-transform duration-200">
                             {@render chevronDown()}
                         </span>
