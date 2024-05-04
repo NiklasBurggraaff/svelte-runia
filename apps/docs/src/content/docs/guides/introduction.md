@@ -1,6 +1,8 @@
 ---
 title: Introduction
 description: Introduction to the package
+sidebar:
+    order: 0
 ---
 
 Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.

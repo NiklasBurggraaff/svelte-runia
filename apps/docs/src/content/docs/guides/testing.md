@@ -1,9 +1,9 @@
 ---
-title: Get Started
-description: A guide in my new Starlight docs site.
-sidebar:
-    order: 1
+title: Testing
+description: How to test
 ---
+
+How to use screenreader/other accessibility tools
 
 Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
 Writing a good guide requires thinking about what your users are trying to do.
