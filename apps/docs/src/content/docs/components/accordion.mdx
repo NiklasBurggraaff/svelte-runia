@@ -149,23 +149,11 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
                 "If `type = 'single'`: The value of the expanded item, `null` if the accordion is collapsed."
         },
         {
-            name: "defaultValue",
-            type: "string",
-            defaultValue: undefined,
-            description: "If `type = 'single'`: The item to be expanded by default."
-        },
-        {
             name: "values",
             type: "string[]",
             bindable: true,
             defaultValue: "[]",
             description: "If `type = 'multiple'`: The values of the expanded items."
-        },
-        {
-            name: "defaultValues",
-            type: "string[]",
-            defaultValue: undefined,
-            description: "If `type = 'multiple'`: The items to be expanded by default."
         },
         {
             name: "collapsible",
@@ -623,36 +611,39 @@ Set type `type` prop to `"multiple"` to allow multiple items to be expanded.
 
 ### Expand an item by default
 
-Use the `defaultValue` prop to set the initial item to be expanded.
+Use the `value` prop to set the initial item to be expanded.
+
+:::note
+The `value` props is bindable, but that doesn't mean you have to bind it.
+This makes it easy to set the default value in Svelte.
+:::
 
 <Example>
     <div slot="code">
-        ```svelte "defaultValue="item-1""
-        <Accordion.Root type="single" defaultValue="item-1">
+        ```svelte /" (value="item-1")/
+        <Accordion.Root type="single" value="item-1">
             <Accordion.Item value="item-1">...</Accordion.Item>
             <Accordion.Item value="item-2">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
-    {/* HERE */}
     <Examples.DefaultSingle client:visible slot="preview" />
 
 </Example>
 
 #### Multiple
 
-For `type = "multiple"` instead use the `defaultValues` prop to set the initial items to be expanded.
+For `type = "multiple"` instead use the `values` prop to set the initial items to be expanded.
 
 <Example>
     <div slot="code">
-        ```svelte "defaultValues={["item-1", "item-2"]}"
-        <Accordion.Root type="multiple" defaultValues={["item-1", "item-2"]}>
+        ```svelte "values={["item-1", "item-2"]}"
+        <Accordion.Root type="multiple" values={["item-1", "item-2"]}>
             <Accordion.Item value="item-1">...</Accordion.Item>
             <Accordion.Item value="item-2">...</Accordion.Item>
         </Accordion.Root>
         ```
     </div>
-    {/* HERE */}
     <Examples.DefaultMultiple client:visible slot="preview" />
 
 </Example>

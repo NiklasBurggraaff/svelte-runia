@@ -32,26 +32,20 @@
         type: "single";
         // Null indicates the accordion is closed
         value?: string | null;
-        defaultValue?: string;
         collapsible?: boolean;
         values?: never;
-        defaultValues?: never;
     }
     interface AccordionMultipleProps extends Props {
         type: "multiple";
         values?: string[];
-        defaultValues?: string[];
         value?: never;
-        defaultValue?: never;
         collapsible?: never;
     }
 
     let {
         type,
         value = $bindable(null),
-        defaultValue,
         values = $bindable([]),
-        defaultValues,
         collapsible = false,
         disabled = false,
         loop = true,
@@ -67,27 +61,8 @@
         element = thisElement;
     });
 
-    // Handle default values
-    switch (type) {
-        case "single":
-            if (value === undefined) {
-                value = defaultValue;
-            }
-            break;
-        case "multiple":
-            if (values === undefined) {
-                values = defaultValues;
-            }
-            break;
-    }
-
     let accordionState: AccordionState = $state({
-        value:
-            type === "single"
-                ? defaultValue === undefined
-                    ? []
-                    : [defaultValue]
-                : defaultValues ?? [],
+        value: type === "single" ? (value === null ? [] : [value]) : values,
         collapsible,
         disabled,
         orientation

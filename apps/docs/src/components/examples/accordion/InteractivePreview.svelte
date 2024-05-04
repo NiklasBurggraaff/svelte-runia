@@ -10,23 +10,33 @@
     let disabled = $state(false);
     let loop = $state(true);
 
-    let values: string[] = $state([]);
+    let values: string = $state("");
     let valuesInput: string = $state("");
     $effect(() => {
-        valuesInput = values.join(", ");
+        valuesInput = values;
     });
 
     function updateValues() {
-        values = valuesInput
-            .split(",")
-            .map((v) => v.trim())
-            .filter((v) => v !== "");
+        values = valuesInput;
+    }
+
+    function onkeydown(event: KeyboardEvent) {
+        if (event.key === "Enter") {
+            updateValues();
+        }
     }
 </script>
 
 <InteractivePreview>
     {#snippet preview()}
-        <InteractiveAccordion {type} bind:value bind:values {collapsible} {disabled} {loop} />
+        <InteractiveAccordion
+            {type}
+            bind:value
+            bind:valuesInput={values}
+            {collapsible}
+            {disabled}
+            {loop}
+        />
     {/snippet}
     {#snippet controls()}
         {#if type === "single"}
@@ -40,6 +50,7 @@
                 <input
                     bind:value={valuesInput}
                     onfocusout={updateValues}
+                    {onkeydown}
                     class="w-full rounded-md border px-4 py-1"
                 />
             </label>

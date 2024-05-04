@@ -4,12 +4,23 @@
 
     let {
         type,
-        value = $bindable(),
-        values = $bindable(),
+        value = $bindable(null),
+        values = $bindable([]),
+        valuesInput = $bindable(""),
         collapsible,
         disabled,
         loop
     }: any = $props();
+
+    $effect(() => {
+        valuesInput = values.join(", ");
+    });
+    $effect(() => {
+        values = (valuesInput as string)
+            .split(",")
+            .map((v) => v.trim())
+            .filter((v) => v !== "");
+    });
 </script>
 
 {#snippet chevronDown()}
