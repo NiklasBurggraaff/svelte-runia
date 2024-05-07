@@ -14,7 +14,7 @@ const { componentName, ariaLink } = Astro.props;
         link={`https://github.com/NiklasBurggraaff/svelte-runia/tree/main/packages/svelte-runia/src/lib/${componentName}`}
         variant="minimal"
         icon={{ type: "icon", name: "github" }}
-        attrs={{ class: "py-1" }}
+        attrs={{ class: "py-1 text-sm" }}
     >
         View source
     </CallToAction>
@@ -22,7 +22,7 @@ const { componentName, ariaLink } = Astro.props;
         link={ariaLink}
         variant="minimal"
         icon={{ type: "icon", name: "external" }}
-        attrs={{ class: "py-1" }}
+        attrs={{ class: "py-1 text-sm" }}
     >
         ARIA design pattern
     </CallToAction>
@@ -30,7 +30,7 @@ const { componentName, ariaLink } = Astro.props;
         link={`https://github.com/NiklasBurggraaff/svelte-runia/issues/new`}
         variant="minimal"
         icon={{ type: "icon", name: "error" }}
-        attrs={{ class: "py-1" }}
+        attrs={{ class: "py-1 text-sm" }}
     >
         Report an issue
     </CallToAction>

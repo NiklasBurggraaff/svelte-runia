@@ -7,13 +7,15 @@
 
 <InteractivePreview>
     {#snippet preview()}
-        <button
-            class="rounded-xl border bg-transparent px-4 py-1"
-            onclick={() => alert(`Hello ${value}`)}
-            {disabled}
-        >
-            Say Hello
-        </button>
+        <div class="flex justify-center">
+            <button
+                class="rounded-xl border bg-transparent px-4 py-1"
+                onclick={() => alert(`Hello ${value}`)}
+                {disabled}
+            >
+                Say Hello
+            </button>
+        </div>
     {/snippet}
     {#snippet controls()}
         <div>

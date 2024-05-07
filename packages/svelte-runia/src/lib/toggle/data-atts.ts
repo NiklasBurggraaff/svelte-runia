@@ -8,14 +8,8 @@ const stateDataAttr = getPublicDataAttribute("state");
 const disabledDataAttr = getPublicDataAttribute("disabled");
 
 export function getToggleDataAttributes(pressed: boolean, disabled: boolean) {
-    if (disabled) {
-        return {
-            [stateDataAttr]: pressed ? "on" : "off",
-            [disabledDataAttr]: ""
-        };
-    } else {
-        return {
-            [stateDataAttr]: pressed ? "on" : "off"
-        };
-    }
+    return {
+        [stateDataAttr]: pressed ? "on" : "off",
+        [disabledDataAttr]: disabled ? "" : undefined
+    };
 }

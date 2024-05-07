@@ -3,7 +3,13 @@ import { findValueIndex, getValue } from "$lib/data-attr.js";
 export type Direction = "ltr" | "rtl";
 export type Orientation = "horizontal" | "vertical";
 
-function getResult(elements: HTMLElement[], index: number) {
+export type MoveResult = {
+    index: number;
+    value: string;
+    element: HTMLElement;
+};
+
+function getResult(elements: HTMLElement[], index: number): MoveResult {
     return { index, value: getValue(elements, index)!, element: elements[index] };
 }
 
@@ -15,7 +21,7 @@ export function moveNext(elements: HTMLElement[], currentValue: string, loop: bo
         if (loop) {
             nextIndex = 0;
         } else {
-            return;
+            return getResult(elements, index);
         }
     }
 
@@ -30,7 +36,7 @@ export function movePrevious(elements: HTMLElement[], currentValue: string, loop
         if (loop) {
             previousIndex = elements.length - 1;
         } else {
-            return;
+            return getResult(elements, index);
         }
     }
 
@@ -41,7 +47,7 @@ export function moveStart(elements: HTMLElement[], currentValue: string) {
     const index = findValueIndex(elements, currentValue);
 
     if (index === 0) {
-        return;
+        return getResult(elements, index);
     }
 
     return getResult(elements, 0);
@@ -51,7 +57,7 @@ export function moveEnd(elements: HTMLElement[], currentValue: string) {
     const index = findValueIndex(elements, currentValue);
 
     if (index === elements.length - 1) {
-        return;
+        return getResult(elements, index);
     }
 
     return getResult(elements, elements.length - 1);

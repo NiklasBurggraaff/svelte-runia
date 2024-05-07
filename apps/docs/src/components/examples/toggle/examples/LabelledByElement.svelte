@@ -24,7 +24,7 @@
 
 <Toggle
     aria-labelledby="axe-label"
-    class="data-[state=on]:text-text-[var(--sl-color-white] inline-flex size-10 items-center justify-center rounded-[9px] bg-[var(--sl-color-bg)] transition-all hover:bg-[var(--sl-color-gray-5)] data-[state=on]:bg-[var(--sl-color-gray-5)] data-[state=off]:text-[var(--sl-color-gray-3)]"
+    class="inline-flex size-10 items-center justify-center rounded-[9px] bg-[var(--sl-color-bg)] transition-all hover:bg-[var(--sl-color-gray-5)] data-[state=on]:bg-[var(--sl-color-gray-5)] data-[state=off]:text-[var(--sl-color-gray-3)]"
 >
     {@render axe()}
 </Toggle>

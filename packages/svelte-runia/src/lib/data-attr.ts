@@ -5,7 +5,7 @@ export type PublicDataAttributes = (typeof PublicDataAttributes)[number];
 
 const GeneralDataAttributes = ["value"];
 type GeneralDataAttributes = (typeof GeneralDataAttributes)[number];
-const ComponentDataAttributes = ["accordion-trigger", "radio-item"];
+const ComponentDataAttributes = ["accordion-trigger", "radio-button"];
 export type ComponentDataAttributes = (typeof ComponentDataAttributes)[number];
 
 type PrivateDataAttributes = GeneralDataAttributes | ComponentDataAttributes;

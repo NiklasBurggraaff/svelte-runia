@@ -26,7 +26,7 @@ But did you know the accordion is a family of instruments that includes the [har
     </TabItem>
     <TabItem label="Code" icon="seti:svelte">
         ```svelte
-        // MyAccordion.svelte
+        // MyComponent.svelte
         <script lang="ts">
             import { slide } from "svelte/transition";
             import { Accordion } from "@niklasburggraaff/svelte-runia";
@@ -99,14 +99,14 @@ But did you know the accordion is a family of instruments that includes the [har
 
 Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger`, and `Content` components.
 
-    ```svelte {2} /<(Accordion.[^ >]+)/
+    ```svelte {3} /<(Accordion.[^ >]+)/
     // MyComponent.svelte
     <script lang="ts">
         import { Accordion } from "@niklasburggraaff/svelte-runia";
     </script>
 
     <Accordion.Root type="single">
-        <Accordion.Item value="item">
+        <Accordion.Item value="...">
             <Accordion.Header level={3}>
                 <Accordion.Trigger>[Heading]</Accordion.Trigger>
             </Accordion.Header>
@@ -203,6 +203,12 @@ Importing `Accordion` gives you access to the `Root`, `Item`, `Header`, `Trigger
 
 <API.DataAttributes
     attributes={[
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description: "Present when the accordion is disabled."
+        },
         {
             name: "data-orientation",
             public: true,
@@ -413,19 +419,20 @@ or apply styling affecting the content size (such as padding), you will likely w
 
 The following is a pseudocode representing the implementation of the `Content` component.
 
-```svelte
-<script lang="ts">
-    let expanded = $...;
-    // The `id` used for the `aria-controls` attribute in the `Trigger` component.
-    let id = $...;
-</script>
+    ```svelte
+    // AccordionContent.svelte
+    <script lang="ts">
+        let expanded = $...;
+        // The `id` used for the `aria-controls` attribute in the `Trigger` component.
+        let id = $...;
+    </script>
 
-<div {id}>
-    {#if expanded}
-        {@render children()}
-    {/if}
-</div>
-```
+    <div {id}>
+        {#if expanded}
+            {@render children()}
+        {/if}
+    </div>
+    ```
 
 #### Props
 
@@ -660,7 +667,7 @@ This allows both reading and writing the value of the expanded item.
 <Example>
     <div slot="code">
         ```svelte /Root (bind:value)/ "let value = $state(null);"
-        // MyAccordion.svelte
+        // MyComponent.svelte
         <script>
             import { Accordion } from "@niklasburggraaff/svelte-runia";
             let value = $state(null);
@@ -675,7 +682,6 @@ This allows both reading and writing the value of the expanded item.
         </Accordion.Root>
         ```
     </div>
-    {/* HERE */}
     <Examples.ControlledSingle client:visible slot="preview" />
 
 </Example>
@@ -692,7 +698,7 @@ For `type = "multiple"` instead use the `values` prop to control the expanded it
 <Example>
     <div slot="code">
         ```svelte "bind:values" "let values = $state([]);"
-        // MyAccordion.svelte
+        // MyComponent.svelte
         <script>
             import { Accordion } from "@niklasburggraaff/svelte-runia";
 

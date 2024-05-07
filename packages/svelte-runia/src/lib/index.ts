@@ -2,3 +2,4 @@
 export * as Accordion from "./accordion/index.js";
 export * as Button from "./button/index.js";
 export { default as Toggle } from "./toggle/index.js";
+export * as Radio from "./radio/index.js";

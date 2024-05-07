@@ -16,8 +16,9 @@ const orientationDataAttr = getPublicDataAttribute("orientation");
 const valueDataAttr = getPrivateDataAttribute("value");
 const accordionTriggerDataAttr = getPrivateDataAttribute("accordion-trigger");
 
-export function getAccordionRootDataAttributes(orientation: Orientation) {
+export function getAccordionRootDataAttributes(disabled: boolean, orientation: Orientation) {
     return {
+        [disabledDataAttr]: disabled ? "" : undefined,
         [orientationDataAttr]: orientation
     };
 }
@@ -27,19 +28,11 @@ export function getAccordionItemDataAttributes(
     disabled: boolean,
     orientation: Orientation
 ) {
-    const stateValue = expanded ? "open" : "closed";
-    if (disabled) {
-        return {
-            [stateDataAttr]: stateValue,
-            [disabledDataAttr]: "",
-            [orientationDataAttr]: orientation
-        };
-    } else {
-        return {
-            [stateDataAttr]: stateValue,
-            [orientationDataAttr]: orientation
-        };
-    }
+    return {
+        [stateDataAttr]: expanded ? "open" : "closed",
+        [disabledDataAttr]: disabled ? "" : undefined,
+        [orientationDataAttr]: orientation
+    };
 }
 
 export function getAccordionTriggerDataAttributes(
@@ -48,22 +41,11 @@ export function getAccordionTriggerDataAttributes(
     expanded: boolean,
     orientation: Orientation
 ) {
-    const stateValue = expanded ? "open" : "closed";
-
-    if (disabled) {
-        return {
-            [accordionTriggerDataAttr]: "",
-            [valueDataAttr]: value,
-            [disabledDataAttr]: "",
-            [stateDataAttr]: stateValue,
-            [orientationDataAttr]: orientation
-        };
-    } else {
-        return {
-            [accordionTriggerDataAttr]: "",
-            [valueDataAttr]: value,
-            [stateDataAttr]: stateValue,
-            [orientationDataAttr]: orientation
-        };
-    }
+    return {
+        [accordionTriggerDataAttr]: "",
+        [valueDataAttr]: value,
+        [stateDataAttr]: expanded ? "open" : "closed",
+        [disabledDataAttr]: disabled ? "" : undefined,
+        [orientationDataAttr]: orientation
+    };
 }

@@ -66,12 +66,14 @@ const { attributes } = Astro.props;
                                 {att.public ? (
                                     ""
                                 ) : (
-                                    <div
-                                        class="inline-flex"
-                                        title="This data attribute is an attribute used for thefunctioning of the component and should not be used."
-                                    >
-                                        <Icon name="seti:ignored" size="1rem" />
-                                    </div>
+                                    <>
+                                        <div
+                                            class="inline-flex"
+                                            title="This data attribute is an attribute used for thefunctioning of the component and should not be used."
+                                        >
+                                            <Icon name="seti:ignored" size="1rem" />
+                                        </div>{" "}
+                                    </>
                                 )}
                                 <code class="!bg-orange-500 text-[var(--sl-color-white)]">
                                     [{att.name}]

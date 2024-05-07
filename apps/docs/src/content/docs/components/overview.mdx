@@ -100,6 +100,8 @@ Next, the props are documented, with their type, default value (or "-" if there 
 
 -   <span class="text-runic-gradient">\*</span> is shown next to a required prop.
 -   <span class="text-sm">(bindable)</span> is shown to indicate that the prop is bindable.
+-   <span class="text-runic-gradient mb-2 pr-1 text-sm">(x)</span> is shown next to group of props where
+    one is required.
 
 <Card title="Props">
     <API.Props
@@ -127,6 +129,20 @@ Next, the props are documented, with their type, default value (or "-" if there 
                 name: "bindableProp",
                 type: "[type]",
                 bindable: true,
+                defaultValue: undefined,
+                description: "Lorem ipsum"
+            },
+            {
+                name: "groupProp1",
+                required: "group1",
+                type: "[type]",
+                defaultValue: undefined,
+                description: "Lorem ipsum"
+            },
+            {
+                name: "groupProp2",
+                required: "group1",
+                type: "[type]",
                 defaultValue: undefined,
                 description: "Lorem ipsum"
             }

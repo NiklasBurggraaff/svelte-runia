@@ -5,6 +5,8 @@ description: Documentation on Toggle Svelte Runia Toggle component
 
 import { Card, Icon, Tabs, TabItem } from "@astrojs/starlight/components";
 import { A11y, API, Features, Links, Example } from "@/components/docs";
+import { getARIALabelOrContentProps } from "@/components/docs/api/Props.astro";
+import { getARIALabelAtts } from "@/components/docs/a11y/ARIAAttributes.astro";
 
 import { InteractivePreview, Examples } from "@/components/examples/toggle";
 
@@ -22,7 +24,7 @@ import { InteractivePreview, Examples } from "@/components/examples/toggle";
     </TabItem>
     <TabItem label="Code" icon="seti:svelte">
         ```svelte
-        // MyAccordion.svelte
+        // MyComponent.svelte
         <script lang="ts">
             import { Toggle } from "@niklasburggraaff/svelte-runia";
 
@@ -57,25 +59,25 @@ import { InteractivePreview, Examples } from "@/components/examples/toggle";
 
 Importing `Toggle` gives you access the components.
 
-    ```svelte {2} /<(Toggle)>/
+    ```svelte {3} /<(Toggle)>/
     // MyComponent.svelte
     <script lang="ts">
         import { Toggle } from "@niklasburggraaff/svelte-runia";
     </script>
 
-    <Toggle text>
-        Toggle
+    <Toggle aria-label="...">
+        ...
     </Toggle>
 
     ```
 
--   The `Toggle` _must_ be passed `text`, `aria-label`, or `aria-labelledby` prop
-    -   `text` should be passed if the toggle contains text describing what the toggle does
+-   The `Toggle` _must_ be passed a `labelledByContent`, `aria-label`, or `aria-labelledby` prop
+    -   `labelledByContent` should be passed if the toggle contains text describing what the toggle does
     -   Otherwise, the `aria-label` should describe what the toggle does when pressed
     -   If the description is already in an element, use `aria-labelledby` to reference the id of that element
 
 :::caution
-Do NOT change the `aria-label` (or content if `text`) based on the state of the toggle.
+Do NOT change the `aria-label` (or content if `labelledByContent`) based on the state of the toggle.
 The `aria-pressed` attribute is handled by the component to determine the state.
 
 As an example, if the toggle is for arming an axe with the `aria-label` set to `"Arm axe"`.
@@ -108,25 +110,7 @@ So is it `true` that the axe is disarmed? No, of course not!
             defaultValue: "false",
             description: "When `true`, prevents the user from interacting with the toggle."
         },
-        {
-            name: "text",
-            type: "boolean",
-            defaultValue: undefined,
-            description:
-                "Inidicate the toggle contains text describing what the toggle does when pressed."
-        },
-        {
-            name: "aria-label",
-            type: "string",
-            defaultValue: undefined,
-            description: "Description of what the toggle does when pressed."
-        },
-        {
-            name: "aria-labelledby",
-            type: "string",
-            defaultValue: undefined,
-            description: "ID of element that describes what the toggle does when pressed."
-        },
+        ...getARIALabelOrContentProps("toggle", "does when pressed"),
         {
             name: "element",
             type: "HTMLButtonElement",
@@ -196,16 +180,7 @@ Adheres to the Toggle button in [WAI-ARIA Button Pattern](https://www.w3.org/WAI
             description:
                 "`'on'` when the toggle is pressed and `'off'` when the toggle is not pressed."
         },
-        {
-            name: "aria-label",
-            type: "string",
-            description: "Description of what the toggle does when pressed."
-        },
-        {
-            name: "aria-labelledby",
-            type: "string",
-            description: "ID of element that describes what the toggle does when pressed."
-        }
+        ...getARIALabelAtts("toggle", "does when pressed")
     ]}
 />
 
@@ -224,10 +199,26 @@ Use the `pressed` prop to set the initial state of the toggle to be pressed.
         ```
     </div>
     <div class="flex justify-center" slot="preview"><Examples.DefaultPressed client:load  /></div>
-
 </Example>
 
-### Label by element
+### Control the pressed state
+
+### Add label
+
+Set the `aria-label` prop to the description of what the toggle does when pressed.
+
+<Example>
+    <div slot="code">
+        ```svelte "aria-label="arm axe""
+        <Toggle aria-label="arm axe">...</Toggle>
+        ```
+    </div>
+    <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
+        <Examples.Label client:load />
+    </div>
+</Example>
+
+#### Label by element
 
 Set the `aria-labelledby` prop to the `id` of an element that describes what the toggle does when pressed.
 
@@ -240,5 +231,20 @@ Set the `aria-labelledby` prop to the `id` of an element that describes what the
     </div>
     <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
         <Examples.LabelledByElement client:load />
+    </div>
+</Example>
+
+#### Label by content
+
+Set the `labelledByContent` prop to `true` to indicate the toggle contains text describing what the toggle does when pressed.
+
+<Example>
+    <div slot="code">
+        ```svelte "labelledByContent"
+        <Toggle labelledByContent>Arm axe</Toggle>
+        ```
+    </div>
+    <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
+        <Examples.LabelledByContent client:load />
     </div>
 </Example>

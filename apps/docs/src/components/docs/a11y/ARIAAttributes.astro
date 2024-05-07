@@ -2,12 +2,29 @@
 import { formatText, formatQuotes } from "../format";
 import NoOverflowCode from "../NoOverflowCode.astro";
 
+type Attribute = {
+    name: string;
+    type: string;
+    description: string;
+};
+
+export function getARIALabelAtts(componentName: string, describingWhatIt: string): Attribute[] {
+    return [
+        {
+            name: "aria-label",
+            type: "string",
+            description: `Description of what the ${componentName} ${describingWhatIt}.`
+        },
+        {
+            name: "aria-labelledby",
+            type: "string",
+            description: `ID of element that describes what the ${componentName} ${describingWhatIt}.`
+        }
+    ];
+}
+
 interface Props {
-    attributes: Array<{
-        name: string;
-        type: string;
-        description: string;
-    }>;
+    attributes: Attribute[];
 }
 
 const { attributes } = Astro.props;
@@ -52,7 +69,7 @@ const { attributes } = Astro.props;
                         <tr>
                             <td>
                                 <code class="!bg-orange-500 text-[var(--sl-color-white)]">
-                                    [{att.name}]
+                                    {att.name}
                                 </code>
                             </td>
                             <td>

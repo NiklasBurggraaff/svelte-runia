@@ -2,18 +2,65 @@
 import { formatText, formatQuotes } from "../format";
 import NoOverflowCode from "../NoOverflowCode.astro";
 
+export type Prop = {
+    name: string;
+    required?: true | string;
+    type: string;
+    bindable?: true;
+    defaultValue: string | undefined;
+    description: string;
+};
+
+export function getARIALabelProps(componentName: string, describingWhatIt: string): Prop[] {
+    return [
+        {
+            name: "aria-label",
+            required: "label",
+            type: "string",
+            defaultValue: undefined,
+            description: `Description of what the ${componentName} ${describingWhatIt}.`
+        },
+        {
+            name: "aria-labelledby",
+            required: "label",
+            type: "string",
+            defaultValue: undefined,
+            description: `ID of element that describes what the ${componentName} ${describingWhatIt}.`
+        }
+    ];
+}
+
+export function getARIALabelOrContentProps(
+    componentName: string,
+    describingWhatIt: string
+): Prop[] {
+    return [
+        {
+            name: "labelledByContent",
+            required: "label",
+            type: "true",
+            defaultValue: undefined,
+            description: `Indicates the ${componentName} contains text describing what the ${componentName} ${describingWhatIt}.`
+        },
+        ...getARIALabelProps(componentName, describingWhatIt)
+    ];
+}
+
 interface Props {
-    props: Array<{
-        name: string;
-        required?: true;
-        type: string;
-        bindable?: true;
-        defaultValue: string | undefined;
-        description: string;
-    }>;
+    props: Prop[];
 }
 
 const { props } = Astro.props;
+
+let requiredGroups: string[] = [];
+
+function getRequiredGroupNumber(group: string) {
+    if (requiredGroups.includes(group)) {
+        return requiredGroups.indexOf(group) + 1;
+    }
+    requiredGroups.push(group);
+    return requiredGroups.length;
+}
 ---
 
 {
@@ -39,7 +86,11 @@ const { props } = Astro.props;
                                     )}
                                 </code>
                             </span>{" "}
-                            {prop.required ? (
+                            {typeof prop.required === "string" ? (
+                                <span class="text-runic-gradient mb-2 pr-1 text-sm">
+                                    ({getRequiredGroupNumber(prop.required)})
+                                </span>
+                            ) : prop.required ? (
                                 <span class="text-runic-gradient pr-1 text-xl">*</span>
                             ) : (
                                 ""
@@ -70,7 +121,11 @@ const { props } = Astro.props;
                                         class="!bg-orange-500 text-[var(--sl-color-white)]"
                                         code={prop.name}
                                     />
-                                    {prop.required ? (
+                                    {typeof prop.required === "string" ? (
+                                        <span class="text-runic-gradient mb-2 text-sm">
+                                            ({getRequiredGroupNumber(prop.required)})
+                                        </span>
+                                    ) : prop.required ? (
                                         <span class="text-runic-gradient text-xl">*</span>
                                     ) : (
                                         ""
@@ -93,6 +148,12 @@ const { props } = Astro.props;
                     ))}
                 </tbody>
             </table>
+            {requiredGroups.map((group, index) => (
+                <p class="flex items-center gap-x-2">
+                    <span class="text-runic-gradient mb-2 text-sm">({index + 1})</span>- One of
+                    these is required.
+                </p>
+            ))}
         </>
     )
 }

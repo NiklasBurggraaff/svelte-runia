@@ -2,8 +2,6 @@
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
         "paths": {
-            "$lib": ["../../packages/svelte-runia/src/lib"],
-            "@niklasburggraaff/svelte-runia": ["../../packages/svelte-runia/src/lib/index.js"],
             "@/*": ["./src/*"]
         }
     }

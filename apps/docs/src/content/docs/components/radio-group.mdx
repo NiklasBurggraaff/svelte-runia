@@ -1,0 +1,568 @@
+---
+title: Radio Group
+description: Documentation on Radio Group Svelte Runia component
+---
+
+import { Card, Icon, Tabs, TabItem } from "@astrojs/starlight/components";
+import { A11y, API, Features, Links, Example } from "@/components/docs";
+import { getARIALabelProps, getARIALabelOrContentProps } from "@/components/docs/api/Props.astro";
+import { getARIALabelAtts } from "@/components/docs/a11y/ARIAAttributes.astro";
+
+import { InteractivePreview, Examples } from "@/components/examples/radio-group";
+
+<Links componentName="radio-group" ariaLink="https://www.w3.org/WAI/ARIA/apg/patterns/radio/" />
+
+<div class="py-4 text-xl text-[var(--sl-color-gray-2)]">
+    Group of checkable buttons that only allow one to be checked at a time.
+</div>
+
+:::tip[Did you know?]
+Named after the buttons on old radios
+https://developer.mozilla.org/en-US/docs/Web/html/Element/input/radio
+:::
+
+<Tabs>
+    <TabItem label="Preview" icon="laptop">
+        <InteractivePreview client:load />
+    </TabItem>
+    <TabItem label="Code" icon="seti:svelte">
+        ```svelte
+        // MyComponent.svelte
+        <script lang="ts">
+            import { scale } from "svelte/transition";
+            import { Radio } from "@niklasburggraaff/svelte-runia";
+
+            let { value = $bindable(null), disabled = false, loop = true }: any = $props();
+        </script>
+
+        <Radio.Group bind:value {disabled} {loop} aria-label="Select rune">
+            <div class="flex items-center gap-4">
+                <Radio.Button value="state" id="state" aria-labelledby="state-label" class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50">
+                    {#snippet indicator()}
+                        <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+                    {/snippet}
+                </Radio.Button>
+                <label id="state-label" for="state" class="text-xl">
+                    <span class="font-runic text-runic-gradient font-bold">ᛋ</span> - sun (<code
+                        class="text-sm">$state</code
+                    >)
+                </label>
+            </div>
+            <div class="flex items-center gap-4">
+                <Radio.Button value="derived" id="derived" aria-labelledby="derived-label" class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50">
+                    {#snippet indicator()}
+                        <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+                    {/snippet}
+                </Radio.Button>
+                <label id="derived-label" for="derived" class="text-xl">
+                    <span class="font-runic text-runic-gradient font-bold">ᛞ</span> - day (<code
+                        class="text-sm">$derived</code
+                    >)
+                </label>
+            </div>
+            <div class="flex items-center gap-4">
+                <Radio.Button value="effect" id="effect" aria-labelledby="effect-label" class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50">
+                    {#snippet indicator()}
+                        <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+                    {/snippet}
+                </Radio.Button>
+                <label id="effect-label" for="effect" class="text-xl">
+                    <span class="font-runic text-runic-gradient font-bold">ᚷ</span> - gift (<code
+                        class="text-sm">$effect</code
+                    >)
+                </label>
+            </div>
+            <div class="flex items-center gap-4">
+                <Radio.Button value="props" id="props" aria-labelledby="props-label" class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50">
+                    {#snippet indicator()}
+                        <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+                    {/snippet}
+                </Radio.Button>
+                <label id="props-label" for="props" class="text-xl">
+                    <span class="font-runic text-runic-gradient font-bold">ᚠ</span> - cattle; wealth (<code
+                        class="text-sm">$props</code
+                    >)
+                </label>
+            </div>
+        </Radio.Group>
+        ```
+    </TabItem>
+
+</Tabs>
+
+### Features
+
+<Features
+    features={[
+        "Full keyboard navigation.",
+        "Adds `input` elements to support forms.",
+        "Supports animating indicators.",
+        "Supports horizontal/vertical orientation."
+    ]}
+/>
+
+## Usage
+
+Importing `Radio` gives you access to the `Group` and `Button` components.
+
+    ```svelte {3} /<(Accordion.[^ >]+)/
+    // MyComponent.svelte
+    <script lang="ts">
+        import { Radio } from "@niklasburggraaff/svelte-runia";
+    </script>
+
+    <Radio.Group aria-label="...">
+        <Radio.Button value="..." aria-label="...">
+            {#snippet indicator()}
+                ...
+            {/snippet}
+        </Radio.Button>
+    </Radio.Group>
+    ```
+
+-   The `Group` _can_ contain multiple `Item`'s and _must_ be passed a `aria-label`, or `aria-labelledby` prop
+-   Each `Item` _must_ be passed a **unique** `value` prop and a `labelledByContent`, `aria-label`, or `aria-labelledby` prop
+-   Each `Item` _can_ be passed a `indicator` snippet
+    -   The `indicator` snippet is rendered when the `Item` is checked.
+
+## API
+
+### Group
+
+<API.Introduction
+    name="Group"
+    element="div"
+    description="contains the radio buttons. It manages the state of the radio group."
+/>
+
+#### Props
+
+<API.Props
+    props={[
+        {
+            name: "name",
+            type: "string",
+            defaultValue: undefined,
+            description: "The name of the radio group. Used as the name for the value in a form."
+        },
+        {
+            name: "value",
+            type: "string | null",
+            bindable: true,
+            defaultValue: "null",
+            description: "The value of the checked item, `null` if no item is checked."
+        },
+        ...getARIALabelProps("group", "is a selection for"),
+        {
+            name: "required",
+            type: "boolean",
+            defaultValue: "false",
+            description: "When `true`, indicates a radio button must be checked."
+        },
+        {
+            name: "disabled",
+            type: "boolean",
+            defaultValue: "false",
+            description: "When `true`, prevents the user from interacting with the radio group."
+        },
+        {
+            name: "loop",
+            type: "boolean",
+            defaultValue: "true",
+            description:
+                "When `true`, keyboard navigation will loop focus from the last to the first `Item` and vice versa."
+        },
+        {
+            name: "orientation",
+            type: "'vertical' | 'horizontal' | undefined",
+            defaultValue: "undefined",
+            description:
+                "The orientation of the radio group, which determines which arrow keys are used for keyboard navigation."
+        },
+        {
+            name: "direction",
+            type: "'ltr' | rtl'",
+            defaultValue: "'ltr'",
+            description:
+                "The reading direction of the radio group, used to correct keyboard navigation."
+        },
+        {
+            name: "element",
+            type: "HTMLDivElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `div` element."
+        }
+    ]}
+/>
+
+#### Data attributes
+
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description: "Present when the accordion is disabled."
+        },
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description:
+                "The orientation of the accordion. Not present when `orientation = undefined`."
+        }
+    ]}
+/>
+
+### Button
+
+<API.Introduction name="Button" element="button" description="is an item that can be checked." />
+
+Then the `indicator` snippet is rendered inside the `button` when it is checked.
+The rendered `button` and `indicator` can be fully styled.
+
+The `Button` component also renders a hidden `input` element with `type="radio"`.
+This is to make the component work in forms.
+
+The following is a pseudocode representing the implementation of the `Button` component.
+
+    ```svelte
+    // RadioGroupButton.svelte
+    <script lang="ts">
+        let checked = $...;
+    </script>
+
+    <button>
+        {#if expanded}
+            {@render indicator(checked)}
+        {/if}
+    </button>
+
+    <input type="radio" aria-hidden={true} style={"opacity: 0"} />
+    ```
+
+#### Props
+
+<API.Props
+    props={[
+        {
+            name: "value",
+            required: true,
+            type: "string",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The value used to identify the item."
+        },
+        {
+            name: "indicator",
+            type: "Snippet<[boolean]>",
+            defaultValue: undefined,
+            description:
+                "When `true`, the item is a `section` element. Avoid using with many (~6) items to prevent landmark region proliferation. This is especially helpful when content contain headings or a nested accordion."
+        },
+        ...getARIALabelOrContentProps("button", "is an option for"),
+        {
+            name: "disabled",
+            type: "boolean",
+            defaultValue: "false",
+            description: "When `true`, prevents the user from interacting with the item."
+        },
+        {
+            name: "element",
+            type: "HTMLDivElement | HTMLElement",
+            bindable: true,
+            defaultValue: undefined,
+            description: "The rendered `div` or `section` element."
+        }
+    ]}
+/>
+
+#### Data attributes
+
+<API.DataAttributes
+    attributes={[
+        {
+            name: "data-state",
+            public: true,
+            values: "'checked' | 'unchecked'",
+            description:
+                "The state of the radio button. `'checked'` when the item is checked and `'unchecked'` when the item is not checked."
+        },
+        {
+            name: "data-disabled",
+            public: true,
+            values: undefined,
+            description:
+                "Present when the radio button is disabled. This can be due to the whole radio group or the item being disabled."
+        },
+        {
+            name: "data-orientation",
+            public: true,
+            values: "'vertical' | 'horizontal'",
+            description:
+                "The orientation of the radio group. Not present when `orientation = undefined`."
+        },
+        {
+            name: "data-svelte-runia-radio-button",
+            values: undefined,
+            description: "Present on all `Button`'s. Used by `Group` to find them."
+        },
+        {
+            name: "data-svelte-runia-value",
+            values: "string",
+            description: "The value identifying the item."
+        }
+    ]}
+/>
+
+## Accessibility
+
+Adheres to the [WAI-ARIA Radio Group Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/).
+
+### Keyboard interactions
+
+<A11y.Keyboard
+    interactions={[
+        {
+            keys: ["Enter", "Space"],
+            condition: "If focus on a `Button`",
+            action: "Attempts to select the item."
+        },
+        {
+            keys: ["Tab", ["Shift", "Tab"]],
+            condition: undefined,
+            action: "Move focus to the next/previous focussable element."
+        },
+        {
+            keys: ["Arrow Down", "Arrow Up"],
+            condition:
+                "If focus on a `Button` (and `orientation = undefined` or `orientation = 'vertical'`)",
+            action: "Move focus to the next/previous `Button`. If `loop = true`, loops focus from the last to the first `Button` and vice versa."
+        },
+        {
+            keys: ["Arrow Right", "Arrow Left"],
+            condition:
+                "If focus on a `Button` (and `orientation = undefined` or `orientation = 'horizontal'`)",
+            action: "Move focus to the `Button` to the right/left (depending on `direction`). If `loop = true`, loops focus from the last to the first `Button` and vice versa."
+        }
+    ]}
+/>
+
+#### Other events
+
+<A11y.Events
+    events={[
+        {
+            component: "Button",
+            event: "onclick",
+            action: "Attempts to select the item."
+        }
+    ]}
+/>
+
+### ARIA attributes
+
+#### Group
+
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "role",
+            type: "string",
+            description: "Set to `radiogroup`."
+        },
+        {
+            name: "aria-required",
+            type: "boolean",
+            description: "Set based on the `required` prop."
+        }
+    ]}
+/>
+
+#### Button
+
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "role",
+            type: "string",
+            description: "Set to `radio`."
+        },
+        {
+            name: "aria-checked",
+            type: "'true' | 'false'",
+            description: "`'true'` when the item is checked."
+        },
+        ...getARIALabelAtts("group", "is a selection for")
+    ]}
+/>
+
+##### Button `input` element
+
+<A11y.ARIAAttributes
+    attributes={[
+        {
+            name: "aria-hidden",
+            type: "boolean",
+            description: "Set to `true` when the `input` element is hidden."
+        },
+        ...getARIALabelAtts("button", "is an option for")
+    ]}
+/>
+
+## Examples
+
+### Check item by default
+
+Use the `value` prop to set the initial item to be checked.
+
+:::note
+The `value` props is bindable, but that doesn't mean you have to bind it.
+This makes it easy to set the default value in Svelte.
+:::
+
+<Example>
+    <div slot="code">
+        ```svelte /" (value="state")/
+        <Radio.Group value="state">
+            <Radio.Button value="state">...</Radio.Button>
+            <Radio.Button value="derived">...</Radio.Button>
+            <Radio.Button value="effect">...</Radio.Button>
+            <Radio.Button value="props">...</Radio.Button>
+        </Radio.Group>
+        ```
+    </div>
+    <Examples.Default client:visible slot="preview" />
+
+</Example>
+
+### Control the checked item
+
+Bind the `value` prop of the `Root` component to a variable to control the checked item.
+This allows both reading and writing the value of the checked item.
+
+<Example>
+    <div slot="code">
+        ```svelte /Root (bind:value)/ "let value = $state(null);"
+        // MyComponent.svelte
+        <script>
+            import { Radio } from "@niklasburggraaff/svelte-runia";
+            let value = $state(null);
+        </script>
+
+        <input bind:value />
+
+        <Radio.Group bind:value>
+            <Radio.Button value="state">...</Radio.Button>
+            <Radio.Button value="derived">...</Radio.Button>
+            <Radio.Button value="effect">...</Radio.Button>
+            <Radio.Button value="props">...</Radio.Button>
+        </Radio.Group>
+        ```
+    </div>
+    <Examples.Controlled client:visible slot="preview" />
+
+</Example>
+
+### Add label
+
+Set the `aria-label` prop to the description of what the toggle does when pressed.
+
+<Example>
+    <div slot="code">
+        ```svelte /aria-label="[^"]+"/
+        <Radio.Group aria-label="Select rune">
+            <Radio.Button aria-label="state" value="state">
+                ...
+            </Radio.Button>
+            <Radio.Button aria-label="derived" value="derived">
+                ...
+            </Radio.Button>
+            <Radio.Button aria-label="effect" value="effect">
+                ...
+            </Radio.Button>
+            <Radio.Button aria-label="props" value="props">
+                ...
+            </Radio.Button>
+        </Radio.Group>
+        ```
+    </div>
+    <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
+        <Examples.Label client:load />
+    </div>
+</Example>
+
+#### Label by element
+
+Set the `aria-labelledby` prop to the `id` of an element that describes what the toggle does when pressed.
+This is useful when using `label` elements especially as interactions are passed to the `Button`.
+Remember to set the `for` prop of the `input` to the `id` of the `Radio.Button`.
+
+<Example>
+    <div slot="code">
+        ```svelte /aria-labelledby="[^"]+"/ /id="[^"]+"/ /for="[^"]+"/
+        <Radio.Group id="select-rune" aria-labelledby="select-rune-label">
+            <label id="select-rune-label" for="select-rune">
+                Select rune:
+            </label>
+            <Radio.Button aria-labelledby="state-label" id="state" value="state">
+                ...
+            </Radio.Button>
+            <label id="state-label" for="state" class="text-md">
+                State
+            </label>
+            <Radio.Button aria-labelledby="derived-label" id="derived" value="derived">
+                ...
+            </Radio.Button>
+            <label id="derived-label" for="derived" class="text-md">
+                Derived
+            </label>
+            <Radio.Button aria-labelledby="effect-label" id="effect" value="effect">
+                ...
+            </Radio.Button>
+            <label id="effect-label" for="effect" class="text-md">
+                Effect
+            </label>
+            <Radio.Button aria-labelledby="props-label" id="props" value="props">
+                ...
+            </Radio.Button>
+            <label id="props-label" for="props" class="text-md">
+                Props
+            </label>
+        </Radio.Group>
+        ```
+    </div>
+    <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
+        <Examples.LabelledByElement client:load />
+    </div>
+</Example>
+
+#### Label by content
+
+Set the `labelledByContent` prop to `true` to indicate the toggle contains text describing what the toggle does when pressed.
+
+<Example>
+    <div slot="code">
+        ```svelte "labelledByContent"
+        <Radio.Group aria-label="Select rune">
+            <Radio.Button labelledByContent value="state">
+                Select ...
+            </Radio.Button>
+            <Radio.Button labelledByContent value="derived">
+                Select ...
+            </Radio.Button>
+            <Radio.Button labelledByContent value="effect">
+                Select ...
+            </Radio.Button>
+            <Radio.Button labelledByContent value="props">
+                Select ...
+            </Radio.Button>
+        </Radio.Group>
+        ```
+    </div>
+    <div class="not-content flex items-center justify-center gap-x-4" slot="preview">
+        <Examples.LabelledByContent client:load />
+    </div>
+</Example>

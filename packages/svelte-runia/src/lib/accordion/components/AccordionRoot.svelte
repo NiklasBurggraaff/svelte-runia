@@ -14,6 +14,7 @@
         moveRight,
         moveStart,
         type Direction,
+        type MoveResult,
         type Orientation
     } from "$lib/moves.js";
     import type { AccordionRootContext, AccordionState } from "../context.js";
@@ -84,8 +85,11 @@
         accordionState.value = expandedItems;
     });
 
+    // TODO: Helper file - mainly shared ID's
+    // TODO: What if ID passed?
     const id: string = `svelte-runia-accordion-${count++}`;
 
+    // TODO: Helper function!
     setContext<AccordionRootContext>(getContextKey("accordion"), {
         accordionId: id,
         accordionState,
@@ -129,36 +133,39 @@
             return;
         }
 
-        if (
-            !["Home", "End"].includes(event.key) &&
-            !(orientation === "vertical" && ["ArrowUp", "ArrowDown"].includes(event.key)) &&
-            !(orientation === "horizontal" && ["ArrowLeft", "ArrowRight"].includes(event.key))
-        ) {
-            return;
-        }
-
-        event.preventDefault();
-
         const accordionTriggers = getAccordionTriggers(thisElement);
 
+        let moveResult: MoveResult | undefined = undefined;
         switch (event.key) {
             case "ArrowUp":
-                if (orientation === "vertical") return movePrevious(accordionTriggers, item, loop);
+                if (orientation === "vertical")
+                    moveResult = movePrevious(accordionTriggers, item, loop);
+                break;
             case "ArrowDown":
-                if (orientation === "vertical") return moveNext(accordionTriggers, item, loop);
+                if (orientation === "vertical")
+                    moveResult = moveNext(accordionTriggers, item, loop);
+                break;
             case "ArrowLeft":
                 if (orientation === "horizontal")
-                    return moveLeft(accordionTriggers, item, loop, direction);
+                    moveResult = moveLeft(accordionTriggers, item, loop, direction);
+                break;
             case "ArrowRight":
                 if (orientation === "horizontal")
-                    return moveRight(accordionTriggers, item, loop, direction);
+                    moveResult = moveRight(accordionTriggers, item, loop, direction);
+                break;
             case "Home":
-                return moveStart(accordionTriggers, item);
+                moveResult = moveStart(accordionTriggers, item);
+                break;
             case "End":
-                return moveEnd(accordionTriggers, item);
+                moveResult = moveEnd(accordionTriggers, item);
+                break;
         }
 
-        return;
+        if (moveResult !== undefined) {
+            event.preventDefault();
+        }
+
+        return moveResult;
     }
 
     function handleKeydown(item: string, event: KeyboardEvent) {
@@ -172,9 +179,9 @@
         }
     }
 
-    let dataAttributes = $derived(getAccordionRootDataAttributes(orientation));
+    let dataAttributes = $derived(getAccordionRootDataAttributes(disabled, orientation));
 </script>
 
-<div bind:this={thisElement} {...dataAttributes} {...props}>
+<div bind:this={thisElement} {...props} {...dataAttributes}>
     {@render children()}
 </div>
