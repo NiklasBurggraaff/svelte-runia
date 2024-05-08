@@ -52,14 +52,20 @@ interface Props {
 
 const { props } = Astro.props;
 
-let requiredGroups: string[] = [];
+let previousGroupNumber = 0;
+let requiredGroups: Map<string, [number, string[]]> = new Map();
 
-function getRequiredGroupNumber(group: string) {
-    if (requiredGroups.includes(group)) {
-        return requiredGroups.indexOf(group) + 1;
+function getRequiredGroupNumber(prop: Prop) {
+    if (requiredGroups.has(prop.required as string)) {
+        const [groupNumber, props] = requiredGroups.get(prop.required as string)!;
+
+        if (!props.includes(prop.name)) {
+            props.push(prop.name);
+        }
+        return groupNumber + 1;
     }
-    requiredGroups.push(group);
-    return requiredGroups.length;
+    requiredGroups.set(prop.required as string, [previousGroupNumber++, [prop.name]]);
+    return previousGroupNumber + 1;
 }
 ---
 
@@ -88,7 +94,7 @@ function getRequiredGroupNumber(group: string) {
                             </span>{" "}
                             {typeof prop.required === "string" ? (
                                 <span class="text-runic-gradient mb-2 pr-1 text-sm">
-                                    ({getRequiredGroupNumber(prop.required)})
+                                    ({getRequiredGroupNumber(prop)})
                                 </span>
                             ) : prop.required ? (
                                 <span class="text-runic-gradient pr-1 text-xl">*</span>
@@ -123,7 +129,7 @@ function getRequiredGroupNumber(group: string) {
                                     />
                                     {typeof prop.required === "string" ? (
                                         <span class="text-runic-gradient mb-2 text-sm">
-                                            ({getRequiredGroupNumber(prop.required)})
+                                            ({getRequiredGroupNumber(prop)})
                                         </span>
                                     ) : prop.required ? (
                                         <span class="text-runic-gradient text-xl">*</span>
@@ -148,12 +154,21 @@ function getRequiredGroupNumber(group: string) {
                     ))}
                 </tbody>
             </table>
-            {requiredGroups.map((group, index) => (
-                <p class="flex items-center gap-x-2">
-                    <span class="text-runic-gradient mb-2 text-sm">({index + 1})</span>- One of
-                    these is required.
-                </p>
-            ))}
+            {Array.from(requiredGroups.keys()).map((group) => {
+                const [index, props] = requiredGroups.get(group)!;
+                return (
+                    <p class="flex items-center gap-x-2">
+                        <span class="text-runic-gradient mb-2 text-sm">({index + 1})</span>- One of
+                        {props.map((prop) => (
+                            <NoOverflowCode
+                                class="!bg-orange-500 text-[var(--sl-color-white)]"
+                                code={prop}
+                            />
+                        ))}
+                        is required.
+                    </p>
+                );
+            })}
         </>
     )
 }
