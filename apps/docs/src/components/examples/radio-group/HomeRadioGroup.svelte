@@ -1,86 +1,77 @@
 <script lang="ts">
-    import { Accordion } from "@niklasburggraaff/svelte-runia";
-    import { slide } from "svelte/transition";
+    import { scale } from "svelte/transition";
+    import { Radio } from "@niklasburggraaff/svelte-runia";
+
+    let { value = $bindable(null), disabled = false, loop = true }: any = $props();
 </script>
 
-<Accordion.Root type="single" collapsible>
-    <Accordion.Item class="border-b" value="furthark-essentials">
-        <Accordion.Header level={5}>
-            <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
-            >
-                Furthark Essentials
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1rem", height: "1rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
-            </Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content>
-            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
-                The Elder Futhark, used from the 2nd to 8th centuries, comprised 24 runic
-                characters, each bearing significance in magic, divination, and communication.
-            </div>
-        </Accordion.Content>
-    </Accordion.Item>
-    <Accordion.Item class="border-b" value="norse-myths">
-        <Accordion.Header level={5}>
-            <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
-            >
-                Norse Myths 101
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1rem", height: "1rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
-            </Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content>
-            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
-                Norse mythology, a tapestry of gods, giants, and heroes, offers insights into
-                ancient Scandinavian beliefs, from the creation of the cosmos to the battles of
-                Ragnarök.
-            </div>
-        </Accordion.Content>
-    </Accordion.Item>
-    <Accordion.Item class="border-b" value="viking-explorers">
-        <Accordion.Header level={5}>
-            <Accordion.Trigger
-                class="flex w-full items-center justify-between bg-transparent py-1 text-center text-base [&[data-state=open]>svg]:rotate-180"
-            >
-                Viking Explorers
-                <svg
-                    class="size-8 transition-transform duration-200"
-                    style={`width: "1rem", height: "1rem"`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"
-                    />
-                </svg>
-            </Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content>
-            <div class="line-clamp-2 pb-2 pl-1.5" transition:slide={{ duration: 200 }}>
-                Vikings, from the 8th to 11th centuries, sailed seas, established trade routes, and
-                left their mark on history through exploration and expansion.
-            </div>
-        </Accordion.Content>
-    </Accordion.Item>
-</Accordion.Root>
+<Radio.Group bind:value {disabled} {loop} aria-label="Select rune">
+    <div class="flex items-center gap-4">
+        <Radio.Button
+            value="state"
+            id="state-home-radio-group"
+            aria-labelledby="state-label-home-radio-group"
+            class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50"
+        >
+            {#snippet indicator()}
+                <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+            {/snippet}
+        </Radio.Button>
+        <label id="state-label-home-radio-group" for="state-home-radio-group" class="text-md">
+            <span class="font-runic text-runic-gradient font-bold">ᛋ</span> - "sun" (<code
+                class="text-xs">$state</code
+            >)
+        </label>
+    </div>
+    <div class="flex items-center gap-4">
+        <Radio.Button
+            value="derived"
+            id="derived-home-radio-group"
+            aria-labelledby="derived-label-home-radio-group"
+            class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50"
+        >
+            {#snippet indicator()}
+                <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+            {/snippet}
+        </Radio.Button>
+        <label id="derived-label-home-radio-group" for="derived-home-radio-group" class="text-md">
+            <span class="font-runic text-runic-gradient font-bold">ᛞ</span> - "day" (<code
+                class="text-xs">$derived</code
+            >)
+        </label>
+    </div>
+    <div class="flex items-center gap-4">
+        <Radio.Button
+            value="effect"
+            id="effect-home-radio-group"
+            aria-labelledby="effect-label-home-radio-group"
+            class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50"
+        >
+            {#snippet indicator()}
+                <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+            {/snippet}
+        </Radio.Button>
+        <label id="effect-label-home-radio-group" for="effect-home-radio-group" class="text-md">
+            <span class="font-runic text-runic-gradient font-bold">ᚷ</span> - "gift" (<code
+                class="text-xs">$effect</code
+            >)
+        </label>
+    </div>
+    <div class="flex items-center gap-4">
+        <Radio.Button
+            value="props"
+            id="props-home-radio-group"
+            aria-labelledby="props-label-home-radio-group"
+            class="h-4 w-4 rounded-full border bg-[var(--sl-color-bg)] p-1 hover:bg-[var(--sl-color-gray-5)] disabled:opacity-50"
+        >
+            {#snippet indicator()}
+                <div transition:scale class="h-full w-full rounded-full bg-orange-500"></div>
+            {/snippet}
+        </Radio.Button>
+        <label id="props-label-home-radio-group" for="props-home-radio-group" class="text-md">
+            <span class="font-runic text-runic-gradient font-bold">ᚠ</span> - "cattle; wealth" (<code
+                class="text-xs">$props</code
+            >)
+        </label>
+    </div>
+</Radio.Group>

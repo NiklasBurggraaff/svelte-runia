@@ -29,7 +29,17 @@ import ExampleCard from "@/components/examples/ExampleCard.astro";
                 <Examples.Accordion client:load />
             </div>
         </ExampleCard>
-        <ExampleCard title="Dialog" slug="dialog">
+        <ExampleCard title="Radio Group" slug="radio-group">
+            <div class="flex w-full justify-center">
+                <Examples.RadioGroup client:load />
+            </div>
+        </ExampleCard>
+        <ExampleCard title="Toggle" slug="toggle">
+            <div class="flex w-full justify-center">
+                <Examples.Toggle client:load />
+            </div>
+        </ExampleCard>
+        {/* <ExampleCard title="Dialog" slug="dialog">
             <Tabs class="tabs">
                 <TabItem label="World" icon="laptop">
                     Hello
@@ -79,16 +89,6 @@ import ExampleCard from "@/components/examples/ExampleCard.astro";
                 </TabItem>
             </Tabs>
         </ExampleCard>
-        <ExampleCard title="Radio Group" slug="radio-group">
-            <Tabs class="tabs">
-                <TabItem label="World" icon="laptop">
-                    Hello
-                </TabItem>
-                <TabItem label="Item" icon="error">
-                    Goodbye
-                </TabItem>
-            </Tabs>
-        </ExampleCard>
         <ExampleCard title="Toggle Group" slug="toggle-group">
             <Tabs class="tabs">
                 <TabItem label="World" icon="laptop">
@@ -108,7 +108,7 @@ import ExampleCard from "@/components/examples/ExampleCard.astro";
                     Goodbye
                 </TabItem>
             </Tabs>
-        </ExampleCard>
+        </ExampleCard> */}
         <Card title="Many more...">
             <div class="flex h-72 w-72 flex-col justify-center overflow-y-auto overflow-x-clip align-middle">
                 See the component docs for more examples
@@ -218,7 +218,7 @@ import ExampleCard from "@/components/examples/ExampleCard.astro";
         </CallToAction>
     </div>
 
-    ### Other links..
+    ### Other links...
 
     <div class="not-content flex w-fit gap-4">
         <CallToAction
